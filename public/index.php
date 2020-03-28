@@ -1,60 +1,34 @@
 <?php
-
 /**
- * Laravel - A PHP Framework For Web Artisans
- *
- * @package  Laravel
- * @author   Taylor Otwell <taylor@laravel.com>
+ * Nexus a PluXml ressources sharing
+ * @author Pedro CADETE <pedro@hyperion-web.fr>
+ * @link https://ressources.pluxml.org
  */
+use DI\Container;
+use Slim\Factory\AppFactory;
 
-define('LARAVEL_START', microtime(true));
+// Composer autoloader
+require_once '../vendor/autoload.php';
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader for
-| our application. We just need to utilize it! We'll simply require it
-| into the script here so that we don't have to worry about manual
-| loading any of our classes later on. It feels great to relax.
-|
-*/
+// Start the PHP session
+session_start();
 
-require __DIR__.'/../vendor/autoload.php';
+// NEXUS application global settings
+require_once '../config/settings.php';
 
-/*
-|--------------------------------------------------------------------------
-| Turn On The Lights
-|--------------------------------------------------------------------------
-|
-| We need to illuminate PHP development, so let us turn on the lights.
-| This bootstraps the framework and gets it ready for use, then it
-| will load up this application so that we can run it and send
-| the responses back to the browser and delight our users.
-|
-*/
+// SLIM4 application initialisation with the PHP-DI container
+$container = new Container;
+AppFactory::setContainer($container);
+$app = AppFactory::create();
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+// SLIM4 container
+require_once '../config/containers.php';
 
-/*
-|--------------------------------------------------------------------------
-| Run The Application
-|--------------------------------------------------------------------------
-|
-| Once we have the application, we can handle the incoming request
-| through the kernel, and send the associated response back to
-| the client's browser allowing them to enjoy the creative
-| and wonderful application we have prepared for them.
-|
-*/
+// SLIM4 middleware
+require_once '../config/middlewares.php';
 
-$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+// SLIM4 routes creation
+require_once '../config/routes.php';
 
-$response = $kernel->handle(
-    $request = Illuminate\Http\Request::capture()
-);
-
-$response->send();
-
-$kernel->terminate($request, $response);
+// SLIM4 application launching
+$app->run();
