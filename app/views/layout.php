@@ -15,7 +15,7 @@
     <nav class="navigation" role="navigation">
       <ul class="navigation-list">
         <li class="navigation-item"><a class="navigation-link" href="/">home</a></li>
-        <li class="navigation-item"><a class="navigation-link" href="test">test</a></li>
+        <li class="navigation-item"><a class="navigation-link" href="/plugins">plugins</a></li>
       </ul>
     </nav>
   </header>

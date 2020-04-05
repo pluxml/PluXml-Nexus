@@ -7,9 +7,9 @@ namespace App\Controllers;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Respect\Validation\Validator;
-use App\Models\TestModel;
+use App\Models\PluginsModel;
 
-class PagesController extends Controller
+class HomeController extends Controller
 {
 
     /**
@@ -20,9 +20,13 @@ class PagesController extends Controller
      */
     public function show(Request $request, Response $response)
     {
-        return $this->render($response, 'pages/home.php', [
-            "title" => "Hello - My App"
-        ]);
+        $pluginModel = new PluginsModel($this->container);
+
+        $datas['title'] = 'Ressources - PluXml.org';
+        $datas['plugins'] = $pluginModel->plugins;
+
+        // View call
+        return $this->render($response, 'pages/home.php', $datas);
     }
 
     /**
@@ -51,22 +55,6 @@ class PagesController extends Controller
             $status = 400;
         }
         return $this->redirect($response, 'test', $status);
-    }
-
-    /**
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
-     */
-    public function test(Request $request, Response $response)
-    {
-        // Model instance with a DB SQL request
-        $test = new TestModel($this->container);
-        // Store the result into the "datas" array for the view
-        $datas['result'] = $test->test;
-        // View call
-        return $this->render($response, 'pages/test.php', $datas);
     }
 }
 ?>
