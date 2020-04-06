@@ -3,3 +3,4 @@
 
 <p><a href="plugins/<?= $plugins[0]['name'] ?>"><?= $plugins[0]['name'] ?></a></p>
 <p><a href="plugins/<?= $plugins[1]['name'] ?>"><?= $plugins[1]['name'] ?></a></p>
+<p><a href="plugins/<?= $plugins[2]['name'] ?>"><?= $plugins[2]['name'] ?></a></p>

@@ -17,7 +17,7 @@ class PluginModel extends Model
 
     public $date;
 
-    public $version;
+    public $versionPlugin;
 
     public $versionPluxml;
 
@@ -35,8 +35,8 @@ class PluginModel extends Model
         $this->description = $pdo[0]['description'];
         $this->author = $pdo[0]['author'];
         $this->date = $pdo[0]['date'];
-        $this->version = $pdo[0]['version'];
-        $this->versionPluxml = $pdo[0]['versionPluxml'];
+        $this->versionPlugin = $pdo[0]['versionplugin'];
+        $this->versionPluxml = $pdo[0]['versionpluxml'];
         $this->link = $pdo[0]['link'];
         $this->file = $pdo[0]['file'];
     }

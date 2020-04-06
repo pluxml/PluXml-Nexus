@@ -11,10 +11,14 @@ class PluginsModel extends Model
 
     public $plugins;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, String $userid = NULL)
     {
         parent::__construct($container);
 
-        $this->plugins = $this->pdoService->query('SELECT * FROM plugins');
+        if (! empty($userid)) {
+            $this->plugins = $this->pdoService->query("SELECT * FROM plugins WHERE author='$userid'");
+        } else {
+            $this->plugins = $this->pdoService->query('SELECT * FROM plugins');
+        }
     }
 }

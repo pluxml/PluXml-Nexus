@@ -17,11 +17,11 @@ class UserModel extends Model
 
     public $website;
 
-    public function __construct(ContainerInterface $container, String $username)
+    public function __construct(ContainerInterface $container, String $id)
     {
         parent::__construct($container);
 
-        $pdo = $this->pdoService->query("SELECT * FROM users WHERE username = '$username'");
+        $pdo = $this->pdoService->query("SELECT * FROM users WHERE id = '$id'");
 
         $this->username = $pdo[0]['username'];
         $this->password = $pdo[0]['password'];

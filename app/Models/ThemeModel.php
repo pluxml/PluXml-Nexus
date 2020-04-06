@@ -17,7 +17,7 @@ class ThemeModel extends Model
 
     public $date;
 
-    public $version;
+    public $versionTheme;
 
     public $versionPluxml;
 
@@ -35,8 +35,8 @@ class ThemeModel extends Model
         $this->description = $pdo[0]['description'];
         $this->author = $pdo[0]['author'];
         $this->date = $pdo[0]['date'];
-        $this->version = $pdo[0]['version'];
-        $this->versionPluxml = $pdo[0]['versionPluxml'];
+        $this->versionTheme = $pdo[0]['versiontheme'];
+        $this->versionPluxml = $pdo[0]['versionpluxml'];
         $this->link = $pdo[0]['link'];
         $this->file = $pdo[0]['file'];
     }

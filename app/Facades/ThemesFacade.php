@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 use App\Models\ThemesModel;
 use App\Models\ThemeModel;
 
-class ThemesFacade
+class ThemesFacade extends Facade
 {
 
     static public function getAllThemes(ContainerInterface $container)
@@ -25,8 +25,14 @@ class ThemesFacade
     {
         $themeModel = new ThemeModel($container, $name);
 
-        $datas['title'] = "Theme $themeModel->name Ressources - PluXml.org";
+        $datas['title'] = "Plugin $themeModel->name Ressources - PluXml.org";
         $datas['name'] = $themeModel->name;
+        $datas['description'] = $themeModel->description;
+        $datas['versionTheme'] = $themeModel->versionTheme;
+        $datas['versionPluxml'] = $themeModel->versionPluxml;
+        $datas['link'] = $themeModel->link;
+        $datas['author'] = Facade::getAuthorUsernameById($container, $themeModel->author);
+
         return $datas;
     }
 }

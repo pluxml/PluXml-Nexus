@@ -57,14 +57,27 @@
 
 	<header class="header" role="banner">
 		<div class="container">
-			<nav class="navigation" role="navigation">
-				<ul class="navigation-list">
-					<li class="navigation-item"><a class="navigation-link" href="/">home</a></li>
-					<li class="navigation-item"><a class="navigation-link" href="/plugins">plugins</a></li>
-					<li class="navigation-item"><a class="navigation-link" href="/themes">themes</a></li>
-					<li class="navigation-item"><a class="navigation-link" href="/profiles">profiles</a></li>
-				</ul>
-			</nav>
+			<div class="grid">
+				<div class="col sml-12 med-8">
+					<nav class="nav" role="navigation">
+						<ul class="inline-list">
+							<li><a href="/">home</a></li>
+							<li><a href="/plugins">plugins</a></li>
+							<li><a href="/themes">themes</a></li>
+							<li><a href="/profiles">profiles</a></li>
+						</ul>
+					</nav>
+				</div>
+
+				<div class="col sml-12 med-4">
+					<nav class="nav text-right" role="navigation">
+						<ul class="inline-list">
+							<li><a href="/signup">Sign up</a></li>
+							<li><a href="/login">Log in</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
 		</div>
 	</header>
 

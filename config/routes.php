@@ -6,6 +6,7 @@ use App\Controllers\HomeController;
 use App\Controllers\PluginsController;
 use App\Controllers\ProfilesController;
 use App\Controllers\ThemesController;
+use App\Controllers\AuthController;
 
 $app->get('/', HomeController::class . ':show')->setName('homepage');
 
@@ -18,6 +19,8 @@ $app->get('/themes/{name}', ThemesController::class . ':showTheme');
 $app->get('/profiles', ProfilesController::class . ':show')->setName('profiles');
 $app->get('/profiles/{username}', ProfilesController::class . ':showProfile');
 
+$app->get('/login', AuthController::class . ':showLogin')->setName('login');
+$app->get('/signup', AuthController::class . ':showSignup')->setName('signup');
 
 //$app->get('/test', PagesController::class . ':test')->setName('test');
 //$app->post('/test', PagesController::class . ':testPost');

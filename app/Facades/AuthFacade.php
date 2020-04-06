@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 use App\Models\PluginsModel;
 use App\Models\PluginModel;
 
-class PluginsFacade extends Facade
+class AuthFacade extends Facade
 {
 
     static public function getAllPlugins(ContainerInterface $container)
