@@ -21,12 +21,12 @@ class PluginsFacade
         return $datas;
     }
 
-    static public function getNamedPlugin(ContainerInterface $container, String $name)
+    static public function getPlugin(ContainerInterface $container, String $name)
     {
         $pluginModel = new PluginModel($container, $name);
 
         $datas['title'] = "Plugin $pluginModel->name Ressources - PluXml.org";
-        $datas['pluginName'] = $pluginModel->name;
+        $datas['name'] = $pluginModel->name;
 
         return $datas;
     }

@@ -1,6 +1,6 @@
 <?php
 /**
- * PluginModel
+ * UserModel
  */
 namespace App\Models;
 
@@ -22,6 +22,12 @@ class UserModel extends Model
     public function __construct(ContainerInterface $container, String $username)
     {
         parent::__construct($container);
-        $this->plugin = $this->pdoService->query('select * from themes where name=' . $username);
+
+        $pdo = $this->pdoService->query("SELECT * FROM users WHERE username = '$username'");
+
+        $this->username = $pdo[0]['username'];
+        $this->password = $pdo[0]['password'];
+        $this->email = $pdo[0]['email'];
+        $this->website = $pdo[0]['website'];
     }
 }

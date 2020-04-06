@@ -1,14 +1,15 @@
 <?php
 /**
- * PluginsController
+ * ProfilesController
  */
 namespace App\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Facades\PluginsFacade;
+use App\Facades\ProfilesFacade;
 
-class PluginsController extends Controller
+class ProfilesController extends Controller
 {
 
     /**
@@ -19,8 +20,8 @@ class PluginsController extends Controller
      */
     public function show(Request $request, Response $response)
     {
-        $datas = PluginsFacade::getAllPlugins($this->container);
-        return $this->render($response, 'pages/plugins.php', $datas);
+        $datas = ProfilesFacade::getAllProfiles($this->container);
+        return $this->render($response, 'pages/profiles.php', $datas);
     }
 
     /**
@@ -30,9 +31,9 @@ class PluginsController extends Controller
      * @param Array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showPlugin(Request $request, Response $response, $args)
+    public function showProfile(Request $request, Response $response, $args)
     {
-        $datas = PluginsFacade::getPlugin($this->container, $args['name']);
-        return $this->render($response, 'pages/plugin.php', $datas);
+        $datas = ProfilesFacade::getProfile($this->container, $args['username']);
+        return $this->render($response, 'pages/profile.php', $datas);
     }
 }

@@ -6,7 +6,7 @@
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= $title ?></title>
-  <link rel="stylesheet" href="css/knacss.css" media="all">
+  <link rel="stylesheet" href="/css/knacss.css" media="all">
 </head>
 
 <body>
@@ -16,6 +16,7 @@
       <ul class="navigation-list">
         <li class="navigation-item"><a class="navigation-link" href="/">home</a></li>
         <li class="navigation-item"><a class="navigation-link" href="/plugins">plugins</a></li>
+        <li class="navigation-item"><a class="navigation-link" href="/profiles">profiles</a></li>
       </ul>
     </nav>
   </header>
