@@ -1,14 +1,14 @@
 <?php
 /**
- * ProfilesController
+ * ThemesController
  */
 namespace App\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use App\Facades\ProfilesFacade;
+use App\Facades\ThemesFacade;
 
-class ProfilesController extends Controller
+class ThemesController extends Controller
 {
 
     /**
@@ -19,8 +19,8 @@ class ProfilesController extends Controller
      */
     public function show(Request $request, Response $response)
     {
-        $datas = ProfilesFacade::getAllProfiles($this->container);
-        return $this->render($response, 'pages/profiles.php', $datas);
+        $datas = ThemesFacade::getAllThemes($this->container);
+        return $this->render($response, 'pages/themes.php', $datas);
     }
 
     /**
@@ -30,9 +30,9 @@ class ProfilesController extends Controller
      * @param Array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showProfile(Request $request, Response $response, $args)
+    public function showTheme(Request $request, Response $response, $args)
     {
-        $datas = ProfilesFacade::getProfile($this->container, $args['username']);
-        return $this->render($response, 'pages/profile.php', $datas);
+        $datas = ThemesFacade::getTheme($this->container, $args['name']);
+        return $this->render($response, 'pages/theme.php', $datas);
     }
 }

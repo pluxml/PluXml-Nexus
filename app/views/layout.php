@@ -16,6 +16,7 @@
       <ul class="navigation-list">
         <li class="navigation-item"><a class="navigation-link" href="/">home</a></li>
         <li class="navigation-item"><a class="navigation-link" href="/plugins">plugins</a></li>
+        <li class="navigation-item"><a class="navigation-link" href="/themes">themes</a></li>
         <li class="navigation-item"><a class="navigation-link" href="/profiles">profiles</a></li>
       </ul>
     </nav>

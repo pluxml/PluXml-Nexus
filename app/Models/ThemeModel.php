@@ -1,6 +1,6 @@
 <?php
 /**
- * PluginModel
+ * ThemeModel
  */
 namespace App\Models;
 
@@ -8,8 +8,6 @@ use Psr\Container\ContainerInterface;
 
 class ThemeModel extends Model
 {
-
-    private $theme;
 
     public $name;
 
@@ -30,6 +28,16 @@ class ThemeModel extends Model
     public function __construct(ContainerInterface $container, String $name)
     {
         parent::__construct($container);
-        $this->plugin = $this->pdoService->query('select * from themes where name=' . $name);
+
+        $pdo = $this->pdoService->query("SELECT * FROM themes WHERE name = '$name'");
+
+        $this->name = $pdo[0]['name'];
+        $this->description = $pdo[0]['description'];
+        $this->author = $pdo[0]['author'];
+        $this->date = $pdo[0]['date'];
+        $this->version = $pdo[0]['version'];
+        $this->versionPluxml = $pdo[0]['versionPluxml'];
+        $this->link = $pdo[0]['link'];
+        $this->file = $pdo[0]['file'];
     }
 }

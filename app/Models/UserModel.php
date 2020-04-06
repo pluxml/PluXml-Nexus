@@ -9,8 +9,6 @@ use Psr\Container\ContainerInterface;
 class UserModel extends Model
 {
 
-    private $user;
-
     public $username;
 
     public $password;

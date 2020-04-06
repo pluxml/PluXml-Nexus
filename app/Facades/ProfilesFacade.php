@@ -5,8 +5,6 @@
 namespace App\Facades;
 
 use Psr\Container\ContainerInterface;
-use App\Models\PluginsModel;
-use App\Models\PluginModel;
 use App\Models\UsersModel;
 use App\Models\UserModel;
 
@@ -27,7 +25,7 @@ class ProfilesFacade
     {
         $userModel = new UserModel($container, $username);
 
-        $datas['title'] = "Profile $pluginModel->name Ressources - PluXml.org";
+        $datas['title'] = "Profile $userModel->username Ressources - PluXml.org";
         $datas['username'] = $userModel->username;
 
         return $datas;
