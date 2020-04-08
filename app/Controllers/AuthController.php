@@ -19,8 +19,7 @@ class AuthController extends Controller
      */
     public function showAuth(Request $request, Response $response)
     {
-        $datas = AuthFacade::getAllThemes($this->container);
-        return $this->render($response, 'pages/themes.php', $datas);
+        return $this->render($response, 'pages/backoffice/auth.php', $datas);
     }
 
     /**
@@ -32,7 +31,7 @@ class AuthController extends Controller
      */
     public function showSignup(Request $request, Response $response, $args)
     {
-        $datas = AuthFacade::getTheme($this->container, $args['name']);
+        // $datas = AuthFacade::getTheme($this->container, $args['name']);
         return $this->render($response, 'pages/theme.php', $datas);
     }
 
@@ -44,8 +43,20 @@ class AuthController extends Controller
      */
     public function login(Request $request, Response $response)
     {
-        $datas = AuthFacade::getAllThemes($this->container);
-        return $this->render($response, 'pages/themes.php', $datas);
+        $post = $request->getParsedBody();
+        $namedRoute = 'auth';
+
+        if (! empty($post['username']) and ! empty($post['password'])) {
+            $result = AuthFacade::authentificateUser($this->container, $post['username'], $post['password']);
+            if (! $result) {
+                $this->messageService->addMessage('error', 'Wrong username or password');
+            } else {
+                $namedRoute = 'backoffice';
+            }
+        } else {
+            $this->messageService->addMessage('error', 'Username and password are required');
+        }
+        return $this->redirect($response, $namedRoute);
     }
 
     /**

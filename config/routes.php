@@ -7,6 +7,7 @@ use App\Controllers\PluginsController;
 use App\Controllers\ProfilesController;
 use App\Controllers\ThemesController;
 use App\Controllers\AuthController;
+use App\Controllers\BackofficeController;
 
 $app->get('/', HomeController::class . ':show')->setName('homepage');
 
@@ -20,9 +21,12 @@ $app->get('/profiles', ProfilesController::class . ':show')->setName('profiles')
 $app->get('/profiles/{username}', ProfilesController::class . ':showProfile')->setName('profile');
 
 $app->get('/auth', AuthController::class . ':showAuth')->setName('auth');
-$app->get('/auth/login', AuthController::class . ':login');
-$app->get('/auth/logout', AuthController::class . ':logout')->setName('logout');
 $app->get('/signup', AuthController::class . ':showSignup')->setName('signup');
+$app->post('/auth/login', AuthController::class . ':login')->setName('loginAction');
+$app->post('/auth/logout', AuthController::class . ':logout')->setName('logoutAction');
+$app->post('/signup', AuthController::class . ':signup')->setName('signupAction');
+
+$app->get('/backoffice', BackofficeController::class . ':show')->setName('backoffice');
 
 //$app->get('/test', PagesController::class . ':test')->setName('test');
 //$app->post('/test', PagesController::class . ':testPost');

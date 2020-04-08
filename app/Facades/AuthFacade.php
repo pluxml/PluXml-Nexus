@@ -5,34 +5,19 @@
 namespace App\Facades;
 
 use Psr\Container\ContainerInterface;
-use App\Models\PluginsModel;
-use App\Models\PluginModel;
 
 class AuthFacade extends Facade
 {
 
-    static public function getAllPlugins(ContainerInterface $container)
+    static public function authentificateUser(ContainerInterface $container, String $username, String $password)
     {
-        $pluginsModel = new PluginsModel($container);
+        $result = FALSE;
+        $userPassword = UsersFacade::getProfilePassword($container, $username);
 
-        $datas['title'] = 'Plugins Ressources - PluXml.org';
-        $datas['plugins'] = $pluginsModel->plugins;
+        if (! empty($userPassword) and $userPassword == $password) {
+            $result = TRUE;
+        }
 
-        return $datas;
-    }
-
-    static public function getPlugin(ContainerInterface $container, String $name)
-    {
-        $pluginModel = new PluginModel($container, $name);
-
-        $datas['title'] = "Plugin $pluginModel->name Ressources - PluXml.org";
-        $datas['name'] = $pluginModel->name;
-        $datas['description'] = $pluginModel->description;
-        $datas['versionPlugin'] = $pluginModel->versionPlugin;
-        $datas['versionPluxml'] = $pluginModel->versionPluxml;
-        $datas['link'] = $pluginModel->link;
-        $datas['author'] = Facade::getAuthorUsernameById($container, $pluginModel->author);
-
-        return $datas;
+        return $result;
     }
 }

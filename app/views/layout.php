@@ -74,7 +74,7 @@
 						<ul class="inline-list">
 							<li><a href="<?= $routerService->urlFor('signup') ?>">Sign up</a></li>
 							<li><a href="<?= $routerService->urlFor('auth') ?>">Log in</a></li>
-							<li><a href="<?= $routerService->urlFor('logout') ?>">Log out</a></li>
+							<li><a href="<?= $routerService->urlFor('logoutAction') ?>">Log out</a></li>
 						</ul>
 					</nav>
 				</div>
