@@ -4,10 +4,12 @@
  */
 use App\Middlewares\FormOldValuesMiddleware;
 use App\Middlewares\CsrfTokenMiddleware;
+use App\Middlewares\RouterViewMiddleware;
 
 // Get services from PHP-DI container
 $viewService = $container->get('view');
 $csrfService = $container->get('csrf');
+$routerService = $container->get('router');
 
 /**
  * Middleware creation
@@ -18,6 +20,7 @@ $csrfService = $container->get('csrf');
  * csrf SLIM 4 CSRF engine add from PHP-DI container
  */
 $app->add(new FormOldValuesMiddleware($viewService));
+$app->add(new RouterViewMiddleware($viewService, $routerService));
 $app->add(new CsrfTokenMiddleware($viewService, $csrfService));
 $app->add('csrf');
 

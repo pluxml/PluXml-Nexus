@@ -14,6 +14,6 @@
 	<li><?= $description ?></li>
 	<li><?= $versionPlugin ?></li>
 	<li><?= $versionPluxml ?></li>
-	<li><a href="/profiles/<?= $author ?>"><?= $author ?></a></li>
+	<li><a href="<?= $routerService->urlFor('profiles') ?><?= $author ?>"><?= $author ?></a></li>
 	<li><?= $link ?></li>
 </ul>

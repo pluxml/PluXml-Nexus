@@ -17,7 +17,7 @@ class AuthController extends Controller
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showLogin(Request $request, Response $response)
+    public function showAuth(Request $request, Response $response)
     {
         $datas = AuthFacade::getAllThemes($this->container);
         return $this->render($response, 'pages/themes.php', $datas);
@@ -34,5 +34,29 @@ class AuthController extends Controller
     {
         $datas = AuthFacade::getTheme($this->container, $args['name']);
         return $this->render($response, 'pages/theme.php', $datas);
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function login(Request $request, Response $response)
+    {
+        $datas = AuthFacade::getAllThemes($this->container);
+        return $this->render($response, 'pages/themes.php', $datas);
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function logout(Request $request, Response $response)
+    {
+        $datas = AuthFacade::getAllThemes($this->container);
+        return $this->render($response, 'pages/themes.php', $datas);
     }
 }

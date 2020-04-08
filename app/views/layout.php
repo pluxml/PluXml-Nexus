@@ -61,10 +61,10 @@
 				<div class="col sml-12 med-8">
 					<nav class="nav" role="navigation">
 						<ul class="inline-list">
-							<li><a href="/">home</a></li>
-							<li><a href="/plugins">plugins</a></li>
-							<li><a href="/themes">themes</a></li>
-							<li><a href="/profiles">profiles</a></li>
+							<li><a href="<?= $routerService->urlFor('homepage') ?>">home</a></li>
+							<li><a href="<?= $routerService->urlFor('plugins') ?>">plugins</a></li>
+							<li><a href="<?= $routerService->urlFor('themes') ?>">themes</a></li>
+							<li><a href="<?= $routerService->urlFor('profiles') ?>">profiles</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -72,8 +72,9 @@
 				<div class="col sml-12 med-4">
 					<nav class="nav text-right" role="navigation">
 						<ul class="inline-list">
-							<li><a href="/signup">Sign up</a></li>
-							<li><a href="/login">Log in</a></li>
+							<li><a href="<?= $routerService->urlFor('signup') ?>">Sign up</a></li>
+							<li><a href="<?= $routerService->urlFor('auth') ?>">Log in</a></li>
+							<li><a href="<?= $routerService->urlFor('logout') ?>">Log out</a></li>
 						</ul>
 					</nav>
 				</div>

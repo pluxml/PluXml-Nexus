@@ -17,6 +17,6 @@
 
 <h2>Plugins :</h2>
 <ul>
-	<li><a href="/plugins/<?= $plugins[0]['name'] ?>"><?= $plugins[0]['name'] ?></a></li>
-	<li><a href="/plugins/<?= $plugins[1]['name'] ?>"><?= $plugins[1]['name'] ?></a></li>
+	<li><a href="<?= $routerService->urlFor('plugin', ['name' => $plugins[0]['name']]) ?>"><?= $plugins[0]['name'] ?></a></li>
+	<li><a href="<?= $routerService->urlFor('plugin', ['name' => $plugins[1]['name']]) ?>"><?= $plugins[1]['name'] ?></a></li>
 </ul>
