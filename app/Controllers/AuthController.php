@@ -12,6 +12,20 @@ use Respect\Validation\Validator;
 class AuthController extends Controller
 {
 
+    const NAMED_ROUTE_HOME = 'homepage';
+
+    const NAMED_ROUTE_AUTH = 'auth';
+
+    const NAMED_ROUTE_BACKOFFICE = 'backoffice';
+
+    const PAGE_AUTH = 'pages/backoffice/auth.php';
+
+    const PAGE_SIGNUP = 'pages/signup.php';
+
+    const MSG_ERROR = 'Wrong username or password';
+    
+    const MSG_LOGOUT = 'Log out successful';
+
     /**
      *
      * @param Request $request
@@ -20,7 +34,13 @@ class AuthController extends Controller
      */
     public function showAuth(Request $request, Response $response)
     {
-        return $this->render($response, 'pages/backoffice/auth.php', $datas);
+        if (AuthFacade::isLogged()) {
+            $response = $this->redirect($response, self::NAMED_ROUTE_BACKOFFICE);
+        } else {
+            $response = $this->render($response, self::PAGE_AUTH, $datas);
+        }
+
+        return $response;
     }
 
     /**
@@ -33,7 +53,7 @@ class AuthController extends Controller
     public function showSignup(Request $request, Response $response, $args)
     {
         // $datas = AuthFacade::getTheme($this->container, $args['name']);
-        return $this->render($response, 'pages/theme.php', $datas);
+        return $this->render($response, self::PAGE_SIGNUP, $datas);
     }
 
     /**
@@ -44,8 +64,7 @@ class AuthController extends Controller
      */
     public function login(Request $request, Response $response)
     {
-        $namedRoute = 'auth';
-        $msg = 'Wrong username or password';
+        $namedRoute = self::NAMED_ROUTE_AUTH;
         $post = $request->getParsedBody();
 
         $validUsername = Validator::notEmpty()->alnum()
@@ -56,12 +75,12 @@ class AuthController extends Controller
         if ($validUsername and $validPassword) {
             $result = AuthFacade::authentificateUser($this->container, $post['username'], $post['password']);
             if (! $result) {
-                $this->messageService->addMessage('error', $msg);
+                $this->messageService->addMessage('error', self::MSG_ERROR);
             } else {
-                $namedRoute = 'backoffice';
+                $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
             }
         } else {
-            $this->messageService->addMessage('error', $msg);
+            $this->messageService->addMessage('error', self::MSG_ERROR);
         }
 
         return $this->redirect($response, $namedRoute);
@@ -75,7 +94,8 @@ class AuthController extends Controller
      */
     public function logout(Request $request, Response $response)
     {
-        $datas = AuthFacade::getAllThemes($this->container);
-        return $this->render($response, 'pages/themes.php', $datas);
+        AuthFacade::logout();
+        $this->messageService->addMessage('success', 'Logout successful');
+        return $this->redirect($response, self::NAMED_ROUTE_HOME);
     }
 }

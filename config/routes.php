@@ -22,8 +22,8 @@ $app->get('/profiles/{username}', ProfilesController::class . ':showProfile')->s
 
 $app->get('/auth', AuthController::class . ':showAuth')->setName('auth');
 $app->get('/signup', AuthController::class . ':showSignup')->setName('signup');
+$app->get('/auth/logout', AuthController::class . ':logout')->setName('logoutAction');
 $app->post('/auth/login', AuthController::class . ':login')->setName('loginAction');
-$app->post('/auth/logout', AuthController::class . ':logout')->setName('logoutAction');
 $app->post('/signup', AuthController::class . ':signup')->setName('signupAction');
 
 $app->get('/backoffice', BackofficeController::class . ':show')->setName('backoffice');

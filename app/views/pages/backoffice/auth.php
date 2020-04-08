@@ -1,13 +1,13 @@
 <h1>Auth</h1>
 
 <?php if (isset($flash['success'])): ?>
-<div class="alert green">
-	<?= $flash['success'][0] ?>
-</div>
+	<div class="alert green">
+		<?= $flash['success'][0] ?>
+	</div>
 <?php elseif (isset($flash['error'])): ?>
-<div class="alert red">
-	<?= $flash['error'][0] ?>
-</div>
+	<div class="alert red">
+		<?= $flash['error'][0] ?>
+	</div>
 <?php endif; ?>
 
 <form action="<?= $routerService->urlFor('loginAction') ?>" method="post">
