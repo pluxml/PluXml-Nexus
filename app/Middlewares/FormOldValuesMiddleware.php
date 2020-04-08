@@ -27,8 +27,9 @@ class FormOldValuesMiddleware
         }
         $this->viewService->addAttribute('formOldValues', $formOldValues);
         $response = $handler->handle($request);
-        if ($response->getStatusCode() === 400){
+        if ($response->getStatusCode() === 302){
             $_SESSION['formOldValues'] = $request->getParsedBody();
+            $_SESSION['formOldValues']['password'] = '';
         }
         return $response;
     }

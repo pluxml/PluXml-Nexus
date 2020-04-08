@@ -7,6 +7,7 @@ namespace App\Controllers;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Facades\AuthFacade;
+use Respect\Validation\Validator;
 
 class AuthController extends Controller
 {
@@ -43,19 +44,26 @@ class AuthController extends Controller
      */
     public function login(Request $request, Response $response)
     {
-        $post = $request->getParsedBody();
         $namedRoute = 'auth';
+        $msg = 'Wrong username or password';
+        $post = $request->getParsedBody();
 
-        if (! empty($post['username']) and ! empty($post['password'])) {
+        $validUsername = Validator::notEmpty()->alnum()
+            ->noWhitespace()
+            ->validate($post['username']);
+        $validPassword = Validator::notEmpty()->validate($post['password']);
+
+        if ($validUsername and $validPassword) {
             $result = AuthFacade::authentificateUser($this->container, $post['username'], $post['password']);
             if (! $result) {
-                $this->messageService->addMessage('error', 'Wrong username or password');
+                $this->messageService->addMessage('error', $msg);
             } else {
                 $namedRoute = 'backoffice';
             }
         } else {
-            $this->messageService->addMessage('error', 'Username and password are required');
+            $this->messageService->addMessage('error', $msg);
         }
+
         return $this->redirect($response, $namedRoute);
     }
 
