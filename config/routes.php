@@ -8,6 +8,8 @@ use App\Controllers\ProfilesController;
 use App\Controllers\ThemesController;
 use App\Controllers\AuthController;
 use App\Controllers\BackofficeController;
+use App\Middlewares\BackofficeMiddleware;
+use Slim\Interfaces\RouteCollectorProxyInterface;
 
 $app->get('/', HomeController::class . ':show')->setName('homepage');
 
@@ -26,7 +28,9 @@ $app->get('/auth/logout', AuthController::class . ':logout')->setName('logoutAct
 $app->post('/auth/login', AuthController::class . ':login')->setName('loginAction');
 $app->post('/signup', AuthController::class . ':signup')->setName('signupAction');
 
-$app->get('/backoffice', BackofficeController::class . ':show')->setName('backoffice');
+$app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
+    $group->get('/', BackofficeController::class . ':show')->setName('backoffice');
+})->add(new BackofficeMiddleware($container));
 
 //$app->get('/test', PagesController::class . ':test')->setName('test');
 //$app->post('/test', PagesController::class . ':testPost');
