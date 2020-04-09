@@ -10,6 +10,7 @@ class AuthFacade extends Facade
 {
 
     /**
+     *
      * @param ContainerInterface $container
      * @param String $username
      * @param String $password
@@ -18,9 +19,9 @@ class AuthFacade extends Facade
     static public function authentificateUser(ContainerInterface $container, String $username, String $password)
     {
         $result = FALSE;
-        $userPassword = UsersFacade::getProfilePassword($container, $username);
+        $userModel = UsersFacade::searchUser($container, $username);
 
-        if (! empty($userPassword) and $userPassword == $password) {
+        if (! empty($userModel) and ! empty($userModel->role) and $userModel->password == $password) {
             $result = TRUE;
             $_SESSION['user'] = $username;
         }
@@ -29,6 +30,7 @@ class AuthFacade extends Facade
     }
 
     /**
+     *
      * @return boolean
      */
     static public function isLogged()
@@ -41,11 +43,11 @@ class AuthFacade extends Facade
 
         return $result;
     }
-    
+
     /**
-     * 
      */
-    static public function logout() {
+    static public function logout()
+    {
         unset($_SESSION['user']);
     }
 }

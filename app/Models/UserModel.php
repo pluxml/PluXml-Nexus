@@ -10,7 +10,7 @@ class UserModel extends Model
 {
 
     public $id;
-    
+
     public $username;
 
     public $password;
@@ -18,6 +18,10 @@ class UserModel extends Model
     public $email;
 
     public $website;
+
+    public $role;
+
+    public $token;
 
     public function __construct(ContainerInterface $container, String $id)
     {
@@ -30,5 +34,7 @@ class UserModel extends Model
         $this->password = $pdo[0]['password'];
         $this->email = $pdo[0]['email'];
         $this->website = $pdo[0]['website'];
+        $this->role = $pdo[0]['role'];
+        $this->token = $pdo[0]['token'];
     }
 }

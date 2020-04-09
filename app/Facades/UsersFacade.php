@@ -15,7 +15,7 @@ class UsersFacade
 
     /**
      * @param ContainerInterface $container
-     * @return string
+     * @return String $datas
      */
     static public function getAllProfiles(ContainerInterface $container)
     {
@@ -30,7 +30,7 @@ class UsersFacade
     /**
      * @param ContainerInterface $container
      * @param String $username
-     * @return String
+     * @return String $datas
      */
     static public function getProfile(ContainerInterface $container, String $username)
     {
@@ -47,23 +47,12 @@ class UsersFacade
     /**
      * @param ContainerInterface $container
      * @param String $username
-     * @return String
-     */
-    static public function getProfilePassword(ContainerInterface $container, String $username)
-    {
-        $userModel = self::searchUser($container, $username);
-        return $userModel->password;
-    }
-
-    /**
-     * @param ContainerInterface $container
-     * @param String $username
      * @return \App\Models\UserModel
      */
-    private function searchUser(ContainerInterface $container, String $username)
+    static public function searchUser(ContainerInterface $container, String $username)
     {
         $userModel = NULL;
-        $userModels = $usersModel = new UsersModel($container);
+        $userModels = new UsersModel($container);
 
         // Search userid by the username
         foreach ($userModels->users as $k => $v)
