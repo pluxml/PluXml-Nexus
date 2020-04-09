@@ -22,7 +22,8 @@ class BackofficeMiddleware extends Middleware
     {
         $response = $handler->handle($request);
         if (! AuthFacade::isLogged()) {
-            $response->withHeader('Location', '/')->withStatus(302);
+            $this->flashService->addMessage('error', 'Auhtentification needed');
+            return $response->withHeader('Location', $this->routerService->urlFor('auth'))->withStatus(302);
         }
         return $response;
     }

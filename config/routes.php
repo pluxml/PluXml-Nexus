@@ -29,7 +29,7 @@ $app->post('/auth/login', AuthController::class . ':login')->setName('loginActio
 $app->post('/signup', AuthController::class . ':signup')->setName('signupAction');
 
 $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
-    $group->get('/', BackofficeController::class . ':show')->setName('backoffice');
+    $group->get('', BackofficeController::class . ':show')->setName('backoffice');
 })->add(new BackofficeMiddleware($container));
 
 //$app->get('/test', PagesController::class . ':test')->setName('test');

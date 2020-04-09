@@ -17,8 +17,7 @@ use App\Services\PdoService;
  * flash instance of SLIM 4 Messages librairie
  */
 $container->set('router', function () use ($app) {
-    return $app->getRouteCollector()
-        ->getRouteParser();
+    return $app->getRouteCollector()->getRouteParser();
 });
 
 $container->set('csrf', function () use ($app) {
