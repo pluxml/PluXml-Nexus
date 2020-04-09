@@ -5,6 +5,7 @@
 namespace App\Facades;
 
 use Psr\Container\ContainerInterface;
+use PhpParser\Node\Expr\Array_;
 
 class AuthFacade extends Facade
 {

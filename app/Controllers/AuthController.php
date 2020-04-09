@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Facades\AuthFacade;
 use Respect\Validation\Validator;
+use App\Facades\UsersFacade;
 
 class AuthController extends Controller
 {
@@ -16,14 +17,16 @@ class AuthController extends Controller
 
     const NAMED_ROUTE_AUTH = 'auth';
 
+    const NAMED_ROUTE_SIGNUP = 'signup';
+
     const NAMED_ROUTE_BACKOFFICE = 'backoffice';
 
     const PAGE_AUTH = 'pages/backoffice/auth.php';
 
-    const PAGE_SIGNUP = 'pages/signup.php';
+    const PAGE_SIGNUP = 'pages/backoffice/signup.php';
 
     const MSG_ERROR = 'Wrong username or password';
-    
+
     const MSG_LOGOUT = 'Log out successful';
 
     /**
@@ -37,7 +40,7 @@ class AuthController extends Controller
         if (AuthFacade::isLogged()) {
             $response = $this->redirect($response, self::NAMED_ROUTE_BACKOFFICE);
         } else {
-            $response = $this->render($response, self::PAGE_AUTH, $datas);
+            $response = $this->render($response, self::PAGE_AUTH);
         }
 
         return $response;
@@ -50,10 +53,15 @@ class AuthController extends Controller
      * @param Array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showSignup(Request $request, Response $response, $args)
+    public function showSignup(Request $request, Response $response)
     {
-        // $datas = AuthFacade::getTheme($this->container, $args['name']);
-        return $this->render($response, self::PAGE_SIGNUP, $datas);
+        if (AuthFacade::isLogged()) {
+            $response = $this->redirect($response, self::NAMED_ROUTE_BACKOFFICE);
+        } else {
+            $response = $this->render($response, self::PAGE_SIGNUP);
+        }
+
+        return $response;
     }
 
     /**
@@ -97,5 +105,44 @@ class AuthController extends Controller
         AuthFacade::logout();
         $this->messageService->addMessage('success', 'Logout successful');
         return $this->redirect($response, self::NAMED_ROUTE_HOME);
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function signup(Request $request, Response $response)
+    {
+        $errors = [];
+        $namedRoute = self::NAMED_ROUTE_SIGNUP;
+        $post = $request->getParsedBody();
+
+        Validator::notEmpty()->noWhitespace()
+            ->alnum()
+            ->length(1, 99)
+            ->validate($post['username']) || $errors['username'] = 'Must be alphanumeric with no whitespace';
+        Validator::notEmpty()->length(1, 99)->validate($post['password']) || $errors['password'] = 'Lengh must be inferior to 100 characters';
+        Validator::notEmpty()->equals($post['password'])->validate($post['password2']) || $errors['password2'] = 'Password does not match';
+        Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = 'Invalid email address';
+        Validator::url()->length(1, 99)->validate($post['website']) || $errors['website'] = 'Invalid url';
+
+        if (empty($errors)) {
+            if (UsersFacade::addUser($this->container, $post)) {
+                $this->messageService->addMessage('success', 'Signup successful, please confirm your email address to be able to login');
+                $namedRoute = self::NAMED_ROUTE_AUTH;
+            }
+            else {
+                $this->messageService->addMessage('error', 'Signup technical error');
+            }
+        } else {
+            $this->messageService->addMessage('error', 'Signup error, please see below');
+            foreach ($errors as $key => $message) {
+                $this->messageService->addMessage($key, $message);
+            }
+        }
+
+        return $this->redirect($response, $namedRoute);
     }
 }

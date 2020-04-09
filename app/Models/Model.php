@@ -24,7 +24,7 @@ class Model
      * @param String $sql
      * @return Array
      */
-    public function query(String $sql)
+    protected function query(String $sql)
     {
         $req = $this->pdoService->prepare($sql);
         $req->execute();

@@ -9,6 +9,7 @@ use App\Models\UsersModel;
 use App\Models\UserModel;
 use App\Models\PluginsModel;
 use App\Models\PluginModel;
+use App\Models\NewUserModel;
 
 class UsersFacade
 {
@@ -67,6 +68,12 @@ class UsersFacade
         }
 
         return $userModel;
+    }
+    
+    static public function addUser(ContainerInterface $container, Array $user)
+    {
+        $newUserModel = new NewUserModel($container, $user);
+        return $newUserModel->saveNewUser($user);
     }
 
     /**

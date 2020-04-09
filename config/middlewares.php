@@ -1,13 +1,13 @@
 <?php
 /**
- * SLIM4 middleware creation
+ * SLIM 4 middleware creation
  */
 use App\Middlewares\FormOldValuesMiddleware;
 use App\Middlewares\CsrfTokenMiddleware;
 use App\Middlewares\RouterViewMiddleware;
 
 /**
- * Middleware creation
+ * Middlewares
  * The last to be added is the first to be executed
  *
  * FormOldValuesMiddleware store in $_SESSION the form values
@@ -20,4 +20,4 @@ $app->add(new CsrfTokenMiddleware($container));
 $app->add('csrf');
 
 // SLIM4 ErrorMiddleware
-$app->addErrorMiddleware(true, false, false);
+$app->addErrorMiddleware(DEBUG, false, false);

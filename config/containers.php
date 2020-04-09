@@ -1,6 +1,6 @@
 <?php
 /**
- * SLIM4 container creation
+ * SLIM 4 PHP-DI container creation
  */
 use Slim\Csrf\Guard;
 use Slim\Views\PhpRenderer;
@@ -8,7 +8,7 @@ use Slim\Flash\Messages;
 use App\Services\PdoService;
 
 /**
- * Services creation inside the SLIM4 container
+ * Services creation inside the SLIM 4 container
  *
  * router SLIM 4 named routes resolver
  * view SLIM4 PHP View
@@ -28,7 +28,7 @@ $container->set('csrf', function () use ($app) {
 
 $container->set('view', function () use ($app) {
     $dir = dirname(__DIR__);
-    $view = new PhpRenderer($dir . '/app/views');
+    $view = new PhpRenderer($dir . '/views');
     $view->setLayout("layout.php");
     return $view;
 });
