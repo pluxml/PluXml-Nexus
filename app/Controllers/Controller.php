@@ -17,6 +17,8 @@ class Controller
     protected $viewService;
 
     protected $messageService;
+    
+    protected $mailService;
 
     public function __construct(ContainerInterface $container)
     {
@@ -24,6 +26,7 @@ class Controller
         $this->routerService = $this->container->get('router');
         $this->viewService = $this->container->get('view');
         $this->messageService = $this->container->get('flash');
+        $this->mailService = $this->container->get('mail');
     }
 
     /**

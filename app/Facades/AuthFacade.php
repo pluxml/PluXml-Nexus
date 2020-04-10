@@ -51,4 +51,17 @@ class AuthFacade extends Facade
     {
         unset($_SESSION['user']);
     }
+    
+    static public function sendConfirmationEmail(ContainerInterface $container, String $username)
+    {
+        $userModel = UsersFacade::searchUser($container, $username);
+        
+        $body = strtr(MAIL_NEWUSER_BODY, '##TOKEN##', $userModel->token);
+        
+        $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_NEWUSER_SUBJECT, $body, TRUE);
+
+        var_dump($result);
+
+        return $result;
+    }
 }
