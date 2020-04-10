@@ -21,7 +21,7 @@ class AuthFacade extends Facade
         $result = FALSE;
         $userModel = UsersFacade::searchUser($container, $username);
 
-        if (! empty($userModel) and ! empty($userModel->role) and $userModel->password == $password) {
+        if (! empty($userModel) and ! empty($userModel->role) and password_verify($password, $userModel->password) ) {
             $result = TRUE;
             $_SESSION['user'] = $username;
         }
