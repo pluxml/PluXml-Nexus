@@ -7,14 +7,14 @@
 
 const DEBUG = TRUE;
 
-const DB_HOST = 'mysql';
-const DB_DBNAME = 'plxnexus';
+const DB_HOST = 'localhost';
+const DB_DBNAME = '';
 const DB_CHARSET = 'utf8';
 const DB_PORT = '3306';
-const DB_USER = 'plxnexus';
-const DB_PASSWORD = 'PassWord';
+const DB_USER = '';
+const DB_PASSWORD = '';
 
-const MAIL_PROVIDER = 'smtp'; // set 'smtp' to use SMTP host and authentification otherwise set empty ('') to use the PHP function mail()
+const MAIL_PROVIDER = ''; // set 'smtp' to use SMTP host and authentification otherwise set empty ('') to use the PHP function mail()
 const MAIL_SMTP_HOST = '';
 const MAIL_SMTP_USERNAME = '';
 const MAIL_SMTP_PASSWORD = '';
