@@ -18,7 +18,8 @@ const MAIL_PROVIDER = ''; // set 'smtp' to use SMTP host and authentification ot
 const MAIL_SMTP_HOST = '';
 const MAIL_SMTP_USERNAME = '';
 const MAIL_SMTP_PASSWORD = '';
-const MAIL_SMTP_PORT = '';
+const MAIL_SMTP_PORT = '465';
+const MAIL_SMTP_SECURITY = 'ssl'; //possible values : 'ssl' or 'tls'
 
 const MAIL_FROM = 'p3ter@pluxml.org';
 const MAIL_FROM_NAME = 'Pluxml.org';

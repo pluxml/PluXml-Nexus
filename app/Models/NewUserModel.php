@@ -20,6 +20,8 @@ class NewUserModel extends Model
     private $website;
 
     private $token;
+    
+    private $tokenExpire;
 
     public function __construct(ContainerInterface $container, Array $user)
     {
@@ -29,7 +31,10 @@ class NewUserModel extends Model
         $this->password = self::generateHashedPassword($user['password']);
         $this->email = $user['email'];
         $this->website = $user['website'];
-        $this->token = self::generateToken();
+        
+        $token = self::generateToken();
+        $this->token = $token['token']; 
+        $this->tokenExpire = $token['expire'];
     }
 
     /**
@@ -38,7 +43,7 @@ class NewUserModel extends Model
      */
     public function saveNewUser()
     {
-        return $this->pdoService->insert("INSERT INTO users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '', token = '$this->token'");
+        return $this->pdoService->insert("INSERT INTO users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '', token = '$this->token', tokenexpire = '$this->tokenExpire'");
     }
 
     private function generateHashedPassword(String $password)
@@ -48,11 +53,16 @@ class NewUserModel extends Model
 
     /**
      *
-     * @return String
+     * @return Array keys are 'token' and 'expire' 
      */
     private function generateToken()
     {
         $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-        return substr(str_shuffle(str_repeat($alphabet, self::TOKEN_LENGH)), 0, self::TOKEN_LENGH);
+        $lifetime = 24; //hours
+        
+        $token['token'] = substr(str_shuffle(str_repeat($alphabet, self::TOKEN_LENGH)), 0, self::TOKEN_LENGH);
+        $token['expire'] = date('Y-m-d H:i:s', mktime(date('H')+$lifetime, date('i'), date('s'), date('m'), date('d'), date('Y')));
+        
+        return $token;
     }
 }

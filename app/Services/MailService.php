@@ -25,7 +25,7 @@ class MailService
             $this->mail->SMTPAuth = true;
             $this->mail->Username = MAIL_SMTP_USERNAME;
             $this->mail->Password = MAIL_SMTP_PASSWORD;
-            $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $this->mail->SMTPSecure = MAIL_SMTP_SECURITY;
             $this->mail->Port = MAIL_SMTP_PORT;
         }
     }

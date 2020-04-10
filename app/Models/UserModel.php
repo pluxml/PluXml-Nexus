@@ -23,6 +23,8 @@ class UserModel extends Model
 
     public $token;
 
+    public $tokenExpire;
+
     public function __construct(ContainerInterface $container, String $id)
     {
         parent::__construct($container);
@@ -36,5 +38,6 @@ class UserModel extends Model
         $this->website = $pdo[0]['website'];
         $this->role = $pdo[0]['role'];
         $this->token = $pdo[0]['token'];
+        $this->tokenExpire = $pdo[0]['tokenexpire'];
     }
 }
