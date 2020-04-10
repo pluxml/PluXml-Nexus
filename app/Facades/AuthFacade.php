@@ -56,7 +56,7 @@ class AuthFacade extends Facade
         $userModel = UsersFacade::searchUser($container, $username);
 
         $host = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-        $tokenHref = $container->get('router')->urlFor('confirmEmail') . "?token=$userModel->token";
+        $tokenHref = $container->get('router')->urlFor('confirmEmail') . "?username=$userModel->username&token=$userModel->token";
         $placeholder = [
             '##USERNAME##' => $userModel->username,
             '##TOKEN##' => '<p><a href="' . $host . $tokenHref . '">' . $host . $tokenHref . '</a></p>'
@@ -64,6 +64,25 @@ class AuthFacade extends Facade
         $body = str_replace(array_keys($placeholder), array_values($placeholder), MAIL_NEWUSER_BODY);
 
         $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_NEWUSER_SUBJECT, $body, TRUE);
+
+        return $result;
+    }
+
+    static public function confirmEmail(ContainerInterface $container, String $username, String $token)
+    {
+        $result = FALSE;
+
+        $userModel = UsersFacade::searchUser($container, $username);
+
+        if (isset($userModel->token) and isset($userModel->tokenExpire)) {
+            if ($userModel->token == $token and $userModel->tokenExpire >= date('Y-m-d H:i:s')) {
+                $userModel->role = 'user';
+                $userModel->token = NULL;
+                $userModel->tokenExpire = '0000-00-00 00:00:00';
+                $userModel->editUser();
+                $result = TRUE;
+            }
+        }
 
         return $result;
     }

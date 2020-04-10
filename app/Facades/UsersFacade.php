@@ -76,6 +76,7 @@ class UsersFacade
         return $newUserModel->saveNewUser($user);
     }
 
+    
     /**
      * @param ContainerInterface $container
      * @param String $userid

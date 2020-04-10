@@ -25,13 +25,19 @@ class AuthController extends Controller
 
     private const PAGE_SIGNUP = 'pages/backoffice/signup.php';
 
+    private const PAGE_CONFIRMEMAIL = 'pages/backoffice/confirmEmail.php';
+
     private const MSG_ERROR_LOGIN = 'Wrong username or password';
 
     private const MSG_ERROR_TECHNICAL = 'Signup technical error';
 
     private const MSG_ERROR_SIGNUP = 'Signup error, please see below';
 
+    private const MSG_ERROR_CONFIRMEMAIL = 'Email confirmation failed';
+
     private const MSG_SUCCESS_SIGNUP = 'Signup successful, please confirm your email address to be able to login';
+
+    private const MSG_SUCCESS_CONFIRMEMAIL = 'Email address confirmation success';
 
     private const MSG_LOGOUT = 'Log out successful';
 
@@ -78,6 +84,28 @@ class AuthController extends Controller
         }
 
         return $response;
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param Array $args
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function confirmEmail(Request $request, Response $response)
+    {
+        $params = $request->getQueryParams();
+
+        $result = AuthFacade::confirmEmail($this->container, $params['username'], $params['token']);
+
+        if ($result) {
+            $this->messageService->addMessage('success', self::MSG_SUCCESS_CONFIRMEMAIL);
+        } else {
+            $this->messageService->addMessage('error', self::MSG_ERROR_CONFIRMEMAIL);
+        }
+
+        return $response = $this->redirect($response, self::NAMED_ROUTE_AUTH);
     }
 
     /**

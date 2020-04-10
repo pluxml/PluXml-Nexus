@@ -40,4 +40,9 @@ class UserModel extends Model
         $this->token = $pdo[0]['token'];
         $this->tokenExpire = $pdo[0]['tokenexpire'];
     }
+
+    public function editUser()
+    {
+        return $this->pdoService->insert("UPDATE users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '$this->role', token = '$this->token', tokenexpire = '$this->tokenExpire' WHERE id = '$this->id'");
+    }
 }
