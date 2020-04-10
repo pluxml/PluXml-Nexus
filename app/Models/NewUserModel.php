@@ -9,6 +9,8 @@ use Psr\Container\ContainerInterface;
 class NewUserModel extends Model
 {
 
+    private const TOKEN_LENGH = 60;
+
     private $username;
 
     private $password;
@@ -24,14 +26,33 @@ class NewUserModel extends Model
         parent::__construct($container);
 
         $this->username = $user['username'];
-        $this->password = $user['password']; // TODO chiffrer le password via une méthode
+        $this->password = self::generateHashedPassword($user['password']);
         $this->email = $user['email'];
         $this->website = $user['website'];
-        //$this->token = //TODO créer le token via une méthode
+        $this->token = self::generateToken();
     }
 
+    /**
+     *
+     * @return Bool
+     */
     public function saveNewUser()
     {
         return $this->pdoService->insert("INSERT INTO users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '', token = '$this->token'");
+    }
+
+    private function generateHashedPassword(String $password)
+    {
+        return password_hash($password, PASSWORD_BCRYPT);
+    }
+
+    /**
+     *
+     * @return String
+     */
+    private function generateToken()
+    {
+        $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+        return substr(str_shuffle(str_repeat($alphabet, self::TOKEN_LENGH)), 0, self::TOKEN_LENGH);
     }
 }
