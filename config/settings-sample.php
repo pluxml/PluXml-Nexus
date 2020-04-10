@@ -5,7 +5,7 @@
  * @link https://ressources.pluxml.org
  */
 
-const DEBUG = TRUE;
+const DEBUG = FALSE;
 
 const DB_HOST = 'localhost';
 const DB_DBNAME = '';
@@ -24,4 +24,4 @@ const MAIL_SMTP_SECURITY = 'ssl'; //possible values : 'ssl' or 'tls'
 const MAIL_FROM = 'p3ter@pluxml.org';
 const MAIL_FROM_NAME = 'Pluxml.org';
 const MAIL_NEWUSER_SUBJECT = 'Welcome to PluXml Nexus';
-const MAIL_NEWUSER_BODY = 'To complete your signup and be able to login to <a href="https://ressources.pluxml.org">ressources.pluxml.org</a>, please confirm your email address by clicking the link below<br><br><a href="##TOKEN##">##TOKEN##</a>';
+const MAIL_NEWUSER_BODY = '<p>Hello ##USERNAME##</p>To complete your signup and be able to login to <a href="https://ressources.pluxml.org">ressources.pluxml.org</a>, please confirm your email address by clicking the link below</p>##TOKEN##<p>This link will expire in 24h.</p>';

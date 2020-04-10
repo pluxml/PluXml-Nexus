@@ -25,6 +25,7 @@ $app->get('/profiles/{username}', ProfilesController::class . ':showProfile')->s
 $app->get('/auth', AuthController::class . ':showAuth')->setName('auth');
 $app->get('/signup', AuthController::class . ':showSignup')->setName('signup');
 $app->get('/auth/logout', AuthController::class . ':logout')->setName('logoutAction');
+$app->get('/auth/emailconfirmation', AuthController::class . ':confirmEmail')->setName('confirmEmail');
 $app->post('/auth/login', AuthController::class . ':login')->setName('loginAction');
 $app->post('/signup', AuthController::class . ':signup')->setName('signupAction');
 

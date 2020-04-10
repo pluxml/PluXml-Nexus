@@ -5,7 +5,6 @@
 namespace App\Facades;
 
 use Psr\Container\ContainerInterface;
-use PhpParser\Node\Expr\Array_;
 
 class AuthFacade extends Facade
 {
@@ -56,7 +55,12 @@ class AuthFacade extends Facade
     {
         $userModel = UsersFacade::searchUser($container, $username);
 
-        $placeholder = ['##USERNAME##' => $userModel->username, '##TOKEN##' => $userModel->token];
+        $host = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+        $tokenHref = $container->get('router')->urlFor('confirmEmail') . "?token=$userModel->token";
+        $placeholder = [
+            '##USERNAME##' => $userModel->username,
+            '##TOKEN##' => '<p><a href="' . $host . $tokenHref . '">' . $host . $tokenHref . '</a></p>'
+        ];
         $body = str_replace(array_keys($placeholder), array_values($placeholder), MAIL_NEWUSER_BODY);
 
         $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_NEWUSER_SUBJECT, $body, TRUE);
