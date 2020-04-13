@@ -15,6 +15,7 @@ class UsersFacade
 {
 
     /**
+     *
      * @param ContainerInterface $container
      * @return String $datas
      */
@@ -29,6 +30,7 @@ class UsersFacade
     }
 
     /**
+     *
      * @param ContainerInterface $container
      * @param String $username
      * @return String $datas
@@ -46,6 +48,7 @@ class UsersFacade
     }
 
     /**
+     *
      * @param ContainerInterface $container
      * @param String $username
      * @return \App\Models\UserModel
@@ -62,22 +65,22 @@ class UsersFacade
                 break;
             }
         $userId = $userModels->users[$key]['id'];
-        
-        if (!empty($userId)) {
+
+        if (! empty($userId)) {
             $userModel = new UserModel($container, $userId);
         }
 
         return $userModel;
     }
-    
+
     static public function addUser(ContainerInterface $container, Array $user)
     {
         $newUserModel = new NewUserModel($container, $user);
         return $newUserModel->saveNewUser($user);
     }
 
-    
     /**
+     *
      * @param ContainerInterface $container
      * @param String $userid
      * @return Array

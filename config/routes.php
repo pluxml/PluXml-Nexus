@@ -10,6 +10,9 @@ use App\Controllers\AuthController;
 use App\Controllers\BackofficeController;
 use App\Middlewares\BackofficeMiddleware;
 use Slim\Interfaces\RouteCollectorProxyInterface;
+use App\Controllers\BackofficePluginsController;
+use App\Controllers\BackofficeThemesController;
+use App\Controllers\BackofficeProfileController;
 
 $app->get('/', HomeController::class . ':show')->setName('homepage');
 
@@ -31,13 +34,16 @@ $app->post('/signup', AuthController::class . ':signup')->setName('signupAction'
 
 $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
     $group->get('', BackofficeController::class . ':show')->setName('backoffice');
-    $group->get('/plugins', PluginsController::class . ':show')->setName('boplugins');
-    $group->get('/plugins/{name}', PluginsController::class . ':showPlugin')->setName('boeditplugin');
-    $group->get('/plugin/add', PluginsController::class . ':showAddPlugin')->setName('boaddplugin');
-    $group->get('/themes', ThemesController::class . ':show')->setName('bothemes');
-    $group->get('/themes/{name}', ThemesController::class . ':showTheme')->setName('boedittheme');
-    $group->get('/theme/add', ThemesController::class . ':showAddTheme')->setName('boaddtheme');
-    $group->get('/profile', ProfilesController::class . ':showEditProfile')->setName('boeditprofile');
+    $group->get('/plugins', BackofficePluginsController::class . ':show')->setName('boplugins');
+    $group->get('/plugins/{name}', BackofficePluginsController::class . ':showPlugin')->setName('boeditplugin');
+    $group->get('/plugin/add', BackofficePluginsController::class . ':showAddPlugin')->setName('boaddplugin');
+    $group->get('/themes', BackofficeThemesController::class . ':show')->setName('bothemes');
+    $group->get('/themes/{name}', BackofficeThemesController::class . ':showTheme')->setName('boedittheme');
+    $group->get('/theme/add', BackofficeThemesController::class . ':showAddTheme')->setName('boaddtheme');
+    $group->get('/profile', BackofficeProfileController::class . ':showEditProfile')->setName('boeditprofile');
+    $group->post('/plugin/save/{name}', BackofficePluginsController::class . ':save')->setName('pluginAction');
+    $group->post('/theme/save', BackofficeThemesController::class . ':save')->setName('themeAction');
+    $group->post('/profile/save', BackofficeProfileController::class . ':save')->setName('profileAction');
 })->add(new BackofficeMiddleware($container));
 
 //$app->get('/test', PagesController::class . ':test')->setName('test');

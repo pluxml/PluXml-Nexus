@@ -1,13 +1,13 @@
 <?php
 /**
- * BackofficeController
+ * BackofficeThemesController
  */
 namespace App\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class BackofficeController extends Controller
+class BackofficeThemesController extends Controller
 {
 
     /**
@@ -19,7 +19,6 @@ class BackofficeController extends Controller
     public function show(Request $request, Response $response)
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
-        $datas['h1'] = 'Backoffice';
 
         return $this->render($response, 'pages/backoffice/backoffice.php', $datas);
     }

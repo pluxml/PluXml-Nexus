@@ -1,4 +1,4 @@
-<h1>Ressources Backoffice</h1>
+<h1><?= $h1 ?></h1>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et leo
 	et ex congue blandit. Sed vel eleifend lorem. Proin laoreet commodo
 	libero non dictum. Vestibulum at bibendum nunc, a ullamcorper turpis.
@@ -25,7 +25,7 @@
 		<div class="panel-content">
 			<img src="/img/favicon/favicon-32x32.png" alt="edit a plugin picto" />
 			<h2 class="no-margin h4">Edit a plugin</h2>
-			<p>Modify an existing plugin.</p>
+			<p>Modify an existing plugin</p>
 			<p>
 				<a href="<?= $routerService->urlFor('boplugins') ?>" class="button blue">Edit</a>
 			</p>
@@ -45,7 +45,7 @@
 		<div class="panel-content">
 			<img src="/img/favicon/favicon-32x32.png" alt="edit a theme picto" />
 			<h2 class="no-margin h4">Edit a themes</h2>
-			<p>Modify an existing theme.</p>
+			<p>Modify an existing theme</p>
 			<p>
 				<a href="<?= $routerService->urlFor('bothemes') ?>" class="button blue">Edit</a>
 			</p>
@@ -55,7 +55,7 @@
 		<div class="panel-content">
 			<img src="/img/favicon/favicon-32x32.png" alt="add a theme picto" />
 			<h2 class="no-margin h4">Add a theme</h2>
-			<p>Modify an existing theme.</p>
+			<p>Add a new theme</p>
 			<p>
 				<a href="<?= $routerService->urlFor('boaddtheme') ?>" class="button blue">Add a theme</a>
 			</p>
@@ -65,7 +65,7 @@
 		<div class="panel-content">
 			<img src="/img/favicon/favicon-32x32.png" alt="edit your profile picto" />
 			<h2 class="no-margin h4">My profile</h2>
-			<p>You can edit your profile.</p>
+			<p>Edit my profile</p>
 			<p>
 				<a href="<?= $routerService->urlFor('boeditprofile') ?>" class="button blue">Edit</a>
 			</p>

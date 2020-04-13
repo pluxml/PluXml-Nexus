@@ -17,8 +17,10 @@ class Controller
     protected $viewService;
 
     protected $messageService;
-    
+
     protected $mailService;
+
+    protected $currentUser;
 
     public function __construct(ContainerInterface $container)
     {
@@ -27,6 +29,7 @@ class Controller
         $this->viewService = $this->container->get('view');
         $this->messageService = $this->container->get('flash');
         $this->mailService = $this->container->get('mail');
+        $this->currentUser = $_SESSION['user'];
     }
 
     /**
