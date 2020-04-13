@@ -5,6 +5,7 @@
 use App\Middlewares\FormOldValuesMiddleware;
 use App\Middlewares\CsrfTokenMiddleware;
 use App\Middlewares\RouterViewMiddleware;
+use App\Middlewares\IsLoggedMiddleware;
 
 /**
  * Middlewares
@@ -15,6 +16,7 @@ use App\Middlewares\RouterViewMiddleware;
  * csrf SLIM 4 CSRF engine added from PHP-DI container
  */
 $app->add(new FormOldValuesMiddleware($container));
+$app->add(new IsLoggedMiddleware($container));
 $app->add(new RouterViewMiddleware($container));
 $app->add(new CsrfTokenMiddleware($container));
 $app->add('csrf');

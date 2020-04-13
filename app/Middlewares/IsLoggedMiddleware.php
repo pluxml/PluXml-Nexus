@@ -1,6 +1,6 @@
 <?php
 /**
- * IsLoggedMiddleware
+ * BackofficeMiddleware
  */
 namespace App\Middlewares;
 
@@ -10,7 +10,7 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Psr\Container\ContainerInterface;
 use App\Facades\AuthFacade;
 
-class BackofficeMiddleware extends Middleware
+class IsLoggedMiddleware extends Middleware
 {
 
     public function __construct(ContainerInterface $container)
@@ -20,11 +20,10 @@ class BackofficeMiddleware extends Middleware
 
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
+        $this->viewService->addAttribute('isLogged', AuthFacade::isLogged());
+        $this->viewService->addAttribute('username', $_SESSION['username']);
+
         $response = $handler->handle($request);
-        if (! AuthFacade::isLogged()) {
-            $this->flashService->addMessage('error', 'Auhtentification needed');
-            return $response->withHeader('Location', $this->routerService->urlFor('auth'))->withStatus(302);
-        }
         return $response;
     }
 }

@@ -19,6 +19,8 @@ class Middleware
 
     protected $viewService;
 
+    protected $isLogged;
+
     public function __construct(ContainerInterface $container)
     {
         $this->csrfService = $container->get('csrf');
