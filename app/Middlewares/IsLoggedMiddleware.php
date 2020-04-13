@@ -21,7 +21,6 @@ class IsLoggedMiddleware extends Middleware
     public function __invoke(Request $request, RequestHandler $handler): Response
     {
         $this->viewService->addAttribute('isLogged', AuthFacade::isLogged());
-        $this->viewService->addAttribute('username', $_SESSION['username']);
 
         $response = $handler->handle($request);
         return $response;

@@ -95,7 +95,7 @@
 								<li><a href="<?= $routerService->urlFor('signup') ?>">Sign up</a></li>
 								<li><a href="<?= $routerService->urlFor('auth') ?>">Log in</a></li>
 							<?php else: ?>
-								<li><?= $username ?></li>
+								<li><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a></li>
 								<li><a href="<?= $routerService->urlFor('logoutAction') ?>">Log out</a></li>
 							<?php endif; ?>
 						</ul>
