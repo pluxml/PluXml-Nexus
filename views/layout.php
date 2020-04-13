@@ -25,6 +25,7 @@
 <meta name="theme-color" content="#ffffff">
 <link href="https://www.pluxml.org/assets/plucss-min.css" rel="stylesheet">
 <link href="https://www.pluxml.org/assets/plx-common-min.css" rel="stylesheet">
+<link href="/css/styles.css" rel="stylesheet">
 </head>
 
 <body>
@@ -61,10 +62,10 @@
 				<div class="col sml-12 med-8">
 					<nav class="nav" role="navigation">
 						<ul class="inline-list">
-							<li><a href="<?= $routerService->urlFor('homepage') ?>">home</a></li>
-							<li><a href="<?= $routerService->urlFor('plugins') ?>">plugins</a></li>
-							<li><a href="<?= $routerService->urlFor('themes') ?>">themes</a></li>
-							<li><a href="<?= $routerService->urlFor('profiles') ?>">profiles</a></li>
+							<li><a href="<?= $routerService->urlFor('homepage') ?>">Home</a></li>
+							<li><a href="<?= $routerService->urlFor('plugins') ?>">Plugins</a></li>
+							<li><a href="<?= $routerService->urlFor('themes') ?>">Themes</a></li>
+							<li><a href="<?= $routerService->urlFor('profiles') ?>">Profiles</a></li>
 						</ul>
 					</nav>
 				</div>

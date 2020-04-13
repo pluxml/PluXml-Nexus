@@ -1,0 +1,28 @@
+/**
+ * Nexus a PluXml ressources sharing
+ * @author Pedro CADETE <pedro@hyperion-web.fr>
+ * @link https://ressources.pluxml.org
+ */
+
+:root {
+	--backheader: #262626;
+	--backsection: #f5f6f6;
+	--backpanel: #fff;
+}
+body {
+	background-color: var(--backsection);
+}
+.header {
+	background-color: var(--backheader);
+}
+.header a {
+	color: #fff;
+}
+.panel {
+	heigh: 100%;
+	padding: 10px;
+}
+.panel-content {
+	padding: 10px;
+	background-color: var(--backpanel);
+}
