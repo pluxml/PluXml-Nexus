@@ -10,7 +10,7 @@ use App\Facades\UsersFacade;
 class NewPluginModel extends Model
 {
 
-    public $name;
+    private $name;
 
     private $description;
 
@@ -34,12 +34,12 @@ class NewPluginModel extends Model
 
         $this->name = $plugin['name'];
         $this->description = $plugin['description'];
-        $this->author = $UserModel->id; 
+        $this->author = $UserModel->id;
         $this->date = date('Y-m-d H:i:s', mktime(date('H'), date('i'), date('s'), date('m'), date('d'), date('Y')));
         $this->versionPlugin = $plugin['versionPlugin'];
         $this->versionPluxml = $plugin['versionPluxml'];
         $this->link = $plugin['link'];
-        $this->file = $plugin['file'];
+        $this->file = DIR_PLUGINS . '/' . $plugin['name'] . '.zip';
     }
 
     /**
@@ -57,7 +57,6 @@ class NewPluginModel extends Model
      */
     public function updatePlugin()
     {
-        //echo "UPDATE plugins SET description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file' WHERE name = '$this->name'";
         return $this->pdoService->insert("UPDATE plugins SET description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file' WHERE name = '$this->name'");
     }
 }

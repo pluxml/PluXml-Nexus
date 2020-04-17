@@ -1,2 +1,5 @@
 /config/settings.php
 /vendor/
+/public/download/tmp/
+/public/download/plugins/
+/public/download/themes/

@@ -55,8 +55,26 @@ class PluginsFacade extends Facade
         return $datas;
     }
 
-    static public function editPlugin(ContainerInterface $container, Array $plugin){
+    /**
+     *
+     * @param ContainerInterface $container
+     * @param array $plugin
+     * @return bool
+     */
+    static public function editPlugin(ContainerInterface $container, Array $plugin)
+    {
         $newPluginModel = new NewPluginModel($container, $plugin);
         return $newPluginModel->updatePlugin();
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param array $plugin
+     * @return bool
+     */
+    static public function savePlugin(ContainerInterface $container, Array $plugin)
+    {
+        $newPluginModel = new NewPluginModel($container, $plugin);
+        return $newPluginModel->saveNewPlugin();
     }
 }

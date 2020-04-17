@@ -33,6 +33,7 @@ $app->post('/auth/login', AuthController::class . ':login')->setName('loginActio
 $app->post('/signup', AuthController::class . ':signup')->setName('signupAction');
 
 $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
+
     $group->get('', BackofficeController::class . ':show')->setName('backoffice');
     $group->get('/plugins', BackofficePluginsController::class . ':show')->setName('boplugins');
     $group->get('/plugins/{name}', BackofficePluginsController::class . ':showPlugin')->setName('boeditplugin');
@@ -41,10 +42,10 @@ $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
     $group->get('/themes/{name}', BackofficeThemesController::class . ':showTheme')->setName('boedittheme');
     $group->get('/theme/add', BackofficeThemesController::class . ':showAddTheme')->setName('boaddtheme');
     $group->get('/profile', BackofficeProfileController::class . ':showEditProfile')->setName('boeditprofile');
-    $group->post('/plugin/save/{name}', BackofficePluginsController::class . ':save')->setName('pluginAction');
+
+    $group->post('/plugin/save', BackofficePluginsController::class . ':save')->setName('pluginSaveAction');
+    $group->post('/plugin/edit/{name}', BackofficePluginsController::class . ':edit')->setName('pluginEditAction');
     $group->post('/theme/save', BackofficeThemesController::class . ':save')->setName('themeAction');
     $group->post('/profile/save', BackofficeProfileController::class . ':save')->setName('profileAction');
-})->add(new BackofficeMiddleware($container));
 
-//$app->get('/test', PagesController::class . ':test')->setName('test');
-//$app->post('/test', PagesController::class . ':testPost');
+})->add(new BackofficeMiddleware($container));
