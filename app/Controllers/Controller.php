@@ -39,9 +39,9 @@ class Controller
      * @param String $namedRoute
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function redirect(Response $response, $namedRoute, $status = 302)
+    public function redirect(Response $response, $namedRoute, $args, $status = 302)
     {
-        return $response->withHeader('Location', $this->routerService->urlFor($namedRoute))
+        return $response->withHeader('Location', $this->routerService->urlFor($namedRoute, $args))
             ->withStatus($status);
     }
 

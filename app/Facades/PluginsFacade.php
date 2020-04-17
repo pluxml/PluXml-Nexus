@@ -57,6 +57,6 @@ class PluginsFacade extends Facade
 
     static public function editPlugin(ContainerInterface $container, Array $plugin){
         $newPluginModel = new NewPluginModel($container, $plugin);
-        return $newPluginModel->saveNewUser();
+        return $newPluginModel->updatePlugin();
     }
 }

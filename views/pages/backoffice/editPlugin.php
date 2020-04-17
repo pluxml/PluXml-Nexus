@@ -15,10 +15,12 @@
 
 <p><a href="#" class="button">Upload new file</a></p>
 
-<form action="<?= $routerService->urlFor('pluginAction') ?><?= '/'.$name ?>" method="post">
+<form action="<?= $routerService->urlFor('pluginAction', ['name' => $name]) ?>" method="post">
 	<input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
 	<input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
-	<div <?php if (isset($flash['description'][0]) or isset($flash['versionPlugin'][0])): ?>style="color:red"<?php endif; ?>>
+	<input type="hidden" name="name" value="<?= $name ?>">
+	<input type="hidden" name="author" value="<?= $_SESSION['user'] ?>">
+	<div <?php if (isset($flash['description'][0]) or isset($flash['description'][0])): ?>style="color:red"<?php endif; ?>>
 		<label for="description">Description*: </label>
 		<input type="description" name="description" id="description" <?php if (isset($formOldValues['description'])): ?>value="<?= $formOldValues['description'] ?>"<?php else: ?>value="<?= $description ?>"<?php endif; ?>>
 		<?php if (isset($flash['description'][0])): ?><p><?= $flash['description'][0] ?></p><?php endif; ?>

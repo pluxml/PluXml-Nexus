@@ -84,12 +84,12 @@ class BackofficePluginsController extends Controller
     public function save(Request $request, Response $response, $args)
     {
         $errors = [];
-        $namedRoute = self::NAMED_ROUTE_BOEDITPLUGIN . $args['name'];
+        $namedRoute = self::NAMED_ROUTE_BOEDITPLUGIN;
         $post = $request->getParsedBody();
 
-        Validator::alnum()->length(1, 249)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG250;
-        Validator::alnum()->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
-        Validator::alnum()->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
+        Validator::length(1, 249)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG250;
+        Validator::length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
+        Validator::length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
         Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
 
         if (empty($errors)) {
@@ -106,7 +106,7 @@ class BackofficePluginsController extends Controller
             }
         }
 
-        return $this->redirect($response, $namedRoute);
+        return $this->redirect($response, $namedRoute, $args);
     }
 }
 ?>
