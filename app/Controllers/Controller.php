@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 class Controller
 {
 
-    protected $container;
+    protected ContainerInterface $container;
 
     protected $routerService;
 
@@ -37,7 +37,9 @@ class Controller
      *
      * @param Response $response
      * @param String $namedRoute
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param array $args
+     * @param int $status
+     * @return Response
      */
     public function redirect(Response $response, $namedRoute, $args = [], $status = 302)
     {
@@ -50,8 +52,8 @@ class Controller
      *
      * @param Response $response
      * @param String $filename
-     * @param Array $datas
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param array $datas
+     * @return Response
      */
     public function render(Response $response, $filename, $datas = [])
     {

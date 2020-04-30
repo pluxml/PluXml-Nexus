@@ -1,7 +1,5 @@
 <?php
-/**
- * PluginsFacade 
- */
+
 namespace App\Facades;
 
 use Psr\Container\ContainerInterface;
@@ -9,6 +7,10 @@ use App\Models\PluginsModel;
 use App\Models\PluginModel;
 use App\Models\NewPluginModel;
 
+/**
+ * Class PluginsFacade
+ * @package App\Facades
+ */
 class PluginsFacade extends Facade
 {
 
@@ -18,7 +20,7 @@ class PluginsFacade extends Facade
      * @param String $username
      * @return string
      */
-    static public function getAllPlugins(ContainerInterface $container, String $username = NULL)
+    static public function getAllPlugins(ContainerInterface $container, string $username = NULL)
     {
         if (isset($username)) {
             $userModel = UsersFacade::searchUser($container, $username);
@@ -40,17 +42,25 @@ class PluginsFacade extends Facade
         return $datas;
     }
 
-    static public function getPlugin(ContainerInterface $container, String $name)
+    /**
+     * @param ContainerInterface $container
+     * @param String $name
+     * @return mixed
+     */
+    static public function getPlugin(ContainerInterface $container, string $name)
     {
+        $datas = [];
         $pluginModel = new PluginModel($container, $name);
 
-        $datas['title'] = "Plugin $pluginModel->name Ressources - PluXml.org";
-        $datas['name'] = $pluginModel->name;
-        $datas['description'] = $pluginModel->description;
-        $datas['versionPlugin'] = $pluginModel->versionPlugin;
-        $datas['versionPluxml'] = $pluginModel->versionPluxml;
-        $datas['link'] = $pluginModel->link;
-        $datas['author'] = Facade::getAuthorUsernameById($container, $pluginModel->author);
+        if (!empty($pluginModel->name)) {
+            $datas['title'] = "Plugin $pluginModel->name Ressources - PluXml.org";
+            $datas['name'] = $pluginModel->name;
+            $datas['description'] = $pluginModel->description;
+            $datas['versionPlugin'] = $pluginModel->versionPlugin;
+            $datas['versionPluxml'] = $pluginModel->versionPluxml;
+            $datas['link'] = $pluginModel->link;
+            $datas['author'] = Facade::getAuthorUsernameById($container, $pluginModel->author);
+        }
 
         return $datas;
     }
@@ -61,7 +71,7 @@ class PluginsFacade extends Facade
      * @param array $plugin
      * @return bool
      */
-    static public function editPlugin(ContainerInterface $container, Array $plugin)
+    static public function editPlugin(ContainerInterface $container, array $plugin)
     {
         $newPluginModel = new NewPluginModel($container, $plugin);
         return $newPluginModel->updatePlugin();
@@ -72,7 +82,7 @@ class PluginsFacade extends Facade
      * @param array $plugin
      * @return bool
      */
-    static public function savePlugin(ContainerInterface $container, Array $plugin)
+    static public function savePlugin(ContainerInterface $container, array $plugin)
     {
         $newPluginModel = new NewPluginModel($container, $plugin);
         return $newPluginModel->saveNewPlugin();
