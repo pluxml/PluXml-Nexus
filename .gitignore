@@ -1,6 +1,6 @@
 /config/settings.php
 /vendor/
-/public/download/tmp/
-/public/download/plugins/
-/public/download/themes/
+/public/datas/tmp/
+/public/datas/plugins/
+/public/datas/themes/
 .idea/

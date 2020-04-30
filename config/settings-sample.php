@@ -7,7 +7,7 @@
 
 const DEBUG = FALSE;
 
-const DIR_DOWNLOAD = '/download';
+const DIR_DOWNLOAD = '/datas';
 const DIR_TMP = DIR_DOWNLOAD . '/tmp';
 const DIR_PLUGINS = DIR_DOWNLOAD . '/plugins';
 const DIR_THEMES = DIR_DOWNLOAD . '/themes';
