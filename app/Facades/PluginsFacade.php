@@ -34,9 +34,10 @@ class PluginsFacade extends Facade
             $datas['plugins'][$key]['name'] = $value['name'];
             $datas['plugins'][$key]['description'] = $value['description'];
             $datas['plugins'][$key]['author'] = $value['author'];
-            $datas['plugins'][$key]['versionPlugin'] = $value['versionPlugin'];
-            $datas['plugins'][$key]['versionPluxml'] = $value['versionPluxml'];
-            $datas['plugins'][$key]['link'] = $value['link'];
+            $datas['plugins'][$key]['versionPlugin'] = $value['versionplugin'];
+            $datas['plugins'][$key]['versionPluxml'] = $value['versionpluxml'];
+            $datas['plugins'][$key]['website'] = $value['link'];
+            $datas['plugins'][$key]['link'] = $value['file'];
         }
 
         return $datas;

@@ -1,11 +1,13 @@
 <?php
-/**
- * PluginModel
- */
+
 namespace App\Models;
 
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class PluginsModel
+ * @package App\Models
+ */
 class PluginsModel extends Model
 {
 

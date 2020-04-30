@@ -1,7 +1,4 @@
 <?php
-/**
- * BackofficePluginsController
- */
 
 namespace App\Controllers;
 
@@ -10,6 +7,10 @@ use Psr\Http\Message\ResponseInterface as Response;
 use App\Facades\PluginsFacade;
 use Respect\Validation\Validator;
 
+/**
+ * Class BackofficePluginsController
+ * @package App\Controllers
+ */
 class BackofficePluginsController extends Controller
 {
 
@@ -53,6 +54,7 @@ class BackofficePluginsController extends Controller
      *
      * @param Request $request
      * @param Response $response
+     * @param $args
      * @return Response
      */
     public function showPlugin(Request $request, Response $response, $args)
@@ -60,7 +62,7 @@ class BackofficePluginsController extends Controller
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h1'] = 'Backoffice';
         $datas['h2'] = 'Edit plugin ' . $args['name'];
-        $datas += PluginsFacade::getPlugin($this->container, $args['name']);
+        $datas = array_merge($datas, PluginsFacade::getPlugin($this->container, $args['name']));
 
         return $this->render($response, 'pages/backoffice/editPlugin.php', $datas);
     }
@@ -149,11 +151,15 @@ class BackofficePluginsController extends Controller
         if (empty($errors) && empty(PluginsFacade::getPlugin($this->container, $post['name']))) {
             if (PluginsFacade::savePlugin($this->container, $post)) {
                 if (!file_exists($dirPlugins . DIRECTORY_SEPARATOR . $filename)) {
-                    rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);
-                    $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
-                    $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
-                }
-                else {
+                    $result = rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);
+                    if ($result) {
+                        $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
+                        $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
+                    }
+                    else {
+                        $techError = true;
+                    }
+                } else {
                     $techError = true;
                 }
             } else {
