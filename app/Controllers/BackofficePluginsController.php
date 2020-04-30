@@ -129,7 +129,6 @@ class BackofficePluginsController extends Controller
         $uploadedFile = $uploadedFiles['file'];
         if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
             $filename = PluginsFacade::moveUploadedFile($_SERVER['DOCUMENT_ROOT'] . DIR_TMP, $uploadedFiles['file']);
-            //TODO rename uploaded file by $post['name']
         }
 
         Validator::notEmpty()->alnum()
@@ -147,6 +146,8 @@ class BackofficePluginsController extends Controller
         if (empty($errors)) {
             // TODO verify if plugin already exist
             if (PluginsFacade::savePlugin($this->container, $post)) {
+                //TODO move tmp file to plugins folder
+                //TODO rename uploaded file by $post['name']
                 $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
                 $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
             } else {
