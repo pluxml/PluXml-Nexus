@@ -1,7 +1,5 @@
 <?php
-/**
- * UsersFacade 
- */
+
 namespace App\Facades;
 
 use Psr\Container\ContainerInterface;
@@ -11,13 +9,17 @@ use App\Models\PluginsModel;
 use App\Models\PluginModel;
 use App\Models\NewUserModel;
 
+/**
+ * Class UsersFacade
+ * @package App\Facades
+ */
 class UsersFacade
 {
 
     /**
      *
      * @param ContainerInterface $container
-     * @return String $datas
+     * @return string $datas
      */
     static public function getAllProfiles(ContainerInterface $container)
     {
@@ -32,28 +34,32 @@ class UsersFacade
     /**
      *
      * @param ContainerInterface $container
-     * @param String $username
+     * @param string $username
+     * @param bool $withPlugins add user's plugins name to the view datas
      * @return String $datas
      */
-    static public function getProfile(ContainerInterface $container, String $username)
+    static public function getProfile(ContainerInterface $container, string $username, bool $withPlugins = true)
     {
         $userModel = self::searchUser($container, $username);
 
         $datas['title'] = "Profile $userModel->username Ressources - PluXml.org";
         $datas['username'] = $userModel->username;
+        $datas['email'] = $userModel->email;
         $datas['website'] = $userModel->website;
 
-        $datas['plugins'] = self::getPluginsByProfile($container, $userModel->id);
+        if ($withPlugins) {
+            $datas['plugins'] = self::getPluginsByProfile($container, $userModel->id);
+        }
         return $datas;
     }
 
     /**
      *
      * @param ContainerInterface $container
-     * @param String $username
-     * @return \App\Models\UserModel
+     * @param string $username
+     * @return UserModel
      */
-    static public function searchUser(ContainerInterface $container, String $username)
+    static public function searchUser(ContainerInterface $container, string $username)
     {
         $userModel = NULL;
         $userModels = new UsersModel($container);
@@ -66,27 +72,39 @@ class UsersFacade
             }
         $userId = $userModels->users[$key]['id'];
 
-        if (! empty($userId)) {
+        if (!empty($userId)) {
             $userModel = new UserModel($container, $userId);
         }
 
         return $userModel;
     }
 
-    static public function addUser(ContainerInterface $container, Array $user)
+    /**
+     * @param ContainerInterface $container
+     * @param array $user
+     * @return bool
+     */
+    static public function addUser(ContainerInterface $container, array $user)
     {
         $newUserModel = new NewUserModel($container, $user);
-        return $newUserModel->saveNewUser($user);
+        return $newUserModel->saveNewUser();
+    }
+
+    static public function editUser(ContainerInterface $container, array $user)
+    {
+        $newUserModel = new NewUserModel($container, $user);
+        return $newUserModel->updateUser();
     }
 
     /**
      *
      * @param ContainerInterface $container
-     * @param String $userid
-     * @return Array
+     * @param string $userid
+     * @return array
      */
-    private function getPluginsByProfile(ContainerInterface $container, String $userid)
+    static private function getPluginsByProfile(ContainerInterface $container, string $userid)
     {
+        $plugins = [];
         $pluginsModel = new PluginsModel($container, $userid);
         foreach ($pluginsModel->plugins as $plugin) {
             $pluginModel = new PluginModel($container, $plugin['name']);

@@ -44,7 +44,7 @@ class NewPluginModel extends Model
 
     /**
      *
-     * @return Bool
+     * @return bool
      */
     public function saveNewPlugin()
     {
@@ -53,7 +53,7 @@ class NewPluginModel extends Model
 
     /**
      *
-     * @return Bool
+     * @return bool
      */
     public function updatePlugin()
     {

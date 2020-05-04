@@ -2,6 +2,7 @@
 /**
  * NewUserModel
  */
+
 namespace App\Models;
 
 use Psr\Container\ContainerInterface;
@@ -23,7 +24,7 @@ class NewUserModel extends Model
 
     private $tokenExpire;
 
-    public function __construct(ContainerInterface $container, Array $user)
+    public function __construct(ContainerInterface $container, array $user)
     {
         parent::__construct($container);
 
@@ -39,16 +40,21 @@ class NewUserModel extends Model
 
     /**
      *
-     * @return Bool
+     * @return bool
      */
     public function saveNewUser()
     {
         return $this->pdoService->insert("INSERT INTO users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '', token = '$this->token', tokenexpire = '$this->tokenExpire'");
     }
 
+    public function updateUser()
+    {
+        return $this->pdoService->insert("UPDATE users SET email = '$this->email', website = '$this->website' WHERE username = '$this->username'");
+    }
+
     /**
      *
-     * @return Array keys are 'token' and 'expire'
+     * @return array keys are 'token' and 'expire'
      */
     private function generateToken()
     {

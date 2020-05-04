@@ -1,12 +1,14 @@
 <?php
-/**
- * Controller
- */
+
 namespace App\Controllers;
 
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 
+/**
+ * Class Controller
+ * @package App\Controllers
+ */
 class Controller
 {
 
@@ -21,6 +23,14 @@ class Controller
     protected $mailService;
 
     protected $currentUser;
+
+    protected const NAMED_ROUTE_BACKOFFICE = 'backoffice';
+
+    protected const MSG_VALID_EMAIL = 'Invalid email address';
+
+    protected const MSG_VALID_URL = 'Invalid url';
+
+    protected const MSG_ERROR_TECHNICAL = 'Technical error';
 
     public function __construct(ContainerInterface $container)
     {

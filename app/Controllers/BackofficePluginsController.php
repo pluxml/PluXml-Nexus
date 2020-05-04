@@ -14,8 +14,6 @@ use Respect\Validation\Validator;
 class BackofficePluginsController extends Controller
 {
 
-    private const NAMED_ROUTE_BACKOFFICE = 'backoffice';
-
     private const NAMED_ROUTE_BOEDITPLUGIN = 'boeditplugin';
 
     private const NAMED_ROUTE_SAVEPLUGIN = 'boaddplugin';
@@ -155,8 +153,7 @@ class BackofficePluginsController extends Controller
                     if ($result) {
                         $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
                         $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
-                    }
-                    else {
+                    } else {
                         $techError = true;
                     }
                 } else {

@@ -1,7 +1,5 @@
 <?php
-/**
- * AuthController
- */
+
 namespace App\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -10,6 +8,10 @@ use App\Facades\AuthFacade;
 use Respect\Validation\Validator;
 use App\Facades\UsersFacade;
 
+/**
+ * Class AuthController
+ * @package App\Controllers
+ */
 class AuthController extends Controller
 {
 
@@ -29,8 +31,6 @@ class AuthController extends Controller
 
     private const MSG_ERROR_LOGIN = 'Wrong username or password';
 
-    private const MSG_ERROR_TECHNICAL = 'Signup technical error';
-
     private const MSG_ERROR_SIGNUP = 'Signup error, please see below';
 
     private const MSG_ERROR_CONFIRMEMAIL = 'Email confirmation failed';
@@ -47,15 +47,11 @@ class AuthController extends Controller
 
     private const MSG_VALID_PASSWORDCONFIRM = 'Password does not match';
 
-    private const MSG_VALID_EMAIL = 'Invalid email address';
-
-    private const MSG_VALID_URL = 'Invalid url';
-
     /**
      *
      * @param Request $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function showAuth(Request $request, Response $response)
     {
@@ -72,8 +68,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @param Array $args
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function showSignup(Request $request, Response $response)
     {
@@ -90,8 +85,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @param Array $args
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function confirmEmail(Request $request, Response $response)
     {
@@ -112,7 +106,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function login(Request $request, Response $response)
     {
@@ -142,7 +136,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function logout(Request $request, Response $response)
     {
@@ -155,7 +149,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function signup(Request $request, Response $response)
     {

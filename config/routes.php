@@ -45,7 +45,9 @@ $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
 
     $group->post('/plugin/save', BackofficePluginsController::class . ':save')->setName('pluginSaveAction');
     $group->post('/plugin/edit/{name}', BackofficePluginsController::class . ':edit')->setName('pluginEditAction');
-    $group->post('/theme/save', BackofficeThemesController::class . ':save')->setName('themeAction');
-    $group->post('/profile/save', BackofficeProfileController::class . ':save')->setName('profileAction');
+    $group->post('/theme/save', BackofficeThemesController::class . ':save')->setName('themeSaveAction');
+    $group->post('/theme/edit/{name}', BackofficeThemesController::class . ':edit')->setName('themeEditAction');
+    $group->post('/profile/edit', BackofficeProfileController::class . ':edit')->setName('profileSaveAction');
+    $group->post('/profile/changePasword', BackofficeProfileController::class . ':save')->setName('profilePasswordAction');
 
 })->add(new BackofficeMiddleware($container));
