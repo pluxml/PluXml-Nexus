@@ -16,14 +16,14 @@ class HomeController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Response
      */
     public function show(Request $request, Response $response)
     {
         $pluginModel = new PluginsModel($this->container);
 
         $datas['title'] = 'Ressources - PluXml.org';
-        $datas['plugins'] = $pluginModel->plugins;
+        $datas['h1'] = 'Ressources';
 
         // View call
         return $this->render($response, 'pages/home.php', $datas);

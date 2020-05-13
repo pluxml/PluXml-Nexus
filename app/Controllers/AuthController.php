@@ -15,19 +15,13 @@ use App\Facades\UsersFacade;
 class AuthController extends Controller
 {
 
-    private const NAMED_ROUTE_HOME = 'homepage';
-
     private const NAMED_ROUTE_AUTH = 'auth';
 
     private const NAMED_ROUTE_SIGNUP = 'signup';
 
-    private const NAMED_ROUTE_BACKOFFICE = 'backoffice';
-
     private const PAGE_AUTH = 'pages/backoffice/auth.php';
 
     private const PAGE_SIGNUP = 'pages/backoffice/signup.php';
-
-    private const PAGE_CONFIRMEMAIL = 'pages/backoffice/confirmEmail.php';
 
     private const MSG_ERROR_LOGIN = 'Wrong username or password';
 

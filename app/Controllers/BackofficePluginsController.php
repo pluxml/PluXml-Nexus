@@ -24,13 +24,11 @@ class BackofficePluginsController extends Controller
 
     private const MSG_VALID_TOLONG100 = 'To long (100 characters max)';
 
-    private const MSG_VALID_URL = 'Invalid url';
-
     private const MSG_VALID_FILE = 'Invalid file (extension must be zip and size inferior to 10MB';
 
     private const MSG_SUCCESS_EDITPLUGIN = 'Plugin saved with success';
 
-    private const MSG_ERROR_TECHNICAL = 'Technical error or plugin name already exist';
+    private const MSG_ERROR_TECHNICAL_PLUGINS = 'Technical error or plugin name already exist';
 
     /**
      *
@@ -142,7 +140,7 @@ class BackofficePluginsController extends Controller
                 ->size(NULL, '10MB')
                 ->validate($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename) || $errors['file'] = self::MSG_VALID_FILE;
         } else {
-            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
+            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL_PLUGINS);
         }
 
         // Any validator error and plugin does not exist
@@ -167,7 +165,7 @@ class BackofficePluginsController extends Controller
         }
 
         if ($techError) {
-            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
+            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL_PLUGINS);
             foreach ($errors as $key => $message) {
                 $this->messageService->addMessage($key, $message);
             }

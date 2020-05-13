@@ -24,6 +24,8 @@ class Controller
 
     protected $currentUser;
 
+    protected const NAMED_ROUTE_HOME = 'homepage';
+
     protected const NAMED_ROUTE_BACKOFFICE = 'backoffice';
 
     protected const MSG_VALID_EMAIL = 'Invalid email address';
