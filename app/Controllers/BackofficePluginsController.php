@@ -140,11 +140,11 @@ class BackofficePluginsController extends Controller
                 ->size(NULL, '10MB')
                 ->validate($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename) || $errors['file'] = self::MSG_VALID_FILE;
         } else {
-            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL_PLUGINS);
+            $techError = true;
         }
 
         // Any validator error and plugin does not exist
-        if (empty($errors) && empty(PluginsFacade::getPlugin($this->container, $post['name']))) {
+        if (empty($errors) && !$techError && empty(PluginsFacade::getPlugin($this->container, $post['name']))) {
             if (PluginsFacade::savePlugin($this->container, $post)) {
                 if (!file_exists($dirPlugins . DIRECTORY_SEPARATOR . $filename)) {
                     $result = rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);

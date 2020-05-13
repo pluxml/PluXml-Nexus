@@ -39,7 +39,7 @@ class NewPluginModel extends Model
         $this->versionPlugin = $plugin['versionPlugin'];
         $this->versionPluxml = $plugin['versionPluxml'];
         $this->link = $plugin['link'];
-        $this->file = DIR_PLUGINS . '/' . $plugin['name'] . '.zip';
+        $this->file = DIR_PLUGINS . DIRECTORY_SEPARATOR . $plugin['name'] . '.zip';
     }
 
     /**
