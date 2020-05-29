@@ -90,7 +90,11 @@ class BackofficePluginsController extends Controller
         $namedRoute = self::NAMED_ROUTE_BOEDITPLUGIN;
         $post = $request->getParsedBody();
 
-        $errors = self::pluginValidator($post);
+        if (!empty($post['file'])) {
+            $errors = self::pluginValidator($request, false, true);
+        } else {
+            $errors = self::pluginValidator($request);
+        }
 
         if (empty($errors)) {
             if (PluginsFacade::editPlugin($this->container, $post)) {
@@ -117,78 +121,86 @@ class BackofficePluginsController extends Controller
      */
     public function save(Request $request, Response $response)
     {
-        $techError = false;
-        $filename = '';
-        $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
+        $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
         $dirPlugins = $_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS;
-        $namedRoute = self::NAMED_ROUTE_SAVEPLUGIN;
+        $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
+
         $post = $request->getParsedBody();
-        $uploadedFiles = $request->getUploadedFiles();
+        $errors = self::pluginValidator($request, true);
 
-        $errors = self::pluginValidator($post);
-        Validator::notEmpty()->alnum()
-            ->noWhitespace()
-            ->length(1, 99)
-            ->validate($post['name']) || $errors['name'] = self::MSG_VALID_NAME;
-
-        // Uploaded file move, rename and validation
-        $uploadedFile = $uploadedFiles['file'];
-        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-            $filename = $post['name'] . '.zip';
-            $uploadedFile->moveTo($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename);
-            Validator::notEmpty()->extension('zip')
-                ->size(NULL, '10MB')
-                ->validate($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename) || $errors['file'] = self::MSG_VALID_FILE;
-        } else {
-            $techError = true;
-        }
-
-        // Any validator error and plugin does not exist
-        if (empty($errors) && !$techError && empty(PluginsFacade::getPlugin($this->container, $post['name']))) {
+        // Validator error and plugin does not exist
+        if (empty($errors) && empty(PluginsFacade::getPlugin($this->container, $post['name']))) {
             if (PluginsFacade::savePlugin($this->container, $post)) {
+                $filename = $post['name'] . '.zip';
                 if (!file_exists($dirPlugins . DIRECTORY_SEPARATOR . $filename)) {
                     $result = rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);
                     if ($result) {
                         $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
-                        $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
                     } else {
-                        $techError = true;
+                        $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;
                     }
                 } else {
-                    $techError = true;
+                    $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;
                 }
             } else {
-                $techError = true;
+                $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;
             }
         } else {
-            $techError = true;
+            $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;
         }
 
-        if ($techError) {
-            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL_PLUGINS);
+        if (!empty($errors)) {
             foreach ($errors as $key => $message) {
                 $this->messageService->addMessage($key, $message);
             }
+            $namedRoute = self::NAMED_ROUTE_SAVEPLUGIN;
         }
 
         return $this->redirect($response, $namedRoute);
     }
 
     /**
-     * @param array $post
+     * Validate request body for a plugin save or edit
+     *
+     * @param Request $request
+     * @param bool $newPlugin
+     * @param bool $newFile
      * @return array
      */
-    private function pluginValidator(array $post)
+    private function pluginValidator(Request $request, bool $newPlugin=false, bool $newFile=false)
     {
         $errors = [];
+        $post = $request->getParsedBody();
+        $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
+
+        $uploadedFiles = $request->getUploadedFiles();
 
         Validator::alnum(' ')->length(1, 249)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG250;
         Validator::alnum('.', ',', '-', '_')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
         Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
         Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
 
+        if ($newPlugin) {
+            Validator::notEmpty()->alnum()
+                ->noWhitespace()
+                ->length(1, 99)
+                ->validate($post['name']) || $errors['name'] = self::MSG_VALID_NAME;
+        }
+
+        if ($newPlugin || $newFile) {
+            // Uploaded file move, rename and validation
+            $uploadedFile = $uploadedFiles['file'];
+            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                $filename = $post['name'] . '.zip';
+                $uploadedFile->moveTo($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename);
+                Validator::notEmpty()->extension('zip')
+                    ->size(NULL, '10MB')
+                    ->validate($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename) || $errors['file'] = self::MSG_VALID_FILE;
+            } else {
+                $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;
+            }
+        }
+
         return $errors;
     }
 }
-
-?>

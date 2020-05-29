@@ -16,8 +16,6 @@
     </div>
 <?php endif; ?>
 
-<p><a href="#" class="button">Upload new file</a></p>
-
 <form action="<?= $routerService->urlFor('pluginEditAction', ['name' => $name]) ?>" method="post">
     <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
     <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
@@ -51,6 +49,11 @@
                <?php if (isset($formOldValues['link'])): ?>value="<?= $formOldValues['link'] ?>"
                <?php else: ?>value="<?= $link ?>"<?php endif; ?>>
         <?php if (isset($flash['link'][0])): ?><p><?= $flash['link'][0] ?></p><?php endif; ?>
+    </div>
+    <div <?php if (isset($flash['file'][0])): ?>style="color:red"<?php endif; ?>>
+        <label for="file">File: </label>
+        <input type="file" name="file" id="file">
+        <?php if (isset($flash['file'][0])): ?><p><?= $flash['file'][0] ?></p><?php endif; ?>
     </div>
     <div>
         <p><input type="submit" class="blue" value="Save">&nbsp;<a href="#" class="button red">Delete</a></p>
