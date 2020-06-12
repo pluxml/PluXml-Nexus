@@ -12,6 +12,8 @@ const DIR_TMP = DIR_DOWNLOAD . '/tmp';
 const DIR_PLUGINS = DIR_DOWNLOAD . '/plugins';
 const DIR_THEMES = DIR_DOWNLOAD . '/themes';
 
+const PLUGINS_MAX_SIZE = '10MB';
+
 const DB_HOST = 'localhost';
 const DB_DBNAME = '';
 const DB_CHARSET = 'utf8';

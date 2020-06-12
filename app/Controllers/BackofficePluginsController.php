@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Facades\PluginsFacade;
@@ -84,13 +85,14 @@ class BackofficePluginsController extends Controller
      * @param Response $response
      * @param array $args
      * @return Response
+     * @throws Exception
      */
     public function edit(Request $request, Response $response, $args)
     {
         $namedRoute = self::NAMED_ROUTE_BOEDITPLUGIN;
         $post = $request->getParsedBody();
 
-        if (!empty($post['file'])) {
+        if (!empty($request->getUploadedFiles())) {
             $errors = self::pluginValidator($request, false, true);
         } else {
             $errors = self::pluginValidator($request);
@@ -118,6 +120,7 @@ class BackofficePluginsController extends Controller
      * @param Request $request
      * @param Response $response
      * @return Response
+     * @throws Exception
      */
     public function save(Request $request, Response $response)
     {
@@ -166,17 +169,20 @@ class BackofficePluginsController extends Controller
      * @param bool $newPlugin
      * @param bool $newFile
      * @return array
+     * @throws Exception
      */
     private function pluginValidator(Request $request, bool $newPlugin=false, bool $newFile=false)
     {
         $errors = [];
         $post = $request->getParsedBody();
         $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
-
         $uploadedFiles = $request->getUploadedFiles();
+        if (empty($uploadedFiles['file'])) {
+            throw new Exception('No file has been send');
+        }
 
         Validator::alnum(' ')->length(1, 249)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG250;
-        Validator::alnum('.', ',', '-', '_')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
+        Validator::alnum('. , - _')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
         Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
         Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
 
@@ -186,7 +192,6 @@ class BackofficePluginsController extends Controller
                 ->length(1, 99)
                 ->validate($post['name']) || $errors['name'] = self::MSG_VALID_NAME;
         }
-
         if ($newPlugin || $newFile) {
             // Uploaded file move, rename and validation
             $uploadedFile = $uploadedFiles['file'];
@@ -194,7 +199,7 @@ class BackofficePluginsController extends Controller
                 $filename = $post['name'] . '.zip';
                 $uploadedFile->moveTo($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename);
                 Validator::notEmpty()->extension('zip')
-                    ->size(NULL, '10MB')
+                    ->size(NULL, PLUGINS_MAX_SIZE)
                     ->validate($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename) || $errors['file'] = self::MSG_VALID_FILE;
             } else {
                 $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;

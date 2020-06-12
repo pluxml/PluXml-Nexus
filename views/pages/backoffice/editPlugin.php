@@ -16,7 +16,7 @@
     </div>
 <?php endif; ?>
 
-<form action="<?= $routerService->urlFor('pluginEditAction', ['name' => $name]) ?>" method="post">
+<form action="<?= $routerService->urlFor('pluginEditAction', ['name' => $name]) ?>" method="post" enctype="multipart/form-data">
     <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
     <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
     <input type="hidden" name="name" value="<?= $name ?>">
