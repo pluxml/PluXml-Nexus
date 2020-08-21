@@ -1,9 +1,8 @@
 <h1><?= $h1 ?></h1>
-<p>
-    <a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;
-    Plugins
-</p>
+<p><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;Plugins</p>
 <h2><?= $h2 ?></h2>
+
+<p><a href="<?= $routerService->urlFor('boaddplugin') ?>" class="button blue">Add a plugin</a></p>
 
 <div class="scrollable-table">
     <? if (!empty($plugins)): ?>
