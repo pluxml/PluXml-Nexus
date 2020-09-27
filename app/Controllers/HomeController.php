@@ -23,7 +23,7 @@ class HomeController extends Controller
         $pluginModel = new PluginsModel($this->container);
 
         $datas['title'] = 'Ressources - PluXml.org';
-        $datas['h1'] = 'Ressources';
+        $datas['activeTab'] = 1;
 
         // View call
         return $this->render($response, 'pages/home.php', $datas);

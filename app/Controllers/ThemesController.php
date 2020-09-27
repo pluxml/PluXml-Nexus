@@ -19,7 +19,8 @@ class ThemesController extends Controller
      */
     public function show(Request $request, Response $response)
     {
-        $datas = ThemesFacade::getAllThemes($this->container);
+        $datas['activeTab'] = 2;
+        $datas['themes'] = ThemesFacade::getAllThemes($this->container);
         return $this->render($response, 'pages/themes.php', $datas);
     }
 

@@ -17,15 +17,15 @@ class ThemesFacade extends Facade
 
         $datas['title'] = 'Themes Ressources - PluXml.org';
         foreach ($themesModel->themes as $key => $value) {
-            $datas['themes'][$key]['name'] = $value['name'];
-            $datas['themes'][$key]['description'] = $value['description'];
-            $datas['themes'][$key]['author'] = $value['author'];
-            $datas['themes'][$key]['versionTheme'] = $value['versionTheme'];
-            $datas['themes'][$key]['versionPluxml'] = $value['versionPluxml'];
-            $datas['themes'][$key]['link'] = $value['link'];
+            $themes[$key]['name'] = $value['name'];
+            $themes[$key]['description'] = $value['description'];
+            $themes[$key]['author'] = $value['author'];
+            $themes[$key]['versionTheme'] = $value['versionTheme'];
+            $themes[$key]['versionPluxml'] = $value['versionPluxml'];
+            $themes[$key]['link'] = $value['link'];
         }
 
-        return $datas;
+        return $themes;
     }
 
     static public function getTheme(ContainerInterface $container, String $name)

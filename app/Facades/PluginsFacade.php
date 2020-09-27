@@ -29,18 +29,17 @@ class PluginsFacade extends Facade
             $pluginsModel = new PluginsModel($container);
         }
 
-        $datas['title'] = 'Plugins Ressources - PluXml.org';
         foreach ($pluginsModel->plugins as $key => $value) {
-            $datas['plugins'][$key]['name'] = $value['name'];
-            $datas['plugins'][$key]['description'] = $value['description'];
-            $datas['plugins'][$key]['author'] = $value['author'];
-            $datas['plugins'][$key]['versionPlugin'] = $value['versionplugin'];
-            $datas['plugins'][$key]['versionPluxml'] = $value['versionpluxml'];
-            $datas['plugins'][$key]['website'] = $value['link'];
-            $datas['plugins'][$key]['link'] = $value['file'];
+            $plugins[$key]['name'] = $value['name'];
+            $plugins[$key]['description'] = $value['description'];
+            $plugins[$key]['author'] = $value['author'];
+            $plugins[$key]['versionPlugin'] = $value['versionplugin'];
+            $plugins[$key]['versionPluxml'] = $value['versionpluxml'];
+            $plugins[$key]['website'] = $value['link'];
+            $plugins[$key]['link'] = $value['file'];
         }
 
-        return $datas;
+        return $plugins;
     }
 
     /**

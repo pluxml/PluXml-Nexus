@@ -82,9 +82,7 @@
             <div class="col sml-12 med-8">
                 <nav class="nav" role="navigation">
                     <ul class="inline-list">
-                        <li><a href="<?= $routerService->urlFor('homepage') ?>">Home</a></li>
-                        <li><a href="<?= $routerService->urlFor('plugins') ?>">Plugins</a></li>
-                        <li><a href="<?= $routerService->urlFor('themes') ?>">Themes</a></li>
+                        <li><a href="<?= $routerService->urlFor('homepage') ?>"><h1>Ressources</h1></a></li>
                         <li><a href="<?= $routerService->urlFor('profiles') ?>">Profiles</a></li>
                     </ul>
                 </nav>
@@ -112,6 +110,10 @@
         <?= $content ?>
     </div>
 </main>
+
+<footer>
+    PluXml.org - Blog ou Cms à l'Xml !
+</footer>
 
 </body>
 

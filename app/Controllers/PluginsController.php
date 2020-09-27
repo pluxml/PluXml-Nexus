@@ -19,7 +19,8 @@ class PluginsController extends Controller
      */
     public function show(Request $request, Response $response)
     {
-        $datas = PluginsFacade::getAllPlugins($this->container);
+        $datas['activeTab'] = 3;
+        $datas['plugins'] = PluginsFacade::getAllPlugins($this->container);
         return $this->render($response, 'pages/plugins.php', $datas);
     }
 

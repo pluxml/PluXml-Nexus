@@ -11,7 +11,7 @@
 <?php endif; ?>
 
 <div class="grid">
-    <div class="col sml-6 med-3 panel text-center">
+    <div class="col sml-12 med-3 panel text-center">
         <a href="<?= $routerService->urlFor('boplugins') ?>">
             <div class="panel-content">
                 <img src="/img/favicon/favicon-32x32.png" alt="add or edit a plugin picto"/>
@@ -20,7 +20,7 @@
             </div>
         </a>
     </div>
-    <div class="col sml-6 med-3 panel text-center">
+    <div class="col sml-12 med-3 panel text-center">
         <a href="<?= $routerService->urlFor('bothemes') ?>">
             <div class="panel-content">
                 <img src="/img/favicon/favicon-32x32.png" alt="add or edit a theme picto"/>
@@ -29,7 +29,7 @@
             </div>
         </a>
     </div>
-    <div class="col sml-6 med-3 panel text-center">
+    <div class="col sml-12 med-3 panel text-center">
         <a href="<?= $routerService->urlFor('boeditprofile') ?>">
             <div class="panel-content">
                 <img src="/img/favicon/favicon-32x32.png" alt="edit your profile picto"/>

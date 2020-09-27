@@ -1,5 +1,13 @@
-<h1>Plugins</h1>
+<div class="content">
+    <?php require_once 'tags/tabs.php' ?>
 
-<? foreach ($plugins as $key => $plugin): ?>
-    <p><a href="<?= $routerService->urlFor('plugin', ['name' => $plugin['name']]) ?>"><?= $plugin['name'] ?></a></p>
-<?php endforeach; ?>
+    <div class="page grid">
+        <? foreach ($plugins as $key => $plugin): ?>
+            <div class="col sml-12 med-3 panel text-center">
+                <a href="<?= $routerService->urlFor('plugin', ['name' => $plugin['name']]) ?>">
+                    <div class="panel-content"><?= $plugin['name'] ?></div>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
