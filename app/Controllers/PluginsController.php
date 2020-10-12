@@ -33,7 +33,8 @@ class PluginsController extends Controller
      */
     public function showPlugin(Request $request, Response $response, $args)
     {
-        $datas = PluginsFacade::getPlugin($this->container, $args['name']);
+        $datas['activeTab'] = 3;
+        $datas['plugin'] = PluginsFacade::getPlugin($this->container, $args['name']);
         return $this->render($response, 'pages/plugin.php', $datas);
     }
 }

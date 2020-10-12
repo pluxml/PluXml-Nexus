@@ -5,13 +5,13 @@
         </div>
     </div>
     <div class="col sml-12 med-4">
-        <div class="tab <? if ($activeTab == 2): ?>activeTab<? endif; ?>">
-            <a href="<?= $routerService->urlFor('themes') ?>">Themes</a>
+        <div class="tab <? if ($activeTab == 3): ?>activeTab<? endif; ?>">
+            <a href="<?= $routerService->urlFor('plugins') ?>">Plugins</a>
         </div>
     </div>
     <div class="col sml-12 med-4">
-        <div class="tab <? if ($activeTab == 3): ?>activeTab<? endif; ?>">
-            <a href="<?= $routerService->urlFor('plugins') ?>">Plugins</a>
+        <div class="tab <? if ($activeTab == 2): ?>activeTab<? endif; ?>">
+            <a href="<?= $routerService->urlFor('themes') ?>">Themes</a>
         </div>
     </div>
 </div>

@@ -43,6 +43,7 @@
     <link href="https://www.pluxml.org/assets/plx-common-min.css"
           rel="stylesheet">
     <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/fontello/css/fontello.css" rel="stylesheet">
 </head>
 
 <body>

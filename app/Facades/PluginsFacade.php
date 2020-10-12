@@ -17,7 +17,7 @@ class PluginsFacade extends Facade
     /**
      *
      * @param ContainerInterface $container
-     * @param String $username
+     * @param string|null $username
      * @return string
      */
     static public function getAllPlugins(ContainerInterface $container, string $username = NULL)
@@ -32,11 +32,11 @@ class PluginsFacade extends Facade
         foreach ($pluginsModel->plugins as $key => $value) {
             $plugins[$key]['name'] = $value['name'];
             $plugins[$key]['description'] = $value['description'];
-            $plugins[$key]['author'] = $value['author'];
+            $plugins[$key]['author'] = Facade::getAuthorUsernameById($container, $value['author']);
             $plugins[$key]['versionPlugin'] = $value['versionplugin'];
             $plugins[$key]['versionPluxml'] = $value['versionpluxml'];
-            $plugins[$key]['website'] = $value['link'];
-            $plugins[$key]['link'] = $value['file'];
+            $plugins[$key]['link'] = $value['link'];
+            $plugins[$key]['file'] = $value['file'];
         }
 
         return $plugins;
@@ -59,6 +59,7 @@ class PluginsFacade extends Facade
             $datas['versionPlugin'] = $pluginModel->versionPlugin;
             $datas['versionPluxml'] = $pluginModel->versionPluxml;
             $datas['link'] = $pluginModel->link;
+            $datas['file'] = $pluginModel->file;
             $datas['author'] = Facade::getAuthorUsernameById($container, $pluginModel->author);
         }
 

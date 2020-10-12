@@ -24,6 +24,7 @@ class HomeController extends Controller
 
         $datas['title'] = 'Ressources - PluXml.org';
         $datas['activeTab'] = 1;
+        $datas['pluxmlCurrentVersion'] = file_get_contents('https://www.pluxml.org/download/latest-version.txt');
 
         // View call
         return $this->render($response, 'pages/home.php', $datas);

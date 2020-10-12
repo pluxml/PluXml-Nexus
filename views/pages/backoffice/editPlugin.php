@@ -1,10 +1,10 @@
-<h1><?= $h1 ?></h1>
+<h2><?= $h2 ?></h2>
 <p>
     <a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;
     <a href="<?= $routerService->urlFor('boplugins') ?>">Plugins</a>&nbsp;/&nbsp;
-    <?= $name ?>
+    <?= $plugin['name'] ?>
 </p>
-<h2><?= $h2 ?></h2>
+<h3><?= $h3 ?></h3>
 
 <?php if (isset($flash['success'])): ?>
     <div class="alert green">
@@ -16,38 +16,39 @@
     </div>
 <?php endif; ?>
 
-<form action="<?= $routerService->urlFor('pluginEditAction', ['name' => $name]) ?>" method="post" enctype="multipart/form-data">
+<form action="<?= $routerService->urlFor('pluginEditAction', ['name' => $plugin['name']]) ?>" method="post"
+      enctype="multipart/form-data">
     <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
     <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
-    <input type="hidden" name="name" value="<?= $name ?>">
+    <input type="hidden" name="name" value="<?= $plugin['name'] ?>">
     <input type="hidden" name="author" value="<?= $_SESSION['user'] ?>">
     <div
         <?php if (isset($flash['description'][0]) or isset($flash['description'][0])): ?>style="color:red"<?php endif; ?>>
         <label for="description">Description*: </label>
         <input type="text" name="description" id="description"
                <?php if (isset($formOldValues['description'])): ?>value="<?= $formOldValues['description'] ?>"
-               <?php else: ?>value="<?= $description ?>"<?php endif; ?>>
+               <?php else: ?>value="<?= $plugin['description'] ?>"<?php endif; ?>>
         <?php if (isset($flash['description'][0])): ?><p><?= $flash['description'][0] ?></p><?php endif; ?>
     </div>
     <div <?php if (isset($flash['versionPlugin'][0])): ?>style="color:red"<?php endif; ?>>
         <label for="versionPlugin">Version*: </label>
         <input type="text" name="versionPlugin" id="versionPlugin"
                <?php if (isset($formOldValues['versionPlugin'])): ?>value="<?= $formOldValues['versionPlugin'] ?>"
-               <?php else: ?>value="<?= $versionPlugin ?>"<?php endif; ?>>
+               <?php else: ?>value="<?= $plugin['versionPlugin'] ?>"<?php endif; ?>>
         <?php if (isset($flash['versionPlugin'][0])): ?><p><?= $flash['versionPlugin'][0] ?></p><?php endif; ?>
     </div>
     <div <?php if (isset($flash['versionPluxml'][0])): ?>style="color:red"<?php endif; ?>>
         <label for="versionPluxml">PluXml version*: </label>
         <input type="text" name="versionPluxml" id="versionPluxml"
                <?php if (isset($formOldValues['versionPluxml'])): ?>value="<?= $formOldValues['versionPluxml'] ?>"
-               <?php else: ?>value="<?= $versionPluxml ?>"<?php endif; ?>>
+               <?php else: ?>value="<?= $plugin['versionPluxml'] ?>"<?php endif; ?>>
         <?php if (isset($flash['versionPluxml'][0])): ?><p><?= $flash['versionPluxml'][0] ?></p><?php endif; ?>
     </div>
     <div <?php if (isset($flash['link'][0])): ?>style="color:red"<?php endif; ?>>
         <label for="link">Link: </label>
         <input type="url" name="link" id="link"
                <?php if (isset($formOldValues['link'])): ?>value="<?= $formOldValues['link'] ?>"
-               <?php else: ?>value="<?= $link ?>"<?php endif; ?>>
+               <?php else: ?>value="<?= $plugin['link'] ?>"<?php endif; ?>>
         <?php if (isset($flash['link'][0])): ?><p><?= $flash['link'][0] ?></p><?php endif; ?>
     </div>
     <div <?php if (isset($flash['file'][0])): ?>style="color:red"<?php endif; ?>>

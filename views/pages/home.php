@@ -11,14 +11,13 @@
 <div class="content">
     <?php require_once 'tags/tabs.php' ?>
     <div class="page text-center">
-        <h2>Télécharger PluXml</h2>
-        <p><a class="button blue" href="https://www.pluxml.org/download/pluxml-latest.zip"
-              title="Télécharger PluXml">PluXml</a></p>
+        <h2>PluXml <?= $pluxmlCurrentVersion ?></h2>
+        <p><a href="https://www.pluxml.org/download/pluxml-latest.zip"
+              title="Download PluXml"><button>Download</button></a></p>
         <p><small><a href="https://www.pluxml.org/download/changelog.txt">Changelog</a> - <a
-                        href="https://github.com/pluxml/PluXml/releases" target="_blank">Versions
-                    précédentes</a></small></p>
+                        href="https://github.com/pluxml/PluXml/releases" target="_blank">Previous versions</a></small></p>
         <h2>Installation</h2>
-        <p>Bien que PluXml soit très simple à installer, une documentation est <a
-                    href="https://wiki.pluxml.org/installer/installation/">accessible ici</a>.</p>
+        <p>Although PluXml is very easy to install, documentation is <a
+                    href="https://wiki.pluxml.org/installer/installation/">available here</a> <em>(french)</em>.</p>
     </div>
 </div>

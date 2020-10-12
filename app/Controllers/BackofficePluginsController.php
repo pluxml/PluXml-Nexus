@@ -40,9 +40,9 @@ class BackofficePluginsController extends Controller
     public function show(Request $request, Response $response)
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
-        $datas['h1'] = 'Backoffice';
-        $datas['h2'] = 'Plugins';
-        $datas = array_merge($datas, PluginsFacade::getAllPlugins($this->container, $this->currentUser));
+        $datas['h2'] = 'Backoffice';
+        $datas['h3'] = 'Plugins';
+        $datas['plugins'] = PluginsFacade::getAllPlugins($this->container, $this->currentUser);
 
         return $this->render($response, 'pages/backoffice/plugins.php', $datas);
     }
@@ -57,9 +57,9 @@ class BackofficePluginsController extends Controller
     public function showPlugin(Request $request, Response $response, $args)
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
-        $datas['h1'] = 'Backoffice';
-        $datas['h2'] = 'Edit plugin ' . $args['name'];
-        $datas = array_merge($datas, PluginsFacade::getPlugin($this->container, $args['name']));
+        $datas['h2'] = 'Backoffice';
+        $datas['h3'] = 'Edit plugin ' . $args['name'];
+        $datas['plugin'] = PluginsFacade::getPlugin($this->container, $args['name']);
 
         return $this->render($response, 'pages/backoffice/editPlugin.php', $datas);
     }

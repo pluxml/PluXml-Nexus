@@ -9,21 +9,28 @@
     --backsection: #f5f6f6;
     --backpanel: #fff;
     --backhover: #dcdddd;
+    --backtab: #a72ccd;
+    --backactivetab: #fff;
+    --backbutton: var(--backtab);
+    --backbuttonhover: #8623A4;
     --primary: #0275D8;
 }
 
 body {
     background-color: var(--backsection);
 }
+
 h1 {
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;;
     margin: 0px;
 }
+
 .grid {
     margin: 0px;
 }
+
 .col {
     padding: 0px;
 }
@@ -31,6 +38,7 @@ h1 {
 .header {
     background-color: var(--backheader);
 }
+
 .header a {
     color: #fff;
 }
@@ -39,21 +47,33 @@ h1 {
     margin-top: 20px;
     background-color: var(--backpanel);
 }
+
 .content .tab {
     text-align: center;
     font-weight: bold;
-    background-color: #a72ccd;
+    transition-duration: .2s;
+    background-color: var(--backtab);
 }
+
+.content .tab:hover {
+    background-color: var(--backbuttonhover);
+}
+
 .content .tab a {
     display: block;
     padding: 10px 20px;
     color: #fff;
     text-decoration: none;
-    border-bottom: 2px solid #71717161;
 }
-.content .activeTab{
-    background-color: #fff;
+
+.content .activeTab {
+    background-color: var(--backactivetab);
 }
+
+.content .activeTab:hover {
+    background-color: inherit;
+}
+
 .content .activeTab a {
     color: #000;
     border-bottom: 1px solid #fff
@@ -61,26 +81,56 @@ h1 {
 
 .page {
     padding: 50px;
+    margin-bottom: 20px;
 }
 
 .panel {
     heigh: 100%;
     padding: 10px;
 }
+
 .panel a {
     color: inherit;
     text-decoration: none;
 }
+
+.panel-header {
+    display: block;
+    background-color: var(--backheader);
+}
+
+.panel-header i {
+    font-size: 6rem;
+}
+
 .panel-content {
     padding: 14px;
+    border: 1px solid var(--backhover);
     background-color: var(--backpanel);
 }
+
 .panel-content:hover {
     background-color: var(--backhover);
+}
+
+button {
+    border: 0px;
+    border-radius: inherit;
+    background-color: var(--backbutton);
+}
+
+button:hover {
+    background-color: var(--backbuttonhover);
 }
 
 footer {
     padding: 20px 0px;
     border-top: 1px solid #ddd;
     text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .page {
+        padding: 10px;
+    }
 }

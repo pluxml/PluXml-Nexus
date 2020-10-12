@@ -19,8 +19,7 @@ class BackofficeController extends Controller
     public function show(Request $request, Response $response)
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
-        $datas['h1'] = 'Backoffice';
-
+        $datas['h2'] = 'Backoffice';
         return $this->render($response, 'pages/backoffice/backoffice.php', $datas);
     }
 }
