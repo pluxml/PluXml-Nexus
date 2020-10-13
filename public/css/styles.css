@@ -113,14 +113,23 @@ h1 {
     background-color: var(--backhover);
 }
 
-button {
+button, input[type=submit] {
     border: 0px;
     border-radius: inherit;
     background-color: var(--backbutton);
 }
 
-button:hover {
+button:hover, input[type=submit]:hover {
     background-color: var(--backbuttonhover);
+}
+
+.auth {
+    width: 50%;
+    margin: auto;
+}
+
+input {
+    margin-bottom: 10px;
 }
 
 footer {

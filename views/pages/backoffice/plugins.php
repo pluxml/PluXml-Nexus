@@ -4,7 +4,7 @@
         <p><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;Plugins</p>
         <h3><?= $h3 ?></h3>
 
-        <p><a href="<?= $routerService->urlFor('boaddplugin') ?>" class="button blue">Add a plugin</a></p>
+        <a href="<?= $routerService->urlFor('boaddplugin') ?>"><button>Add a plugin</button></a>
 
         <div class="scrollable-table">
             <? if (!empty($plugins)): ?>
@@ -28,9 +28,9 @@
                             <td><?= $plugin['versionPluxml'] ?></td>
                             <td><a href="<?= $plugin['link'] ?>"<a><?= $plugin['link'] ?></a></td>
                             <td>
-                                <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>">edit</a>&nbsp;
-                                <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>">delete</a>&nbsp;
-                                <a href="<?= $plugin['file'] ?>">download</a></td>
+                                <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>"><i class="icon-pencil"></i></a>
+                                <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>"><i class="icon-trash"></i></a>
+                                <a href="<?= $plugin['file'] ?>"><i class="icon-download"></i></a></td>
                             </td>
                         </tr>
                     <? endforeach; ?>

@@ -15,7 +15,7 @@
             <li><i class="icon-leaf"></i>PluXml version required : <?= $plugin['versionPluxml'] ?></li>
         </ul>
         <a href=" <?= $plugin['file'] ?>">
-            <button>Download</button>
+            <button><i class="icon-download"></i>Download</button>
         </a>
     </div>
 </div>

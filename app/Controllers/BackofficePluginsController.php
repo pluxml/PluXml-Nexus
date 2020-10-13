@@ -73,8 +73,8 @@ class BackofficePluginsController extends Controller
     public function showAddPlugin(Request $request, Response $response)
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
-        $datas['h1'] = 'Backoffice';
-        $datas['h2'] = 'New plugin';
+        $datas['h2'] = 'Backoffice';
+        $datas['h3'] = 'New plugin';
 
         return $this->render($response, 'pages/backoffice/addPlugin.php', $datas);
     }

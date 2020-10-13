@@ -13,7 +13,7 @@
     <div class="page text-center">
         <h2>PluXml <?= $pluxmlCurrentVersion ?></h2>
         <p><a href="https://www.pluxml.org/download/pluxml-latest.zip"
-              title="Download PluXml"><button>Download</button></a></p>
+              title="Download PluXml"><button><i class="icon-download"></i>Download</button></a></p>
         <p><small><a href="https://www.pluxml.org/download/changelog.txt">Changelog</a> - <a
                         href="https://github.com/pluxml/PluXml/releases" target="_blank">Previous versions</a></small></p>
         <h2>Installation</h2>
