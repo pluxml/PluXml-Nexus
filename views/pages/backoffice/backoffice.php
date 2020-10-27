@@ -2,6 +2,7 @@
     <div class="page">
         <h2><?= $h2 ?></h2>
         <p>Hello <?= $_SESSION['user'] ?> !</p>
+
         <?php if (isset($flash['success'])): ?>
             <div class="alert green">
                 <?= $flash['success'][0] ?>

@@ -9,7 +9,7 @@ use Psr\Container\ContainerInterface;
 class Model
 {
 
-    private $container;
+    private ContainerInterface $container;
 
     protected $pdoService;
 
@@ -17,17 +17,5 @@ class Model
     {
         $this->container = $container;
         $this->pdoService = $this->container->get('pdo');
-    }
-
-    /**
-     *
-     * @param String $sql
-     * @return Array
-     */
-    protected function query(String $sql)
-    {
-        $req = $this->pdoService->prepare($sql);
-        $req->execute();
-        return $req->fetchAll();
     }
 }

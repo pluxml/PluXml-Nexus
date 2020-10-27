@@ -37,4 +37,15 @@ class PdoService
         $req = $this->pdo->prepare($sql);
         return $req->execute();
     }
+
+    /**
+     *
+     * @param String $sql
+     * @return Bool
+     */
+    public function delete(String $sql)
+    {
+        $req = $this->pdo->prepare($sql);
+        return $req->execute();
+    }
 }

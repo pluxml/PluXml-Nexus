@@ -59,7 +59,12 @@
                 <?php if (isset($flash['file'][0])): ?><p><?= $flash['file'][0] ?></p><?php endif; ?>
             </div>
             <button type="submit"><i class="icon-floppy"></i>Save</button>&nbsp;
-            <a href="#"><button class="blue"><i class="icon-trash"></i>Delete</button></a>
+        </form>
+        <hr>
+        <form action="<?= $routerService->urlFor('pluginDeleteAction', ['name' => $plugin['name']]) ?>" method="post">
+            <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
+            <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
+            <button type="submit" class="blue"><i class="icon-trash"></i>Delete</button>
         </form>
     </div>
 </div>

@@ -88,4 +88,16 @@ class PluginsFacade extends Facade
         $newPluginModel = new NewPluginModel($container, $plugin);
         return $newPluginModel->saveNewPlugin();
     }
+
+    /**
+     * @param ContainerInterface $container
+     * @param string $name
+     * @return bool
+     */
+    static public function deletePlugin(ContainerInterface $container, string $name)
+    {
+        $pluginModel = new PluginModel($container, $name);
+        $pluginModel->delete($container, $name) != false;
+        return unlink($_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS . DIRECTORY_SEPARATOR . $name . '.zip');
+    }
 }

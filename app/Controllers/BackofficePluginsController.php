@@ -15,6 +15,8 @@ use Respect\Validation\Validator;
 class BackofficePluginsController extends Controller
 {
 
+    private const NAMED_ROUTE_BOPLUGINS = 'boplugins';
+
     private const NAMED_ROUTE_BOEDITPLUGIN = 'boeditplugin';
 
     private const NAMED_ROUTE_SAVEPLUGIN = 'boaddplugin';
@@ -28,6 +30,8 @@ class BackofficePluginsController extends Controller
     private const MSG_VALID_FILE = 'Invalid file (extension must be zip and size inferior to 10MB';
 
     private const MSG_SUCCESS_EDITPLUGIN = 'Plugin saved with success';
+
+    private const MSG_SUCCESS_DELETEPLUGIN = 'Plugin deleted with success';
 
     private const MSG_ERROR_TECHNICAL_PLUGINS = 'Technical error or plugin name already exist';
 
@@ -89,7 +93,9 @@ class BackofficePluginsController extends Controller
      */
     public function edit(Request $request, Response $response, $args)
     {
-        $namedRoute = self::NAMED_ROUTE_BOEDITPLUGIN;
+        $dirPlugins = $_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS;
+        $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
+
         $post = $request->getParsedBody();
 
         if (!empty($request->getUploadedFiles())) {
@@ -100,8 +106,13 @@ class BackofficePluginsController extends Controller
 
         if (empty($errors)) {
             if (PluginsFacade::editPlugin($this->container, $post)) {
-                $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
-                $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
+                $filename = $post['name'] . '.zip';
+                $result = rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);
+                if ($result) {
+                    $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
+                } else {
+                    $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;
+                }
             } else {
                 $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
             }
@@ -112,7 +123,7 @@ class BackofficePluginsController extends Controller
             }
         }
 
-        return $this->redirect($response, $namedRoute, $args);
+        return $this->redirect($response, self::NAMED_ROUTE_BOPLUGINS, $args);
     }
 
     /**
@@ -124,7 +135,7 @@ class BackofficePluginsController extends Controller
      */
     public function save(Request $request, Response $response)
     {
-        $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
+        $namedRoute = self::NAMED_ROUTE_BOPLUGINS;
         $dirPlugins = $_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS;
         $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
 
@@ -163,6 +174,26 @@ class BackofficePluginsController extends Controller
     }
 
     /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return Response
+     */
+    public function delete(Request $request, Response $response, $args)
+    {
+        $namedRoute = self::NAMED_ROUTE_BOPLUGINS;
+
+        if (PluginsFacade::deletePlugin($this->container, $args['name'])) {
+            $this->messageService->addMessage('success', self::MSG_SUCCESS_DELETEPLUGIN);
+        } else {
+            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
+        }
+
+        return $this->redirect($response, $namedRoute);
+    }
+
+    /**
      * Validate request body for a plugin save or edit
      *
      * @param Request $request
@@ -171,7 +202,7 @@ class BackofficePluginsController extends Controller
      * @return array
      * @throws Exception
      */
-    private function pluginValidator(Request $request, bool $newPlugin=false, bool $newFile=false)
+    private function pluginValidator(Request $request, bool $newPlugin = false, bool $newFile = false)
     {
         $errors = [];
         $post = $request->getParsedBody();

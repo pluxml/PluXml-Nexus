@@ -2,6 +2,7 @@
 /**
  * PluginModel
  */
+
 namespace App\Models;
 
 use Psr\Container\ContainerInterface;
@@ -25,7 +26,7 @@ class PluginModel extends Model
 
     public $file;
 
-    public function __construct(ContainerInterface $container, String $name)
+    public function __construct(ContainerInterface $container, string $name)
     {
         parent::__construct($container);
 
@@ -39,5 +40,16 @@ class PluginModel extends Model
         $this->versionPluxml = $pdo[0]['versionpluxml'];
         $this->link = $pdo[0]['link'];
         $this->file = $pdo[0]['file'];
+    }
+
+    /**
+     *
+     * @param ContainerInterface $container
+     * @param string $name
+     * @return bool
+     */
+    public function delete(ContainerInterface $container, string $name)
+    {
+        return $this->pdoService->delete("DELETE FROM plugins WHERE name = '$name'");
     }
 }

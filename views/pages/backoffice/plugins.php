@@ -4,6 +4,16 @@
         <p><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;Plugins</p>
         <h3><?= $h3 ?></h3>
 
+        <?php if (isset($flash['success'])): ?>
+            <div class="alert green">
+                <?= $flash['success'][0] ?>
+            </div>
+        <?php elseif (isset($flash['error'])): ?>
+            <div class="alert red">
+                <?= $flash['error'][0] ?>
+            </div>
+        <?php endif; ?>
+
         <a href="<?= $routerService->urlFor('boaddplugin') ?>"><button>Add a plugin</button></a>
 
         <div class="scrollable-table">
@@ -29,7 +39,6 @@
                             <td><a href="<?= $plugin['link'] ?>"<a><?= $plugin['link'] ?></a></td>
                             <td>
                                 <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>"><i class="icon-pencil"></i></a>
-                                <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>"><i class="icon-trash"></i></a>
                                 <a href="<?= $plugin['file'] ?>"><i class="icon-download"></i></a></td>
                             </td>
                         </tr>
