@@ -33,19 +33,7 @@ class PluginsFacade extends Facade
             $pluginsModel = new PluginsModel($container);
         }
 
-        foreach ($pluginsModel->plugins as $key => $value) {
-            $plugins[$key]['name'] = $value['name'];
-            $plugins[$key]['description'] = $value['description'];
-            $plugins[$key]['author'] = Facade::getAuthorUsernameById($container, $value['author']);
-            $plugins[$key]['versionPlugin'] = $value['versionplugin'];
-            $plugins[$key]['versionPluxml'] = $value['versionpluxml'];
-            $plugins[$key]['link'] = $value['link'];
-            $plugins[$key]['file'] = $value['file'];
-            $plugins[$key]['categoryName'] = PluginsFacade::getPluginCategory($container, $value['category'])->name;
-            $plugins[$key]['categoryIcon'] = PluginsFacade::getPluginCategory($container, $value['category'])->icon;
-        }
-
-        return $plugins;
+        return PluginsFacade::populatePluginsList($container, $pluginsModel);
     }
 
     /**
@@ -67,9 +55,15 @@ class PluginsFacade extends Facade
             $datas['link'] = $pluginModel->link;
             $datas['file'] = $pluginModel->file;
             $datas['author'] = Facade::getAuthorUsernameById($container, $pluginModel->author);
+<<<<<<< HEAD
             $datas['category'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->id;
             $datas['categoryName'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->name;
             $datas['categoryIcon'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->icon;
+=======
+            $datas['category'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->id;
+            $datas['categoryName'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->name;
+            $datas['categoryIcon'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->icon;
+>>>>>>> add plugins categories wip
         }
 
         return $datas;
@@ -110,6 +104,7 @@ class PluginsFacade extends Facade
         return unlink($_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS . DIRECTORY_SEPARATOR . $name . '.zip');
     }
 
+<<<<<<< HEAD
     /**
      * @param ContainerInterface $container
      * @return array
@@ -135,5 +130,26 @@ class PluginsFacade extends Facade
     static private function getPluginCategory(ContainerInterface $container, int $id)
     {
         return new CategoryModel($container, $id);
+=======
+    static public function populatePluginsList(ContainerInterface $container, PluginsModel $pluginsModel)
+    {
+        $plugins = null;
+
+        if (!empty($pluginsModel)) {
+            foreach ($pluginsModel->plugins as $key => $value) {
+                $plugins[$key]['name'] = $value['name'];
+                $plugins[$key]['description'] = $value['description'];
+                $plugins[$key]['author'] = Facade::getAuthorUsernameById($container, $value['author']);
+                $plugins[$key]['versionPlugin'] = $value['versionplugin'];
+                $plugins[$key]['versionPluxml'] = $value['versionpluxml'];
+                $plugins[$key]['link'] = $value['link'];
+                $plugins[$key]['file'] = $value['file'];
+                $plugins[$key]['categoryName'] = CategoriesFacade::getPluginCategory($container, $value['category'])->name;
+                $plugins[$key]['categoryIcon'] = CategoriesFacade::getPluginCategory($container, $value['category'])->icon;
+            }
+        }
+
+        return $plugins;
+>>>>>>> add plugins categories wip
     }
 }

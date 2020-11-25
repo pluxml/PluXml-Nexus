@@ -9,7 +9,7 @@
             <i class="icon-link-1"></i>
             <em><a href="<?= $plugin['link'] ?>"><?= $plugin['link'] ?></a></em>
             <i class="<?= $plugin['categoryIcon'] ?>"></i>
-            <em><a href="<?= $plugin['categoryName'] ?>"><?= $plugin['categoryName'] ?></a></em>
+            <em><a href="<?= $routerService->urlFor('category', ['name' => $plugin['categoryName']]) ?>"><?= $plugin['categoryName'] ?></a></em>
         </p>
         <p><?= $plugin['description'] ?></p>
         <ul class="unstyled-list">

@@ -2,6 +2,8 @@
 /**
  * SLIM4 routes creation
  */
+
+use App\Controllers\CategoriesController;
 use App\Controllers\HomeController;
 use App\Controllers\PluginsController;
 use App\Controllers\ProfilesController;
@@ -16,6 +18,7 @@ use App\Controllers\BackofficeProfileController;
 
 $app->get('/', HomeController::class . ':show')->setName('homepage');
 
+$app->get('/plugins/categories/{name}', PluginsController::class . ':showCategory')->setName('category');
 $app->get('/plugins', PluginsController::class . ':show')->setName('plugins');
 $app->get('/plugins/{name}', PluginsController::class . ':showPlugin')->setName('plugin');
 

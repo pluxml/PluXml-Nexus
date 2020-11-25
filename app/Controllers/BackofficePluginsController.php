@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Facades\CategoriesFacade;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -64,7 +65,7 @@ class BackofficePluginsController extends Controller
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'Edit plugin ' . $args['name'];
         $datas['plugin'] = PluginsFacade::getPlugin($this->container, $args['name']);
-        $datas['categories'] = PluginsFacade::getCategories($this->container);
+        $datas['categories'] = CategoriesFacade::getCategories($this->container);
 
         return $this->render($response, 'pages/backoffice/editPlugin.php', $datas);
     }
@@ -80,7 +81,7 @@ class BackofficePluginsController extends Controller
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'New plugin';
-        $datas['categories'] = PluginsFacade::getCategories($this->container);
+        $datas['categories'] = CategoriesFacade::getCategories($this->container);
 
         return $this->render($response, 'pages/backoffice/addPlugin.php', $datas);
     }

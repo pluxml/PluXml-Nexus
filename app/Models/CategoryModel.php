@@ -15,11 +15,15 @@ class CategoryModel extends Model
 
     public $icon;
 
-    public function __construct(ContainerInterface $container, int $id)
+    public function __construct(ContainerInterface $container, int $id = NULL, string $name = NULL)
     {
         parent::__construct($container);
 
-        $pdo = $this->pdoService->query("SELECT * FROM categories WHERE id = '$id'");
+        if (!empty($id)) {
+            $pdo = $this->pdoService->query("SELECT * FROM categories WHERE id = '$id'");
+        } else {
+            $pdo = $this->pdoService->query("SELECT * FROM categories WHERE name = '$name'");
+        }
 
         $this->id = $pdo[0]['id'];
         $this->name = $pdo[0]['name'];
