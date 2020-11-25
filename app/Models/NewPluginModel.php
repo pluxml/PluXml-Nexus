@@ -24,7 +24,9 @@ class NewPluginModel extends Model
 
     private $link;
 
-    private $file;
+    private string $file;
+
+    private int $category;
 
     public function __construct(ContainerInterface $container, Array $plugin)
     {
@@ -40,6 +42,7 @@ class NewPluginModel extends Model
         $this->versionPluxml = $plugin['versionPluxml'];
         $this->link = $plugin['link'];
         $this->file = DIR_PLUGINS . DIRECTORY_SEPARATOR . $plugin['name'] . '.zip';
+        $this->category = $plugin['category'];
     }
 
     /**
@@ -48,7 +51,7 @@ class NewPluginModel extends Model
      */
     public function saveNewPlugin()
     {
-        return $this->pdoService->insert("INSERT INTO plugins SET name = '$this->name', description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file'");
+        return $this->pdoService->insert("INSERT INTO plugins SET name = '$this->name', description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file', category = '$this->category'");
     }
 
     /**
@@ -57,6 +60,6 @@ class NewPluginModel extends Model
      */
     public function updatePlugin()
     {
-        return $this->pdoService->insert("UPDATE plugins SET description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file' WHERE name = '$this->name'");
+        return $this->pdoService->insert("UPDATE plugins SET description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file', category = '$this->category' WHERE name = '$this->name'");
     }
 }

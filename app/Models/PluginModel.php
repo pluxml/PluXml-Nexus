@@ -26,6 +26,8 @@ class PluginModel extends Model
 
     public $file;
 
+    public $category;
+
     public function __construct(ContainerInterface $container, string $name)
     {
         parent::__construct($container);
@@ -40,6 +42,7 @@ class PluginModel extends Model
         $this->versionPluxml = $pdo[0]['versionpluxml'];
         $this->link = $pdo[0]['link'];
         $this->file = $pdo[0]['file'];
+        $this->category = $pdo[0]['category'];
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Facades;
 
+use App\Models\CategoriesModel;
+use App\Models\CategoryModel;
 use Psr\Container\ContainerInterface;
 use App\Models\PluginsModel;
 use App\Models\PluginModel;
@@ -18,10 +20,12 @@ class PluginsFacade extends Facade
      *
      * @param ContainerInterface $container
      * @param string|null $username
-     * @return string
+     * @return array
      */
     static public function getAllPlugins(ContainerInterface $container, string $username = NULL)
     {
+        $plugins = [];
+
         if (isset($username)) {
             $userModel = UsersFacade::searchUser($container, $username);
             $pluginsModel = new PluginsModel($container, $userModel->id);
@@ -37,6 +41,8 @@ class PluginsFacade extends Facade
             $plugins[$key]['versionPluxml'] = $value['versionpluxml'];
             $plugins[$key]['link'] = $value['link'];
             $plugins[$key]['file'] = $value['file'];
+            $plugins[$key]['categoryName'] = PluginsFacade::getPluginCategory($container, $value['category'])->name;
+            $plugins[$key]['categoryIcon'] = PluginsFacade::getPluginCategory($container, $value['category'])->icon;
         }
 
         return $plugins;
@@ -61,6 +67,9 @@ class PluginsFacade extends Facade
             $datas['link'] = $pluginModel->link;
             $datas['file'] = $pluginModel->file;
             $datas['author'] = Facade::getAuthorUsernameById($container, $pluginModel->author);
+            $datas['category'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->id;
+            $datas['categoryName'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->name;
+            $datas['categoryIcon'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->icon;
         }
 
         return $datas;
@@ -99,5 +108,32 @@ class PluginsFacade extends Facade
         $pluginModel = new PluginModel($container, $name);
         $pluginModel->delete($container, $name) != false;
         return unlink($_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS . DIRECTORY_SEPARATOR . $name . '.zip');
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return array
+     */
+    static public function getCategories(ContainerInterface $container)
+    {
+        $categories = [];
+        $categoriesModel = new CategoriesModel($container);
+
+        foreach ($categoriesModel->categories as $category => $value) {
+            $categories[$category]['id'] = $value['id'];
+            $categories[$category]['name'] = $value['name'];
+        }
+
+        return $categories;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param int $id
+     * @return CategoryModel
+     */
+    static private function getPluginCategory(ContainerInterface $container, int $id)
+    {
+        return new CategoryModel($container, $id);
     }
 }

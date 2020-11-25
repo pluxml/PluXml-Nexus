@@ -64,6 +64,7 @@ class BackofficePluginsController extends Controller
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'Edit plugin ' . $args['name'];
         $datas['plugin'] = PluginsFacade::getPlugin($this->container, $args['name']);
+        $datas['categories'] = PluginsFacade::getCategories($this->container);
 
         return $this->render($response, 'pages/backoffice/editPlugin.php', $datas);
     }
@@ -79,6 +80,7 @@ class BackofficePluginsController extends Controller
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'New plugin';
+        $datas['categories'] = PluginsFacade::getCategories($this->container);
 
         return $this->render($response, 'pages/backoffice/addPlugin.php', $datas);
     }
@@ -215,7 +217,9 @@ class BackofficePluginsController extends Controller
         Validator::alnum(' ')->length(1, 249)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG250;
         Validator::alnum('. , - _')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
         Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
-        Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
+        if (!empty($post['link'])) {
+            Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
+        }
 
         if ($newPlugin) {
             Validator::notEmpty()->alnum()

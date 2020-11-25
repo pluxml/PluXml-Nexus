@@ -32,6 +32,15 @@
                        <?php else: ?>value="<?= $plugin['description'] ?>"<?php endif; ?>>
                 <?php if (isset($flash['description'][0])): ?><p><?= $flash['description'][0] ?></p><?php endif; ?>
             </div>
+            <div <?php if (isset($flash['category'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="category">Category: </label>
+                <select name="category" id="category" required>
+                    <? foreach ($categories as $category => $value): ?>
+                        <option value="<?= $value['id'] ?>" <?php if ($plugin['category'] == $value['id']):?>selected="selected"<? endif; ?>><?= $value['name'] ?></option>
+                    <? endforeach; ?>
+                </select>
+                <?php if (isset($flash['category'][0])): ?><p><?= $flash['category'][0] ?></p><?php endif; ?>
+            </div>
             <div <?php if (isset($flash['versionPlugin'][0])): ?>style="color:red"<?php endif; ?>>
                 <label for="versionPlugin">Version*: </label>
                 <input type="text" name="versionPlugin" id="versionPlugin"

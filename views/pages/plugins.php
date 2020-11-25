@@ -6,7 +6,7 @@
             <div class="col sml-12 med-3 panel">
                 <a href="<?= $routerService->urlFor('plugin', ['name' => $plugin['name']]) ?>">
                     <div class="panel-content">
-                        <span class="panel-header text-center"><i class="icon-leaf"></i></span>
+                        <span class="panel-header text-center"><i class="<?= $plugin['categoryIcon'] ?>"></i></span>
                         <strong><?= $plugin['name'] ?></strong>
                         <ul class="unstyled-list">
                             <li><i class="icon-user"></i><em><a href="<?= $routerService->urlFor('profile', ['username' => $plugin['author']]) ?>"><?= $plugin['author'] ?></a></em></li>

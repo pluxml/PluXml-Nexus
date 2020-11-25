@@ -8,6 +8,8 @@
             <em><a href="<?= $routerService->urlFor('profile', ['username' => $plugin['author']]) ?>"><?= $plugin['author'] ?></a></em>
             <i class="icon-link-1"></i>
             <em><a href="<?= $plugin['link'] ?>"><?= $plugin['link'] ?></a></em>
+            <i class="<?= $plugin['categoryIcon'] ?>"></i>
+            <em><a href="<?= $plugin['categoryName'] ?>"><?= $plugin['categoryName'] ?></a></em>
         </p>
         <p><?= $plugin['description'] ?></p>
         <ul class="unstyled-list">
