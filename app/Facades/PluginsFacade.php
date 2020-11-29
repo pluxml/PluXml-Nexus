@@ -55,15 +55,9 @@ class PluginsFacade extends Facade
             $datas['link'] = $pluginModel->link;
             $datas['file'] = $pluginModel->file;
             $datas['author'] = Facade::getAuthorUsernameById($container, $pluginModel->author);
-<<<<<<< HEAD
-            $datas['category'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->id;
-            $datas['categoryName'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->name;
-            $datas['categoryIcon'] = PluginsFacade::getPluginCategory($container, $pluginModel->category)->icon;
-=======
             $datas['category'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->id;
             $datas['categoryName'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->name;
             $datas['categoryIcon'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->icon;
->>>>>>> add plugins categories wip
         }
 
         return $datas;
@@ -104,33 +98,6 @@ class PluginsFacade extends Facade
         return unlink($_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS . DIRECTORY_SEPARATOR . $name . '.zip');
     }
 
-<<<<<<< HEAD
-    /**
-     * @param ContainerInterface $container
-     * @return array
-     */
-    static public function getCategories(ContainerInterface $container)
-    {
-        $categories = [];
-        $categoriesModel = new CategoriesModel($container);
-
-        foreach ($categoriesModel->categories as $category => $value) {
-            $categories[$category]['id'] = $value['id'];
-            $categories[$category]['name'] = $value['name'];
-        }
-
-        return $categories;
-    }
-
-    /**
-     * @param ContainerInterface $container
-     * @param int $id
-     * @return CategoryModel
-     */
-    static private function getPluginCategory(ContainerInterface $container, int $id)
-    {
-        return new CategoryModel($container, $id);
-=======
     static public function populatePluginsList(ContainerInterface $container, PluginsModel $pluginsModel)
     {
         $plugins = null;
@@ -150,6 +117,5 @@ class PluginsFacade extends Facade
         }
 
         return $plugins;
->>>>>>> add plugins categories wip
     }
 }
