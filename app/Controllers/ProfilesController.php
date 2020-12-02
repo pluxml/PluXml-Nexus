@@ -32,7 +32,7 @@ class ProfilesController extends Controller
      */
     public function showProfile(Request $request, Response $response, $args)
     {
-        $datas = UsersFacade::getProfile($this->container, $args['username']);
+        $datas = UsersFacade::getProfile($this->container, $args['username'], true);
         return $this->render($response, 'pages/profile.php', $datas);
     }
 }

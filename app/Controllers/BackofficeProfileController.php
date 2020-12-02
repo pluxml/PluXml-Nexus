@@ -29,7 +29,7 @@ class BackofficeProfileController extends Controller
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h1'] = 'Backoffice';
         $datas['h2'] = 'My profile';
-        $datas = array_merge($datas, UsersFacade::getProfile($this->container, $this->currentUser, false));
+        $datas = array_merge($datas, UsersFacade::getProfile($this->container, $this->currentUser));
 
         return $this->render($response, 'pages/backoffice/editProfile.php', $datas);
     }

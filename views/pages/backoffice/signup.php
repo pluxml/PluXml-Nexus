@@ -1,7 +1,5 @@
 <div class="content">
     <div class="page">
-        <h2>Backoffice</h2>
-
         <div class="auth">
             <h3>Sign up</h3>
 

@@ -10,8 +10,6 @@ use Psr\Container\ContainerInterface;
 class NewUserModel extends Model
 {
 
-    private const TOKEN_LENGH = 60;
-
     private $username;
 
     private $password;
@@ -33,7 +31,7 @@ class NewUserModel extends Model
         $this->email = $user['email'];
         $this->website = $user['website'];
 
-        $token = self::generateToken();
+        $token = parent::generateToken();
         $this->token = $token['token'];
         $this->tokenExpire = $token['expire'];
     }
@@ -50,20 +48,5 @@ class NewUserModel extends Model
     public function updateUser()
     {
         return $this->pdoService->insert("UPDATE users SET email = '$this->email', website = '$this->website' WHERE username = '$this->username'");
-    }
-
-    /**
-     *
-     * @return array keys are 'token' and 'expire'
-     */
-    private function generateToken()
-    {
-        $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-        $lifetime = 24; // hours
-
-        $token['token'] = substr(str_shuffle(str_repeat($alphabet, self::TOKEN_LENGH)), 0, self::TOKEN_LENGH);
-        $token['expire'] = date('Y-m-d H:i:s', mktime(date('H') + $lifetime, date('i'), date('s'), date('m'), date('d'), date('Y')));
-
-        return $token;
     }
 }

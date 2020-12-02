@@ -1,7 +1,7 @@
 <div class="content">
     <div class="page">
         <div class="auth">
-            <h3>Log in</h3>
+            <h3>Reset password</h3>
 
             <?php if (isset($flash['success'])): ?>
                 <div class="alert green">
@@ -13,26 +13,20 @@
                 </div>
             <?php endif; ?>
 
-            <form action="<?= $routerService->urlFor('loginAction') ?>" method="post">
+            <form action="<?= $routerService->urlFor('resetPassword') ?>" method="post">
                 <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
                 <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
-                <div <?php if (isset($flash['error'][1])): ?>style="color:red"<?php endif; ?>>
-                    <label for="username">Username: </label>
-                    <input type="text" name="username" id="username"
-                           <?php if (isset($formOldValues['username'])): ?>value="<?= $formOldValues['username'] ?>"<?php endif; ?>
-                           required>
-                    <?php if (isset($flash['error'][1])): ?><p><?= $flash['error'][1] ?></p><?php endif; ?>
-                </div>
+                <input type="hidden" name="username" value="<?= $user['username'] ?>">
                 <div <?php if (isset($flash['error'][2])): ?>style="color:red"<?php endif; ?>>
                     <label for="password">Password: </label>
                     <input type="password" name="password" id="password" required>
                     <?php if (isset($flash['error'][2])): ?><p><?= $flash['error'][2] ?></p><?php endif; ?>
                 </div>
                 <div>
-                    <input type="submit" value="Log in">
+                    <input type="submit" value="Change my password">
                 </div>
             </form>
-            <small><a href="<?= $routerService->urlFor('lostPassword') ?>">Lost your password?</a></small>
+            <small><a href="<?= $routerService->urlFor('lostPassword') ?>">← Back to log in</a></small>
         </div>
     </div>
 </div>

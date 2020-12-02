@@ -23,6 +23,10 @@ class AuthController extends Controller
 
     private const PAGE_SIGNUP = 'pages/backoffice/signup.php';
 
+    private const PAGE_LOSTPASSWORD = 'pages/backoffice/authLostPassword.php';
+
+    private const PAGE_RESETPASSWORD = 'pages/backoffice/authResetPassword.php';
+
     private const MSG_ERROR_LOGIN = 'Wrong username or password';
 
     private const MSG_ERROR_SIGNUP = 'Signup error, please see below';
@@ -32,6 +36,10 @@ class AuthController extends Controller
     private const MSG_SUCCESS_SIGNUP = 'Signup successful, please confirm your email address to be able to login';
 
     private const MSG_SUCCESS_CONFIRMEMAIL = 'Email address confirmation success';
+
+    private const MSG_SUCCESS_LOSTPASSWORDEMAIL = 'An e-mail has been sent to you, allowing you to reset your password';
+
+    private const MSG_SUCCESS_RESETPASSWORD = 'Your password has been updated';
 
     private const MSG_LOGOUT = 'Log out successful';
 
@@ -47,7 +55,7 @@ class AuthController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function showAuth(Request $request, Response $response)
+    public function showAuth(Request $request, Response $response): Response
     {
         if (AuthFacade::isLogged()) {
             $response = $this->redirect($response, self::NAMED_ROUTE_BACKOFFICE);
@@ -64,7 +72,7 @@ class AuthController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function showSignup(Request $request, Response $response)
+    public function showSignup(Request $request, Response $response): Response
     {
         if (AuthFacade::isLogged()) {
             $response = $this->redirect($response, self::NAMED_ROUTE_BACKOFFICE);
@@ -81,7 +89,86 @@ class AuthController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function confirmEmail(Request $request, Response $response)
+    public function showLostPassword(Request $request, Response $response): Response
+    {
+        if (AuthFacade::isLogged()) {
+            $response = $this->redirect($response, self::NAMED_ROUTE_BACKOFFICE);
+        } else {
+            $response = $this->render($response, self::PAGE_LOSTPASSWORD);
+        }
+
+        return $response;
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function showResetPassword(Request $request, Response $response): Response
+    {
+        $params = $request->getQueryParams();
+
+        $result = AuthFacade::confirmLostPasswordToken($this->container, $params['token']);
+
+        if ($result) {
+            $datas['user'] = UsersFacade::getProfile($this->container, $params['token']);
+            $response = $this->render($response, self::PAGE_RESETPASSWORD, $datas);
+        } else {
+            $response = $this->render($response, self::PAGE_AUTH);
+        }
+
+        return $response;
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function sendNewPassword(Request $request, Response $response): Response
+    {
+        $post = $request->getParsedBody();
+        $result = AuthFacade::sendNewPasswordEmail($this->container, $post['username']);
+
+        if ($result) {
+            $this->messageService->addMessage('success', self::MSG_SUCCESS_LOSTPASSWORDEMAIL);
+        } else {
+            $this->messageService->addMessage('error', self::MSG_ERROR);
+        }
+
+        return $response = $this->redirect($response, self::NAMED_ROUTE_AUTH);
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function resetPassword(Request $request, Response $response): Response
+    {
+        $post = $request->getParsedBody();
+        $result = AuthFacade::resetPassword($this->container, $post['username'], $post['password']);
+
+        if ($result) {
+            $this->messageService->addMessage('success', self::MSG_SUCCESS_RESETPASSWORD);
+        } else {
+            $this->messageService->addMessage('error', self::MSG_ERROR);
+        }
+
+        return $response = $this->redirect($response, self::NAMED_ROUTE_AUTH);
+    }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function confirmEmail(Request $request, Response $response): Response
     {
         $params = $request->getQueryParams();
 
@@ -102,7 +189,7 @@ class AuthController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function login(Request $request, Response $response)
+    public function login(Request $request, Response $response): Response
     {
         $namedRoute = self::NAMED_ROUTE_AUTH;
         $post = $request->getParsedBody();
@@ -132,7 +219,7 @@ class AuthController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function logout(Request $request, Response $response)
+    public function logout(Request $request, Response $response): Response
     {
         AuthFacade::logout();
         $this->messageService->addMessage('success', self::MSG_LOGOUT);
@@ -145,7 +232,7 @@ class AuthController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function signup(Request $request, Response $response)
+    public function signup(Request $request, Response $response): Response
     {
         $errors = [];
         $namedRoute = self::NAMED_ROUTE_SIGNUP;

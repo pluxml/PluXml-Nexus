@@ -1,11 +1,16 @@
 <?php
 /**
- * PluginsFacade 
+ * PluginsFacade
  */
+
 namespace App\Facades;
 
 use Psr\Container\ContainerInterface;
 
+/**
+ * Class AuthFacade
+ * @package App\Facades
+ */
 class AuthFacade extends Facade
 {
 
@@ -14,14 +19,14 @@ class AuthFacade extends Facade
      * @param ContainerInterface $container
      * @param String $username
      * @param String $password
-     * @return boolean
+     * @return bool
      */
-    static public function authentificateUser(ContainerInterface $container, String $username, String $password)
+    static public function authentificateUser(ContainerInterface $container, string $username, string $password): bool
     {
         $result = FALSE;
         $userModel = UsersFacade::searchUser($container, $username);
 
-        if (! empty($userModel) and ! empty($userModel->role) and password_verify($password, $userModel->password) ) {
+        if (!empty($userModel) and !empty($userModel->role) and password_verify($password, $userModel->password)) {
             $result = TRUE;
             $_SESSION['user'] = $username;
         }
@@ -45,13 +50,19 @@ class AuthFacade extends Facade
     }
 
     /**
+     *
      */
     static public function logout()
     {
         unset($_SESSION['user']);
     }
 
-    static public function sendConfirmationEmail(ContainerInterface $container, String $username)
+    /**
+     * @param ContainerInterface $container
+     * @param String $username
+     * @return mixed
+     */
+    static public function sendConfirmationEmail(ContainerInterface $container, string $username)
     {
         $userModel = UsersFacade::searchUser($container, $username);
 
@@ -68,7 +79,13 @@ class AuthFacade extends Facade
         return $result;
     }
 
-    static public function confirmEmail(ContainerInterface $container, String $username, String $token)
+    /**
+     * @param ContainerInterface $container
+     * @param String $username
+     * @param String $token
+     * @return bool
+     */
+    static public function confirmEmail(ContainerInterface $container, string $username, string $token): bool
     {
         $result = FALSE;
 
@@ -79,6 +96,82 @@ class AuthFacade extends Facade
                 $userModel->role = 'user';
                 $userModel->token = NULL;
                 $userModel->tokenExpire = '0000-00-00 00:00:00';
+                $userModel->editUser();
+                $result = TRUE;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param String $username
+     * @return bool
+     */
+    static public function sendNewPasswordEmail(ContainerInterface $container, string $username): bool
+    {
+        $result = FALSE;
+
+        $userModel = UsersFacade::searchUser($container, $username);
+
+        if (isset($userModel->id)) {
+            $token = $userModel->generateToken();
+            $userModel->token = $token['token'];
+            $userModel->tokenExpire = $token['expire'];
+            $result = $userModel->editUser();
+        }
+
+        if ($result) {
+            $host = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+            $tokenHref = $container->get('router')->urlFor('resetPassword') . "?token=$userModel->token";
+            $placeholder = [
+                '##USERNAME##' => $userModel->username,
+                '##URL_PASSWORD##' => $host . $tokenHref,
+                '##URL_EXPIRY##' => $token['expire']
+            ];
+            $body = str_replace(array_keys($placeholder), array_values($placeholder), MAIL_LOSTPASSWORD);
+
+            $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_NEWUSER_SUBJECT, $body, TRUE);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param String $token
+     * @return bool
+     */
+    static public function confirmLostPasswordToken(ContainerInterface $container, string $token): bool
+    {
+        $result = false;
+        if (isset($token)) {
+            $userModel = UsersFacade::searchUser($container, $token);
+            if (isset($userModel)) {
+                $result = true;
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param string $username
+     * @param string $password
+     * @return bool
+     */
+    static public function resetPassword(ContainerInterface $container, string $username, string $password): bool
+    {
+        $result = FALSE;
+
+        $userModel = UsersFacade::searchUser($container, $username);
+
+        if (isset($userModel->token) and isset($userModel->tokenExpire)) {
+            if ($userModel->tokenExpire >= date('Y-m-d H:i:s')) {
+                $userModel->token = NULL;
+                $userModel->tokenExpire = '0000-00-00 00:00:00';
+                $userModel->password = password_hash($password, PASSWORD_BCRYPT);
                 $userModel->editUser();
                 $result = TRUE;
             }

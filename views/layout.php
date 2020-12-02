@@ -84,7 +84,7 @@
                 <nav class="nav" role="navigation">
                     <ul class="inline-list">
                         <li><a href="<?= $routerService->urlFor('homepage') ?>"><h1>Ressources</h1></a></li>
-                        <li><a href="<?= $routerService->urlFor('profiles') ?>">Profiles</a></li>
+                        <li><a href="<?= $routerService->urlFor('profiles') ?>">Contributors</a></li>
                     </ul>
                 </nav>
             </div>

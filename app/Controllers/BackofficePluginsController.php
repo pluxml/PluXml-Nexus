@@ -56,10 +56,10 @@ class BackofficePluginsController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @param $args
+     * @param array $args
      * @return Response
      */
-    public function showPlugin(Request $request, Response $response, $args)
+    public function showPlugin(Request $request, Response $response, array $args)
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
@@ -94,7 +94,7 @@ class BackofficePluginsController extends Controller
      * @return Response
      * @throws Exception
      */
-    public function edit(Request $request, Response $response, $args)
+    public function edit(Request $request, Response $response, array $args)
     {
         $dirPlugins = $_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS;
         $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
@@ -180,10 +180,10 @@ class BackofficePluginsController extends Controller
      *
      * @param Request $request
      * @param Response $response
-     * @param $args
+     * @param array $args
      * @return Response
      */
-    public function delete(Request $request, Response $response, $args)
+    public function delete(Request $request, Response $response, array $args)
     {
         $namedRoute = self::NAMED_ROUTE_BOPLUGINS;
 

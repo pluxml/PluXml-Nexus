@@ -38,7 +38,7 @@ class UsersFacade
      * @param bool $withPlugins add user's plugins name to the view datas
      * @return String $datas
      */
-    static public function getProfile(ContainerInterface $container, string $username, bool $withPlugins = true)
+    static public function getProfile(ContainerInterface $container, string $username, bool $withPlugins = false)
     {
         $userModel = self::searchUser($container, $username);
 
@@ -56,21 +56,20 @@ class UsersFacade
     /**
      *
      * @param ContainerInterface $container
-     * @param string $username
+     * @param string $search
      * @return UserModel
      */
-    static public function searchUser(ContainerInterface $container, string $username)
+    static public function searchUser(ContainerInterface $container, string $search): ?UserModel
     {
         $userModel = NULL;
         $userModels = new UsersModel($container);
 
         // Search userid by the username
         foreach ($userModels->users as $k => $v)
-            if (in_array($username, $v)) {
-                $key = $k;
+            if (in_array($search, $v)) {
+                $userId = $userModels->users[$k]['id'];
                 break;
             }
-        $userId = $userModels->users[$key]['id'];
 
         if (!empty($userId)) {
             $userModel = new UserModel($container, $userId);
@@ -84,7 +83,7 @@ class UsersFacade
      * @param array $user
      * @return bool
      */
-    static public function addUser(ContainerInterface $container, array $user)
+    static public function addUser(ContainerInterface $container, array $user): bool
     {
         $newUserModel = new NewUserModel($container, $user);
         return $newUserModel->saveNewUser();
@@ -102,7 +101,7 @@ class UsersFacade
      * @param string $userid
      * @return array
      */
-    static private function getPluginsByProfile(ContainerInterface $container, string $userid)
+    static private function getPluginsByProfile(ContainerInterface $container, string $userid): array
     {
         $plugins = [];
         $pluginsModel = new PluginsModel($container, $userid);

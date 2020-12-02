@@ -32,6 +32,8 @@ class Controller
 
     protected const MSG_VALID_URL = 'Invalid url';
 
+    protected const MSG_ERROR = 'An error occured';
+
     protected const MSG_ERROR_TECHNICAL = 'Technical error';
 
     public function __construct(ContainerInterface $container)

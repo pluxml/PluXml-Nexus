@@ -30,9 +30,13 @@ $app->get('/profiles/{username}', ProfilesController::class . ':showProfile')->s
 
 $app->get('/auth', AuthController::class . ':showAuth')->setName('auth');
 $app->get('/signup', AuthController::class . ':showSignup')->setName('signup');
-$app->get('/auth/logout', AuthController::class . ':logout')->setName('logoutAction');
+$app->get('/auth/lostpassword', AuthController::class . ':showLostPassword')->setName('lostPassword');
+$app->get('/auth/resetpassword', AuthController::class . ':showResetPassword');
 $app->get('/auth/emailconfirmation', AuthController::class . ':confirmEmail')->setName('confirmEmail');
+$app->get('/auth/logout', AuthController::class . ':logout')->setName('logoutAction');
 $app->post('/auth/login', AuthController::class . ':login')->setName('loginAction');
+$app->post('/auth/lostpassword', AuthController::class . ':sendNewPassword')->setName('lostPasswordAction');
+$app->post('/auth/resetpassword', AuthController::class . ':resetPassword')->setName('resetPassword');
 $app->post('/signup', AuthController::class . ':signup')->setName('signupAction');
 
 $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
