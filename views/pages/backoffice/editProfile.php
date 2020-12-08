@@ -56,6 +56,6 @@
         <?php if (isset($flash['password2'][0])): ?><p><?= $flash['password2'][0] ?></p><?php endif; ?>
     </div>
     <div>
-        <input type="submit" value="Change password">
+        <input disabled type="submit" value="Change password">
     </div>
 </form>

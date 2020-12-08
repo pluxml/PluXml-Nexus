@@ -17,7 +17,7 @@
         <a href="<?= $routerService->urlFor('boaddplugin') ?>"><button>Add a plugin</button></a>
 
         <div class="scrollable-table">
-            <? if (!empty($plugins)): ?>
+						<?php if (!empty($plugins)): ?>
                 <table>
                     <thead>
                     <tr>
@@ -30,7 +30,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <? foreach ($plugins as $key => $plugin): ?>
+                    <?php foreach ($plugins as $key => $plugin): ?>
                         <tr>
                             <td><a href="<?= $routerService->urlFor('plugin', ['name' => $plugin['name']]) ?>"><?= $plugin['name'] ?></a></td>
                             <td><?= $plugin['description'] ?></td>
@@ -42,12 +42,12 @@
                                 <a href="<?= $plugin['file'] ?>"><i class="icon-download"></i></a></td>
                             </td>
                         </tr>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
-            <? else: ?>
+            <?php else: ?>
                 <p>No plugins to edit</p>
-            <? endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>

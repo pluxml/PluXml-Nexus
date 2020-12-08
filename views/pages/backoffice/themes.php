@@ -7,7 +7,7 @@
         <p><a href="<?= $routerService->urlFor('boaddtheme') ?>" class="button blue">Add a theme</a></p>
 
         <div class="scrollable-table">
-            <? if (!empty($themes)): ?>
+            <?php if (!empty($themes)): ?>
                 <table>
                     <thead>
                     <tr>
@@ -20,7 +20,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <? foreach ($themes as $key => $theme): ?>
+                    <?php foreach ($themes as $key => $theme): ?>
                         <tr>
                             <td><?= $theme['name'] ?></td>
                             <td><?= $theme['description'] ?></td>
@@ -33,12 +33,12 @@
                                 <a href="<?= $theme['link'] ?>">download</a></td>
                             </td>
                         </tr>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
-            <? else: ?>
+            <?php else: ?>
                 <p>No themes to edit</p>
-            <? endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>
