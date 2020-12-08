@@ -217,11 +217,13 @@ class BackofficePluginsController extends Controller
             throw new Exception('No file has been send');
         }
 
-        Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
         Validator::alnum('. , - _')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
         Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
         if (!empty($post['link'])) {
             Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
+        }
+				if (!empty($post['description'])) {
+				    Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
         }
 
         if ($newPlugin) {
