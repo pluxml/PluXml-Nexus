@@ -1,6 +1,6 @@
 {
 	"name" : "hyperion/pluxml-nexus",
-	"description" : "Ressources sharing for PluXml",
+	"description" : "Ressources center for PluXml",
 	"type" : "project",
 	"license" : "GNU GPL",
 	"authors" : [{
