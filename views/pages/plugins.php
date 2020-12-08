@@ -2,12 +2,12 @@
     <?php require_once 'tags/tabs.php' ?>
 
     <div class="page grid">
-        <? include 'tags/pluginsCategories.php'; ?>
+        <?php include 'tags/pluginsCategories.php'; ?>
 
-        <? if (!empty($plugins)): ?>
-            <? include 'tags/pluginsList.php'; ?>
-        <? else: ?>
+        <?php if (!empty($plugins)): ?>
+            <?php include 'tags/pluginsList.php'; ?>
+        <?php else: ?>
             <div class="alert orange">No plugins found</div>
-        <? endif; ?>
+        <?php endif; ?>
     </div>
 </div>

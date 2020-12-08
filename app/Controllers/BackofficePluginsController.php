@@ -24,7 +24,9 @@ class BackofficePluginsController extends Controller
 
     private const MSG_VALID_NAME = 'Must be alphanumeric with no whitespace';
 
-    private const MSG_VALID_TOLONG250 = 'To long (250 characters max)';
+    private const MSG_VALID_TOLONG1000 = 'To long (1000 characters max)';
+		
+		private const MSG_VALID_TOLONG250 = 'To long (250 characters max)';
 
     private const MSG_VALID_TOLONG100 = 'To long (100 characters max)';
 
@@ -215,7 +217,7 @@ class BackofficePluginsController extends Controller
             throw new Exception('No file has been send');
         }
 
-        Validator::alnum(' ')->length(1, 249)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG250;
+        Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
         Validator::alnum('. , - _')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
         Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
         if (!empty($post['link'])) {
