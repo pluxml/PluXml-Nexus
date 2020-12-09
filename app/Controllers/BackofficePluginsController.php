@@ -24,11 +24,9 @@ class BackofficePluginsController extends Controller
 
     private const MSG_VALID_NAME = 'Must be alphanumeric with no whitespace';
 
-    private const MSG_VALID_TOLONG1000 = 'To long (1000 characters max)';
+    private const MSG_VALID_TOLONG1000 = 'Invalid or to long (1000 characters max)';
 
-    private const MSG_VALID_TOLONG250 = 'To long (250 characters max)';
-
-    private const MSG_VALID_TOLONG100 = 'To long (100 characters max)';
+    private const MSG_VALID_TOLONG100 = 'Invalid or to long (100 characters max)';
 
     private const MSG_VALID_FILE = 'Invalid file (extension must be zip and size inferior to 10MB';
 
@@ -220,13 +218,17 @@ class BackofficePluginsController extends Controller
             throw new Exception('No file has been send');
         }
 
-        Validator::alnum('. , - _')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
-        Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
+        if (!empty($post['description'])) {
+            Validator::alnum(' ','.','-','_','\'')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
+        }
+        if (!empty($post['versionPlugin'])) {
+            Validator::alnum('. , - _')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
+        }
+        if (!empty($post['versionPluxml'])) {
+            Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
+        }
         if (!empty($post['link'])) {
             Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
-        }
-        if (!empty($post['description'])) {
-            Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
         }
 
         if ($newPlugin) {
@@ -235,6 +237,7 @@ class BackofficePluginsController extends Controller
                 ->length(1, 99)
                 ->validate($post['name']) || $errors['name'] = self::MSG_VALID_NAME;
         }
+
         if ($newPlugin || $newFile) {
             // Uploaded file move, rename and validation
             $uploadedFile = $uploadedFiles['file'];
