@@ -30,10 +30,9 @@ class UsersFacade
             foreach ($usersModel->users as $user) {
                 $plugins = self::getPluginsByProfile($container, $user['id']);
                 if (isset($plugins)) {
-                    $datas['profiles'] = array_merge($datas['profiles'], $user);
+                    $datas['profiles'][] = $user;
                 }
             }
-            $datas['profiles'] = $usersModel->users;
         } else {
             $datas['profiles'] = $usersModel->users;
         }
