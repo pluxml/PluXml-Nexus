@@ -43,7 +43,7 @@ class Controller
         $this->viewService = $this->container->get('view');
         $this->messageService = $this->container->get('flash');
         $this->mailService = $this->container->get('mail');
-        $this->currentUser = $_SESSION['user'];
+        $this->currentUser = isset($_SESSION['user']) ? $_SESSION['user'] : null;
     }
 
     /**
