@@ -1,7 +1,7 @@
 <div class="content">
     <?php require_once 'tags/tabs.php' ?>
 
-    <div class="page">
+    <div class="page grid">
         <h2><?= $username ?></h2>
         <ul>
             <li>
@@ -10,8 +10,6 @@
         </ul>
 
         <h3>Plugins :</h3>
-        <?php include 'tags/pluginsCategories.php'; ?>
-
         <?php if (!empty($plugins)): ?>
             <?php include 'tags/pluginsList.php'; ?>
         <?php else: ?>
