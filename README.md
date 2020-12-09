@@ -13,7 +13,7 @@
 
 Pre-requisite
 ----------------------------
-* Php 7.3
+* php7.4, php7.4-mysql, php7.4-zip
 * Mariadb
 * Composer
 
@@ -21,17 +21,24 @@ Installation
 ----------------------------
 
 Create a database and a specific user with the appropriate rights.
+```sql
+CREATE DATABASE mydatabase;
+GRANT ALL PRIVILEGES ON mydatabase.* TO 'user'@'%' IDENTIFIED BY 'PassWord';
+FLUSH PRIVILEGES;
+```
 Clone the project :
 ```shell
 git clone https://github.com/pluxml/PluXmlNexus
 ```
+Import the `config/initialisation.sql` script to your database.
+
 Install the dependencies :
 ```shell
 composer install
 ```
 Copy and edit settings.php
 ```shell
-cp config/settings-sample.php 
+cp config/settings-sample.php config/settings.php
 vim config/settings.php
 ```
 Access PluXml Nexus and create a user.
