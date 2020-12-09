@@ -103,12 +103,7 @@ class UsersFacade
      */
     static private function getPluginsByProfile(ContainerInterface $container, string $userid): array
     {
-        $plugins = [];
         $pluginsModel = new PluginsModel($container, $userid);
-        foreach ($pluginsModel->plugins as $plugin) {
-            $pluginModel = new PluginModel($container, $plugin['name']);
-            $plugins[]['name'] = $pluginModel->name;
-        }
-        return $plugins;
+        return PluginsFacade::populatePluginsList($container, $pluginsModel);;
     }
 }
