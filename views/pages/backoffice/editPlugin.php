@@ -63,7 +63,7 @@
                 <?php if (isset($flash['link'][0])): ?><p><?= $flash['link'][0] ?></p><?php endif; ?>
             </div>
             <div <?php if (isset($flash['file'][0])): ?>style="color:red"<?php endif; ?>>
-                <label for="file">File: </label>
+                <label for="file">File (optionnal): </label>
                 <input type="file" name="file" id="file">
                 <?php if (isset($flash['file'][0])): ?><p><?= $flash['file'][0] ?></p><?php endif; ?>
             </div>

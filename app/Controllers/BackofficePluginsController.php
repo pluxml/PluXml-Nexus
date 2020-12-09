@@ -25,8 +25,8 @@ class BackofficePluginsController extends Controller
     private const MSG_VALID_NAME = 'Must be alphanumeric with no whitespace';
 
     private const MSG_VALID_TOLONG1000 = 'To long (1000 characters max)';
-		
-		private const MSG_VALID_TOLONG250 = 'To long (250 characters max)';
+
+    private const MSG_VALID_TOLONG250 = 'To long (250 characters max)';
 
     private const MSG_VALID_TOLONG100 = 'To long (100 characters max)';
 
@@ -103,7 +103,7 @@ class BackofficePluginsController extends Controller
 
         $post = $request->getParsedBody();
 
-        if (!empty($request->getUploadedFiles())) {
+        if (isset($post['file'])) {
             $errors = self::pluginValidator($request, false, true);
         } else {
             $errors = self::pluginValidator($request);
@@ -111,8 +111,11 @@ class BackofficePluginsController extends Controller
 
         if (empty($errors)) {
             if (PluginsFacade::editPlugin($this->container, $post)) {
-                $filename = $post['name'] . '.zip';
-                $result = rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);
+                $result = true;
+                if (isset($post['file'])) {
+                    $filename = $post['name'] . '.zip';
+                    $result = rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);
+                }
                 if ($result) {
                     $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPLUGIN);
                 } else {
@@ -222,8 +225,8 @@ class BackofficePluginsController extends Controller
         if (!empty($post['link'])) {
             Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
         }
-				if (!empty($post['description'])) {
-				    Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
+        if (!empty($post['description'])) {
+            Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
         }
 
         if ($newPlugin) {
