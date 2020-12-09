@@ -219,7 +219,7 @@ class BackofficePluginsController extends Controller
         }
 
         if (!empty($post['description'])) {
-            Validator::alnum(' ','.','-','_','\'')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
+            Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
         }
         if (!empty($post['versionPlugin'])) {
             Validator::alnum('. , - _')->length(1, 99)->validate($post['versionPlugin']) || $errors['versionPlugin'] = self::MSG_VALID_TOLONG100;
