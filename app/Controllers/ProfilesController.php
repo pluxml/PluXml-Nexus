@@ -19,7 +19,7 @@ class ProfilesController extends Controller
      */
     public function show(Request $request, Response $response)
     {
-        $datas = UsersFacade::getAllProfiles($this->container);
+        $datas = UsersFacade::getAllProfiles($this->container, true);
         return $this->render($response, 'pages/profiles.php', $datas);
     }
 
