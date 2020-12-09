@@ -5,11 +5,11 @@
         <h2><?= $username ?></h2>
         <ul>
             <li>
-                <a href="<?= $website ?>" target="_blank">Website: <?= $website ?></a></li>
+                Website: <a href="<?= $website ?>" target="_blank"><?= $website ?></a></li>
             </li>
         </ul>
 
-        <h3>Plugins :</h3>
+        <h3>Plugins:</h3>
         <?php if (!empty($plugins)): ?>
             <?php include 'tags/pluginsList.php'; ?>
         <?php else: ?>
