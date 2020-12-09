@@ -114,11 +114,11 @@ class UsersFacade
      *
      * @param ContainerInterface $container
      * @param string $userid
-     * @return array
+     * @return array|null
      */
-    static private function getPluginsByProfile(ContainerInterface $container, string $userid): array
+    static private function getPluginsByProfile(ContainerInterface $container, string $userid): ?array
     {
         $pluginsModel = new PluginsModel($container, $userid);
-        return PluginsFacade::populatePluginsList($container, $pluginsModel);
+        return isset($pluginsModel) ? PluginsFacade::populatePluginsList($container, $pluginsModel) : null;
     }
 }
