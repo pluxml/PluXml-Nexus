@@ -27,8 +27,8 @@ class BackofficeProfileController extends Controller
     public function showEditProfile(Request $request, Response $response)
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
-        $datas['h1'] = 'Backoffice';
-        $datas['h2'] = 'My profile';
+        $datas['h2'] = 'Backoffice';
+        $datas['h3'] = 'My profile';
         $datas = array_merge($datas, UsersFacade::getProfile($this->container, $this->currentUser));
 
         return $this->render($response, 'pages/backoffice/editProfile.php', $datas);
