@@ -6,7 +6,6 @@ use Psr\Container\ContainerInterface;
 use App\Models\UsersModel;
 use App\Models\UserModel;
 use App\Models\PluginsModel;
-use App\Models\PluginModel;
 use App\Models\NewUserModel;
 
 /**
@@ -19,14 +18,25 @@ class UsersFacade
     /**
      *
      * @param ContainerInterface $container
-     * @return string $datas
+     * @param bool $hadPlugins
+     * @return array $datas
      */
-    static public function getAllProfiles(ContainerInterface $container)
+    static public function getAllProfiles(ContainerInterface $container, bool $hadPlugins = false): array
     {
+        $datas = [];
         $usersModel = new UsersModel($container);
 
-        $datas['title'] = 'Profiles Ressources - PluXml.org';
-        $datas['profiles'] = $usersModel->users;
+        if ($hadPlugins) {
+            foreach ($usersModel->users as $user) {
+                $plugins = self::getPluginsByProfile($container, $user['id']);
+                if (isset($plugins)) {
+                    $datas['profiles'] = array_merge($datas['profiles'], $user);
+                }
+            }
+            $datas['profiles'] = $usersModel->users;
+        } else {
+            $datas['profiles'] = $usersModel->users;
+        }
 
         return $datas;
     }
@@ -36,9 +46,9 @@ class UsersFacade
      * @param ContainerInterface $container
      * @param string $username
      * @param bool $withPlugins add user's plugins name to the view datas
-     * @return String $datas
+     * @return array $datas
      */
-    static public function getProfile(ContainerInterface $container, string $username, bool $withPlugins = false)
+    static public function getProfile(ContainerInterface $container, string $username, bool $withPlugins = false): array
     {
         $userModel = self::searchUser($container, $username);
 
@@ -89,7 +99,12 @@ class UsersFacade
         return $newUserModel->saveNewUser();
     }
 
-    static public function editUser(ContainerInterface $container, array $user)
+    /**
+     * @param ContainerInterface $container
+     * @param array $user
+     * @return bool
+     */
+    static public function editUser(ContainerInterface $container, array $user): bool
     {
         $newUserModel = new NewUserModel($container, $user);
         return $newUserModel->updateUser();
@@ -104,6 +119,6 @@ class UsersFacade
     static private function getPluginsByProfile(ContainerInterface $container, string $userid): array
     {
         $pluginsModel = new PluginsModel($container, $userid);
-        return PluginsFacade::populatePluginsList($container, $pluginsModel);;
+        return PluginsFacade::populatePluginsList($container, $pluginsModel);
     }
 }
