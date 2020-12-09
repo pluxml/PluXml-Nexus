@@ -40,29 +40,5 @@
                 <input type="submit" value="Save">
             </div>
         </form>
-
-        <hr>
-
-        <form action="<?= $routerService->urlFor('profilePasswordAction') ?>" method="post">
-            <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
-            <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
-            <input type="hidden" name="<?= $username ?>" value="<?= $username ?>">
-            <div
-                <?php if (isset($flash['password'][0]) or isset($flash['password2'][0])): ?>style="color:red"<?php endif; ?>>
-                <label for="password">Password*: </label>
-                <input type="password" name="password" id="password"
-                       <?php if (isset($formOldValues['password'])): ?>value="<?= $formOldValues['password'] ?>"<?php endif; ?>
-                       required>
-                <?php if (isset($flash['password'][0])): ?><p><?= $flash['password'][0] ?></p><?php endif; ?>
-            </div>
-            <div <?php if (isset($flash['password2'][0])): ?>style="color:red"<?php endif; ?>>
-                <label for="password2">Confirm password*: </label>
-                <input type="password" name="password2" id="password2" required>
-                <?php if (isset($flash['password2'][0])): ?><p><?= $flash['password2'][0] ?></p><?php endif; ?>
-            </div>
-            <div>
-                <input disabled type="submit" value="Change password">
-            </div>
-        </form>
     </div>
 </div>
