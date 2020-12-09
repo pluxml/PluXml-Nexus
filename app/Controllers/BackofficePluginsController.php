@@ -226,7 +226,7 @@ class BackofficePluginsController extends Controller
             Validator::url()->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
         }
         if (!empty($post['description'])) {
-            Validator::length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
+            Validator::alnum('. , - _')->length(1, 999)->validate($post['description']) || $errors['description'] = self::MSG_VALID_TOLONG1000;
         }
 
         if ($newPlugin) {
