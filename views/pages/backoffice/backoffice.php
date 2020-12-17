@@ -41,6 +41,17 @@
                     </div>
                 </a>
             </div>
+            <? if ($adminUser): ?>
+            <div class="col sml-12 med-3 panel text-center">
+                <a href="<?= $routerService->urlFor('bousers') ?>">
+                    <div class="panel-content">
+                        <img src="/img/favicon/favicon-32x32.png" alt="registred users"/>
+                        <h3 class="no-margin h4">Users</h3>
+                        <p>Display registred users</p>
+                    </div>
+                </a>
+            </div>
+            <? endif; ?>
         </div>
     </div>
 </div>

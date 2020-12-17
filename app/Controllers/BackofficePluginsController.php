@@ -18,8 +18,6 @@ class BackofficePluginsController extends Controller
 
     private const NAMED_ROUTE_BOPLUGINS = 'boplugins';
 
-    private const NAMED_ROUTE_BOEDITPLUGIN = 'boeditplugin';
-
     private const NAMED_ROUTE_SAVEPLUGIN = 'boaddplugin';
 
     private const MSG_VALID_NAME = 'Must be alphanumeric with no whitespace';

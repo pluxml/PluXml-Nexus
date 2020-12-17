@@ -5,6 +5,7 @@
 
 namespace App\Facades;
 
+use App\Models\UserModel;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -28,17 +29,19 @@ class AuthFacade extends Facade
 
         if (!empty($userModel) and !empty($userModel->role) and password_verify($password, $userModel->password)) {
             $result = TRUE;
-            $_SESSION['user'] = $username;
+            $_SESSION['user'] = $userModel->username;
+            $_SESSION['role'] = $userModel->role;
         }
 
         return $result;
     }
 
     /**
+     * Check if user is logged
      *
      * @return boolean
      */
-    static public function isLogged()
+    static public function isLogged(): bool
     {
         $result = FALSE;
 
@@ -50,7 +53,27 @@ class AuthFacade extends Facade
     }
 
     /**
+     * Check user role from session and model
      *
+     * @param ContainerInterface $container
+     * @return boolean
+     */
+    static public function isAdmin(ContainerInterface $container, $username): bool
+    {
+        $result = FALSE;
+
+        if ($_SESSION['role'] == 'admin') {
+            $userModel = UsersFacade::searchUser($container, $username);
+            if ($userModel->role == 'admin') {
+                $result = TRUE;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Logout the user
      */
     static public function logout()
     {
