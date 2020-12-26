@@ -41,7 +41,7 @@
                     </div>
                 </a>
             </div>
-            <? if ($adminUser): ?>
+            <?php if ($adminUser): ?>
             <div class="col sml-12 med-3 panel text-center">
                 <a href="<?= $routerService->urlFor('bousers') ?>">
                     <div class="panel-content">
@@ -51,7 +51,7 @@
                     </div>
                 </a>
             </div>
-            <? endif; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>
