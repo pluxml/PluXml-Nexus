@@ -36,11 +36,11 @@
                             <td><?= $profile['website'] ?></td>
                             <td><?= $profile['website'] ?></td>
                             <td>
-                                <? if($profile['tokenexpire'] == '0000-00-00 00:00:00'): ?>
+                                <?php if($profile['tokenexpire'] == '0000-00-00 00:00:00'): ?>
                                     Yes
-                                <? else: ?>
+                                <?php else: ?>
                                     No (<?= $profile['tokenexpire'] ?>)
-                                <? endif; ?>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
