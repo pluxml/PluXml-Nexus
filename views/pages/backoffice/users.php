@@ -20,6 +20,10 @@
                     <thead>
                     <tr>
                         <th>Username</th>
+                        <th>Email</th>
+                        <th>Website</th>
+                        <th>Had plugins</th>
+                        <th>Validated</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,6 +31,16 @@
                         <tr>
                             <td>
                                 <a href="<?= $routerService->urlFor('profile', ['username' => $profile['username']]) ?>"><?= $profile['username'] ?></a>
+                            </td>
+                            <td><?= $profile['email'] ?></td>
+                            <td><?= $profile['website'] ?></td>
+                            <td><?= $profile['website'] ?></td>
+                            <td>
+                                <? if($profile['tokenexpire'] == '0000-00-00 00:00:00'): ?>
+                                    Yes
+                                <? else: ?>
+                                    No (<?= $profile['tokenexpire'] ?>)
+                                <? endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
