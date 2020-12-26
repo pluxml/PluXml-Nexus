@@ -24,18 +24,9 @@ class UsersFacade
     static public function getAllProfiles(ContainerInterface $container, bool $hadPlugins = false): array
     {
         $datas = [];
-        $usersModel = new UsersModel($container);
+        $usersModel = new UsersModel($container, $hadPlugins);
 
-        if ($hadPlugins) {
-            foreach ($usersModel->users as $user) {
-                $plugins = self::getPluginsByProfile($container, $user['id']);
-                if (isset($plugins)) {
-                    $datas['profiles'][] = $user;
-                }
-            }
-        } else {
-            $datas['profiles'] = $usersModel->users;
-        }
+        $datas['profiles'] = $usersModel->users;
 
         return $datas;
     }
