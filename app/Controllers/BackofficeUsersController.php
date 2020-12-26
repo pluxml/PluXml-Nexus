@@ -30,7 +30,7 @@ class BackofficeUsersController extends Controller
             $datas['title'] = 'Backoffice Ressources - PluXml.org';
             $datas['h1'] = 'Backoffice';
             $datas['h2'] = 'Users';
-            $datas = array_merge($datas, UsersFacade::getProfile($this->container, $this->currentUser));
+            $datas = array_merge($datas, UsersFacade::getAllProfiles($this->container));
         } else {
             $view = parent::VIEW_BO_USERS;
         }
