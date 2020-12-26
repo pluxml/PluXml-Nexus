@@ -28,6 +28,8 @@ class Controller
 
     protected const NAMED_ROUTE_BACKOFFICE = 'backoffice';
 
+    protected const VIEW_BO_USERS = 'pages/backoffice/backoffice.php';
+
     protected const MSG_VALID_EMAIL = 'Invalid email address';
 
     protected const MSG_VALID_URL = 'Invalid url';

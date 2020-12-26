@@ -15,6 +15,7 @@ use Slim\Interfaces\RouteCollectorProxyInterface;
 use App\Controllers\BackofficePluginsController;
 use App\Controllers\BackofficeThemesController;
 use App\Controllers\BackofficeProfileController;
+use App\Controllers\BackofficeUsersController;
 
 $app->get('/', HomeController::class . ':show')->setName('homepage');
 
@@ -49,6 +50,7 @@ $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
     $group->get('/themes/{name}', BackofficeThemesController::class . ':showTheme')->setName('boedittheme');
     $group->get('/theme/add', BackofficeThemesController::class . ':showAddTheme')->setName('boaddtheme');
     $group->get('/profile', BackofficeProfileController::class . ':showEditProfile')->setName('boeditprofile');
+    $group->get('/users', BackofficeUsersController::class . ':showUsers')->setName('bousers');
 
     $group->post('/plugin/save', BackofficePluginsController::class . ':save')->setName('pluginSaveAction');
     $group->post('/plugin/edit/{name}', BackofficePluginsController::class . ':edit')->setName('pluginEditAction');

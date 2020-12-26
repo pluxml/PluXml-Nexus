@@ -11,10 +11,14 @@ class UsersModel extends Model
 
     public $users;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, bool $withPluginsFilter = false)
     {
         parent::__construct($container);
 
-        $this->users = $this->pdoService->query('SELECT * FROM users');
+        if ($withPluginsFilter) {
+            $this->users = $this->pdoService->query('SELECT * FROM users JOIN plugins p ON users.id = p.author GROUP BY username');
+        } else {
+            $this->users = $this->pdoService->query('SELECT * FROM users');
+        }
     }
 }
