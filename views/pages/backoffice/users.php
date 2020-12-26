@@ -15,36 +15,25 @@
         <?php endif; ?>
 
         <div class="scrollable-table">
-						<?php if (!empty($plugins)): ?>
+            <?php if (!empty($profiles)): ?>
                 <table>
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Version</th>
-                        <th>PluXml</th>
-                        <th>Website</th>
-                        <th>Action</th>
+                        <th>Username</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($plugins as $key => $plugin): ?>
+                    <?php foreach ($profiles as $key => $profile): ?>
                         <tr>
-                            <td><a href="<?= $routerService->urlFor('plugin', ['name' => $plugin['name']]) ?>"><?= $plugin['name'] ?></a></td>
-                            <td><?= $plugin['description'] ?></td>
-                            <td><?= $plugin['versionPlugin'] ?></td>
-                            <td><?= $plugin['versionPluxml'] ?></td>
-                            <td><a href="<?= $plugin['link'] ?>"<a><?= $plugin['link'] ?></a></td>
                             <td>
-                                <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>"><i class="icon-pencil"></i></a>
-                                <a href="<?= $plugin['file'] ?>"><i class="icon-download"></i></a></td>
+                                <a href="<?= $routerService->urlFor('profile', ['username' => $profile['username']]) ?>"><?= $profile['username'] ?></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
                 </table>
             <?php else: ?>
-                <p>No plugins to edit</p>
+                <p>No users found</p>
             <?php endif; ?>
         </div>
     </div>
