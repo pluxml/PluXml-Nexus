@@ -24,6 +24,7 @@
                         <th>Website</th>
                         <th>Had plugins</th>
                         <th>Validated</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -42,6 +43,9 @@
                                     No (<?= $profile['tokenexpire'] ?>)
                                 <?php endif; ?>
                             </td>
+                            <td>
+                                <a onclick="confirmModal('<?= $profile['username'] ?>', '<?= $routerService->urlFor('bormuser', ['username' => $profile['username']]) ?>')"><i class="icon-trash"></i></a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
@@ -52,3 +56,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/confirmModal.js"></script>
