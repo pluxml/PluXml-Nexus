@@ -37,4 +37,18 @@ class BackofficeUsersController extends Controller
 
         return $this->render($response, $view, $datas);
     }
+
+    /**
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function removeUsers(Request $request, Response $response, array $args)
+    {
+        if (AuthFacade::isAdmin($this->container, $this->currentUser)) {
+            UsersFacade::removeUser($this->container, $args['username']);
+        }
+    }
 }

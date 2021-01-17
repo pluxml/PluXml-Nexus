@@ -45,4 +45,9 @@ class UserModel extends Model
     {
         return $this->pdoService->insert("UPDATE users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '$this->role', token = '$this->token', tokenexpire = '$this->tokenExpire' WHERE id = '$this->id'");
     }
+
+    public function delete()
+    {
+        return $this->pdoService->delete("DELETE FROM users WHERE id = '$this->id'");
+    }
 }

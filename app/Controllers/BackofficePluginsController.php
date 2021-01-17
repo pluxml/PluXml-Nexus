@@ -57,7 +57,7 @@ class BackofficePluginsController extends Controller
      * @param array $args
      * @return Response
      */
-    public function showPlugin(Request $request, Response $response, array $args)
+    public function showPlugin(Request $request, Response $response, array $args): Response
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
@@ -74,7 +74,7 @@ class BackofficePluginsController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function showAddPlugin(Request $request, Response $response)
+    public function showAddPlugin(Request $request, Response $response): Response
     {
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
@@ -92,7 +92,7 @@ class BackofficePluginsController extends Controller
      * @return Response
      * @throws Exception
      */
-    public function edit(Request $request, Response $response, array $args)
+    public function edit(Request $request, Response $response, array $args): Response
     {
         $dirPlugins = $_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS;
         $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
@@ -137,7 +137,7 @@ class BackofficePluginsController extends Controller
      * @return Response
      * @throws Exception
      */
-    public function save(Request $request, Response $response)
+    public function save(Request $request, Response $response): Response
     {
         $namedRoute = self::NAMED_ROUTE_BOPLUGINS;
         $dirPlugins = $_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS;
@@ -184,7 +184,7 @@ class BackofficePluginsController extends Controller
      * @param array $args
      * @return Response
      */
-    public function delete(Request $request, Response $response, array $args)
+    public function delete(Request $request, Response $response, array $args): Response
     {
         $namedRoute = self::NAMED_ROUTE_BOPLUGINS;
 
@@ -206,7 +206,7 @@ class BackofficePluginsController extends Controller
      * @return array
      * @throws Exception
      */
-    private function pluginValidator(Request $request, bool $newPlugin = false, bool $newFile = false)
+    private function pluginValidator(Request $request, bool $newPlugin = false, bool $newFile = false): array
     {
         $errors = [];
         $post = $request->getParsedBody();

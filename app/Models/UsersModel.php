@@ -21,4 +21,9 @@ class UsersModel extends Model
             $this->users = $this->pdoService->query('SELECT * FROM users');
         }
     }
+
+    public function delete()
+    {
+        return $this->pdoService->query('SELECT * FROM users');;
+    }
 }

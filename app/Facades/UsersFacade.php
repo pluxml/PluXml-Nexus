@@ -101,6 +101,17 @@ class UsersFacade
     }
 
     /**
+     * @param ContainerInterface $container
+     * @param string $username
+     * @return bool
+     */
+    static public function removeUser(ContainerInterface $container, string $username): bool
+    {
+        $userModel = self::searchUser($container, $username);
+        return $userModel->delete();
+    }
+
+    /**
      *
      * @param ContainerInterface $container
      * @param string $userid
