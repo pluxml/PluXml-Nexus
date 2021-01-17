@@ -1,7 +1,7 @@
 <div class="content">
     <div class="page">
         <h2><?= $h2 ?></h2>
-        <p><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;Plugins</p>
+        <p><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;Users</p>
         <h3><?= $h3 ?></h3>
 
         <?php if (isset($flash['success'])): ?>
