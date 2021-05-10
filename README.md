@@ -13,7 +13,7 @@
 
 Pre-requisite
 ----------------------------
-* php7.4, php7.4-mysql, php7.4-zip
+* php7.4+ (with bcmath, pdo, pdo_mysql extensions
 * Mariadb
 * Composer
 
