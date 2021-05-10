@@ -4,3 +4,6 @@
 /public/datas/plugins/
 /public/datas/themes/
 .idea/
+.buildpath
+.project
+.settings/
