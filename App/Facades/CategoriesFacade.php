@@ -6,8 +6,6 @@ use App\Models\CategoriesModel;
 use App\Models\CategoryModel;
 use Psr\Container\ContainerInterface;
 use App\Models\PluginsModel;
-use App\Models\PluginModel;
-use App\Models\NewPluginModel;
 
 /**
  * Class CategoriesFacade
@@ -35,7 +33,7 @@ class CategoriesFacade extends Facade
 
     static public function getPluginsForCategory(ContainerInterface $container, string $categoryName)
     {
-        $categoryModel = CategoriesFacade::getCategoryIdFromName($container, $categoryName);
+        $categoryModel = self::getCategoryIdFromName($container, $categoryName);
         $pluginsModel = new PluginsModel($container, null, $categoryModel->id);
         return PluginsFacade::populatePluginsList($container, $pluginsModel);
     }
@@ -50,7 +48,7 @@ class CategoriesFacade extends Facade
         return new CategoryModel($container, $categoryId);
     }
 
-    private function getCategoryIdFromName(ContainerInterface $container, string $categoryName) {
+    static private function getCategoryIdFromName(ContainerInterface $container, string $categoryName) {
         return new CategoryModel($container, null, $categoryName);
     }
 }

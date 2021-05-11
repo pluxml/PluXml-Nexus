@@ -26,11 +26,11 @@
                             <td><?= $theme['description'] ?></td>
                             <td><?= $theme['versionPlugin'] ?></td>
                             <td><?= $theme['versionPluxml'] ?></td>
-                            <td><a href="<?= $theme['website'] ?>"<a><?= $theme['website'] ?></a></td>
+                            <td><a href="<?= $theme['website'] ?>"><?= $theme['website'] ?></a></td>
                             <td>
                                 <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $theme['name']]) ?>">edit</a>&nbsp;
                                 <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $theme['name']]) ?>">delete</a>&nbsp;
-                                <a href="<?= $theme['link'] ?>">download</a></td>
+                                <a href="<?= $theme['link'] ?>">download</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

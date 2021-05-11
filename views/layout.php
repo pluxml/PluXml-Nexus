@@ -48,7 +48,7 @@
 
 <body>
 
-<div id="plxnav" data-title="Ressources" data-logo="purple" data-link="nexus"></div>
+<div id="plxnav" data-title="Ressources" data-logo="purple" data-link="nexus" style="height: 43px; background-color: #333; border-bottom: 2px solid #cdcdcd;"></div>
 
 <header class="header" role="banner">
     <div class="container">

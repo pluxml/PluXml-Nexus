@@ -3,7 +3,6 @@
  * SLIM4 routes creation
  */
 
-use App\Controllers\CategoriesController;
 use App\Controllers\HomeController;
 use App\Controllers\PluginsController;
 use App\Controllers\ProfilesController;
