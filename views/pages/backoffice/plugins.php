@@ -40,11 +40,11 @@
                             <td><?= $plugin['description'] ?></td>
                             <td><?= $plugin['versionPlugin'] ?></td>
                             <td><?= $plugin['versionPluxml'] ?></td>
-                            <td><a href="<?= $plugin['link'] ?>"<a><?= $plugin['link'] ?></a></td>
+                            <td><a href="<?= $plugin['link'] ?>"><?= $plugin['link'] ?></a></td>
                             <td>
                                 <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>"><i
                                             class="icon-pencil"></i></a>
-                                <a href="<?= $plugin['file'] ?>"><i class="icon-download"></i></a></td>
+                                <a href="<?= $plugin['file'] ?>"><i class="icon-download"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
