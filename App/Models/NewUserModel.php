@@ -29,7 +29,6 @@ class NewUserModel extends Model
         $this->username = $user['username'];
         $this->password = password_hash($user['password'], PASSWORD_BCRYPT);
         $this->email = $user['email'];
-        $this->website = $user['website'];
 
         $token = parent::generateToken();
         $this->token = $token['token'];

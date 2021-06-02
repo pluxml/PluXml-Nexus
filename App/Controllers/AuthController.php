@@ -245,9 +245,6 @@ class AuthController extends Controller
         Validator::notEmpty()->length(1, 99)->validate($post['password']) || $errors['password'] = self::MSG_VALID_PASSWORD;
         Validator::notEmpty()->equals($post['password'])->validate($post['password2']) || $errors['password2'] = self::MSG_VALID_PASSWORDCONFIRM;
         Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = self::MSG_VALID_EMAIL;
-        if (!empty($post['website'])) {
-            Validator::url()->length(1, 99)->validate($post['website']) || $errors['website'] = self::MSG_VALID_URL;
-        }
 
         if (empty($errors)) {
             if (UsersFacade::addUser($this->container, $post) and AuthFacade::sendConfirmationEmail($this->container, $post['username'])) {
