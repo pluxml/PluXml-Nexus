@@ -35,7 +35,13 @@
                             </td>
                             <td><?= $profile['email'] ?></td>
                             <td><?= $profile['website'] ?></td>
-                            <td><?= $profile['website'] ?></td>
+                            <td>
+                                <?php if ($profile['hadPlugins']): ?>
+                                    Yes
+                                <?php else: ?>
+                                    No
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <?php if($profile['tokenexpire'] == '0000-00-00 00:00:00'): ?>
                                     Yes

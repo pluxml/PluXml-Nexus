@@ -31,6 +31,27 @@ class UsersFacade
         return $datas;
     }
 
+    static public function getAllProfilesWithAndWithoutPlugins(ContainerInterface $container): array
+    {
+        $datas = UsersFacade::getAllProfiles($container);
+
+        $usersWithPluginsModel = new UsersModel($container, true);
+        $usersWithPlugins = $usersWithPluginsModel->users;
+
+        foreach ($datas['profiles'] as $key => $profile)
+        {
+            $datas['profiles'][$key]['hadPlugins'] = false;
+            foreach ($usersWithPlugins as $user => $profileWithPlugins)
+            {
+                if (in_array($profile['id'], $profileWithPlugins))
+                {
+                    $datas['profiles'][$key]['hadPlugins'] = true;
+                }
+            }
+        }
+
+        return $datas;
+    }
     /**
      *
      * @param ContainerInterface $container
