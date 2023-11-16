@@ -11,31 +11,18 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class Controller
 {
-
     protected ContainerInterface $container;
-
     protected $routerService;
-
     protected $viewService;
-
     protected $messageService;
-
     protected $mailService;
-
     protected $currentUser;
-
     protected const NAMED_ROUTE_HOME = 'homepage';
-
     protected const NAMED_ROUTE_BACKOFFICE = 'backoffice';
-
     protected const VIEW_BO_USERS = 'pages/backoffice/backoffice.php';
-
     protected const MSG_VALID_EMAIL = 'Invalid email address';
-
     protected const MSG_VALID_URL = 'Invalid url';
-
     protected const MSG_ERROR = 'An error occured';
-
     protected const MSG_ERROR_TECHNICAL = 'Technical error';
 
     public function __construct(ContainerInterface $container)
