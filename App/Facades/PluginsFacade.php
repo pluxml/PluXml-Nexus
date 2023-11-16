@@ -45,7 +45,6 @@ class PluginsFacade extends Facade
     {
         $datas = [];
         $pluginModel = new PluginModel($container, $name);
-
         if (!empty($pluginModel->name)) {
             $datas['title'] = "Plugin $pluginModel->name Ressources - PluXml.org";
             $datas['name'] = $pluginModel->name;
@@ -59,7 +58,6 @@ class PluginsFacade extends Facade
             $datas['categoryName'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->name;
             $datas['categoryIcon'] = CategoriesFacade::getPluginCategory($container, $pluginModel->category)->icon;
         }
-
         return $datas;
     }
 
@@ -69,7 +67,7 @@ class PluginsFacade extends Facade
      * @param array $plugin
      * @return bool
      */
-    static public function editPlugin(ContainerInterface $container, array $plugin)
+    static public function editPlugin(ContainerInterface $container, array $plugin): bool
     {
         $newPluginModel = new NewPluginModel($container, $plugin);
         return $newPluginModel->updatePlugin();
@@ -80,7 +78,7 @@ class PluginsFacade extends Facade
      * @param array $plugin
      * @return bool
      */
-    static public function savePlugin(ContainerInterface $container, array $plugin)
+    static public function savePlugin(ContainerInterface $container, array $plugin): bool
     {
         $newPluginModel = new NewPluginModel($container, $plugin);
         return $newPluginModel->saveNewPlugin();
@@ -91,17 +89,19 @@ class PluginsFacade extends Facade
      * @param string $name
      * @return bool
      */
-    static public function deletePlugin(ContainerInterface $container, string $name)
+    static public function deletePlugin(ContainerInterface $container, string $name): bool
     {
         $pluginModel = new PluginModel($container, $name);
         $pluginModel->delete($container, $name) != false;
         return unlink($_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS . DIRECTORY_SEPARATOR . $name . '.zip');
     }
 
-    static public function populatePluginsList(ContainerInterface $container, PluginsModel $pluginsModel)
+    /**
+     * @return null|array
+     */
+    static public function populatePluginsList(ContainerInterface $container, PluginsModel $pluginsModel): null|array
     {
         $plugins = null;
-
         if (!empty($pluginsModel)) {
             foreach ($pluginsModel->plugins as $key => $value) {
                 $plugins[$key]['name'] = $value['name'];
@@ -115,7 +115,6 @@ class PluginsFacade extends Facade
                 $plugins[$key]['categoryIcon'] = CategoriesFacade::getPluginCategory($container, $value['category'])->icon;
             }
         }
-
         return $plugins;
     }
 }
