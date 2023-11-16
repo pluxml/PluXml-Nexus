@@ -50,7 +50,7 @@
                 <label for="category">Category: </label>
                 <select name="category" id="category" required>
                     <?php foreach ($categories as $category => $value): ?>
-                        <option value="<?= $value['id'] ?>" <?php if ($formOldValues['category'] == $value['id']):?>selected="selected"<?php endif; ?>><?= $value['name'] ?></option>
+                        <option value="<?= $value['id'] ?>" <?php if (isset($formOldValues['category']) && $formOldValues['category'] == $value['id']):?>selected="selected"<?php endif; ?>><?= $value['name'] ?></option>
                     <?php endforeach; ?>
                 </select>
                 <?php if (isset($flash['category'][0])): ?><p><?= $flash['category'][0] ?></p><?php endif; ?>
