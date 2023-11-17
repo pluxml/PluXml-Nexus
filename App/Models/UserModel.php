@@ -8,21 +8,13 @@ use Psr\Container\ContainerInterface;
 
 class UserModel extends Model
 {
-
     public $id;
-
     public $username;
-
     public $password;
-
     public $email;
-
     public $website;
-
     public $role;
-
     public $token;
-
     public $tokenExpire;
 
     public function __construct(ContainerInterface $container, String $id)
@@ -41,12 +33,12 @@ class UserModel extends Model
         $this->tokenExpire = $pdo[0]['tokenexpire'];
     }
 
-    public function editUser()
+    public function editUser(): bool
     {
         return $this->pdoService->insert("UPDATE users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '$this->role', token = '$this->token', tokenexpire = '$this->tokenExpire' WHERE id = '$this->id'");
     }
 
-    public function delete()
+    public function delete(): bool
     {
         return $this->pdoService->delete("DELETE FROM users WHERE id = '$this->id'");
     }

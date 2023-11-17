@@ -59,6 +59,6 @@ $app->group('/backoffice', function (RouteCollectorProxyInterface $group) {
     $group->post('/theme/edit/{name}', BackofficeThemesController::class . ':edit')->setName('themeEditAction');
     $group->post('/theme/delete/{name}', BackofficeThemesController::class . ':delete')->setName('themeDeleteAction');
     $group->post('/profile/edit', BackofficeProfileController::class . ':edit')->setName('profileSaveAction');
-    $group->post('/profile/changePasword', BackofficeProfileController::class . ':save')->setName('profilePasswordAction');
+    $group->post('/profile/changePassword', BackofficeProfileController::class . ':password')->setName('profilePasswordAction');
 
 })->add(new BackofficeMiddleware($container));

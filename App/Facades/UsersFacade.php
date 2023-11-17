@@ -61,6 +61,7 @@ class UsersFacade
      */
     static public function getProfile(ContainerInterface $container, string $username, bool $withPlugins = false): array
     {
+        $datas = array();
         $userModel = self::searchUser($container, $username);
 
         $datas['title'] = "Profile $userModel->username Ressources - PluXml.org";
@@ -77,25 +78,24 @@ class UsersFacade
     /**
      *
      * @param ContainerInterface $container
-     * @param string $search
+     * @param string $username
      * @return UserModel
      */
-    static public function searchUser(ContainerInterface $container, string $search): ?UserModel
+    static public function searchUser(ContainerInterface $container, string $username): ?UserModel
     {
         $userModel = NULL;
         $userModels = new UsersModel($container);
 
         // Search userid by the username
-        foreach ($userModels->users as $k => $v)
-            if (in_array($search, $v)) {
+        foreach ($userModels->users as $k => $v) {
+            if ($v['username'] == $username) {
                 $userId = $userModels->users[$k]['id'];
                 break;
             }
-
+        }
         if (!empty($userId)) {
             $userModel = new UserModel($container, $userId);
         }
-
         return $userModel;
     }
 
@@ -121,6 +121,26 @@ class UsersFacade
         return $newUserModel->updateUser();
     }
 
+    /**
+     * @param ContainerInterface $container
+     * @param array $post
+     * @return bool
+     */
+    static public function changeUserPassword(ContainerInterface $container, array $post): bool
+    {
+        $result = false;
+        $userModel = self::searchUser($container, $post['username']);
+
+        if (!empty($userModel) and password_verify($post['currentPassword'], $userModel->password)) {
+            if ($post['newPassword'] == $post['confirmPassword']) {
+                $userModel->password = password_hash($post['newPassword'], PASSWORD_BCRYPT);
+                $result = $userModel->editUser();
+            }
+        }
+
+        return $result;
+    }
+    
     /**
      * @param ContainerInterface $container
      * @param string $username
