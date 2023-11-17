@@ -9,17 +9,11 @@ use Psr\Container\ContainerInterface;
 
 class NewUserModel extends Model
 {
-
     private $username;
-
     private $password;
-
     private $email;
-
     private $website;
-
     private $token;
-
     private $tokenExpire;
 
     public function __construct(ContainerInterface $container, array $user)
@@ -35,16 +29,12 @@ class NewUserModel extends Model
         $this->tokenExpire = $token['expire'];
     }
 
-    /**
-     *
-     * @return bool
-     */
-    public function saveNewUser()
+    public function saveNewUser(): bool
     {
         return $this->pdoService->insert("INSERT INTO users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '', token = '$this->token', tokenexpire = '$this->tokenExpire'");
     }
 
-    public function updateUser()
+    public function updateUser(): bool
     {
         return $this->pdoService->insert("UPDATE users SET email = '$this->email', website = '$this->website' WHERE username = '$this->username'");
     }

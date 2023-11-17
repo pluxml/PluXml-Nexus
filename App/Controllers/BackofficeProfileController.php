@@ -13,10 +13,9 @@ use Respect\Validation\Validator;
  */
 class BackofficeProfileController extends Controller
 {
-
     private const MSG_SUCCESS_EDITPROFILE = 'Profile updated with success.';
-
     private const MSG_ERROR_EDITPROFILE = 'Profile can not be updated, see errors below.';
+    private const MSG_ERROR_EDITPROFILE_PASSWORD = 'Current password incorrect or new passwords do not match';
 
     /**
      *
@@ -24,8 +23,9 @@ class BackofficeProfileController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function showEditProfile(Request $request, Response $response)
+    public function showEditProfile(Request $request, Response $response): Response
     {
+        $datas = array();
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'My profile';
@@ -40,10 +40,11 @@ class BackofficeProfileController extends Controller
      * @param $args
      * @return Response
      */
-    public function edit(Request $request, Response $response, $args)
+    public function edit(Request $request, Response $response, $args): Response
     {
         $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
         $post = $request->getParsedBody();
+        $errors = array();
 
         Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = self::MSG_VALID_EMAIL;
         Validator::url()->length(1, 99)->validate($post['website']) || $errors['website'] = self::MSG_VALID_URL;
@@ -71,9 +72,18 @@ class BackofficeProfileController extends Controller
      * @param $args
      * @return Response
      */
-    public function changePassword(Request $request, Response $response, $args)
+    public function password(Request $request, Response $response, $args): Response
     {
         $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
+        $post = $request->getParsedBody();
+
+        if (UsersFacade::changeUserPassword($this->container, $post)) {
+            $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPROFILE);
+        }
+        else {
+            $this->messageService->addMessage('error', self::MSG_ERROR_EDITPROFILE_PASSWORD);
+            $namedRoute = self::NAMED_ROUTE_BACKOFFICE_PROFILE;
+        }
 
         return $this->redirect($response, $namedRoute, $args);
     }

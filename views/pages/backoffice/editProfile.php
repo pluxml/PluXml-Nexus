@@ -40,5 +40,27 @@
                 <input type="submit" value="Save">
             </div>
         </form>
+
+        <h4>Change password</h4>
+        <form action="<?= $routerService->urlFor('profilePasswordAction') ?>" method="post">
+            <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
+            <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
+            <input type="hidden" name="username" value="<?= $username ?>">
+            <div <?php if (isset($flash['currentPassword'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="currentPassword">Current password*: </label>
+                <input type="text" name="currentPassword" id="currentPassword" required>
+            </div>
+            <div>
+                <label for="newPassword">New password*: </label>
+                <input type="password" name="newPassword" id="newPassword" required>
+            </div>
+            <div>
+                <label for="confirmPassword">Confirm password*: </label>
+                <input type="password" name="confirmPassword" id="confirmPassword" required>
+            </div>
+            <div>
+                <input type="submit" value="Save">
+            </div>
+        </form>
     </div>
 </div>
