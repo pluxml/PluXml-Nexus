@@ -1,4 +1,4 @@
-## 1.5 - 2023/mm/dd
+## 1.5 - 2023/11/17
 
 ADD user can change his password
 FIX error when removing a user
