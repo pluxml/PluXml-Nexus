@@ -35,4 +35,4 @@ jobs:
     - name: PHPStan static analysis
       uses: php-actions/phpstan@v3
       with:
-        path: src/App
+        path: App config views
