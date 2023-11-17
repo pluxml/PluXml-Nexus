@@ -2,7 +2,7 @@
 	"name" : "hyperion/pluxml-nexus",
 	"description" : "Ressources center for PluXml",
 	"type" : "project",
-	"license" : "GNU GPL",
+	"license" : "GPL-3.0-or-later",
 	"authors" : [{
 			"name" : "Pedro CADETE",
 			"email" : "pedro@hyperion-web.fr"
