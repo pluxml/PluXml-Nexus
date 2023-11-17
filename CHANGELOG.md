@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6 - 2023/mm/dd
+
+- FIX active tabs CSS class
+
 ## 1.5 - 2023/11/17
 
 - ADD user can change his password
