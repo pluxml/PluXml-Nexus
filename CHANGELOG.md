@@ -3,6 +3,7 @@
 ## 1.6 - 2023/mm/dd
 
 - FIX active tabs CSS class
+- FIX syntax error on themes view
 
 ## 1.5 - 2023/11/17
 
