@@ -14,39 +14,22 @@ use App\Facades\UsersFacade;
  */
 class AuthController extends Controller
 {
-
     private const NAMED_ROUTE_AUTH = 'auth';
-
     private const NAMED_ROUTE_SIGNUP = 'signup';
-
     private const PAGE_AUTH = 'pages/backoffice/auth.php';
-
     private const PAGE_SIGNUP = 'pages/backoffice/signup.php';
-
     private const PAGE_LOSTPASSWORD = 'pages/backoffice/authLostPassword.php';
-
     private const PAGE_RESETPASSWORD = 'pages/backoffice/authResetPassword.php';
-
     private const MSG_ERROR_LOGIN = 'Wrong username or password';
-
     private const MSG_ERROR_SIGNUP = 'Signup error, please see below';
-
     private const MSG_ERROR_CONFIRMEMAIL = 'Email confirmation failed';
-
     private const MSG_SUCCESS_SIGNUP = 'Signup successful, please confirm your email address to be able to login';
-
     private const MSG_SUCCESS_CONFIRMEMAIL = 'Email address confirmation success';
-
     private const MSG_SUCCESS_LOSTPASSWORDEMAIL = 'An e-mail has been sent to you, allowing you to reset your password';
-
     private const MSG_SUCCESS_RESETPASSWORD = 'Your password has been updated';
-
     private const MSG_LOGOUT = 'Log out successful';
-
     private const MSG_VALID_USERNAME = 'Must be alphanumeric with no whitespace';
-
     private const MSG_VALID_PASSWORD = 'Lengh must be inferior to 100 characters';
-
     private const MSG_VALID_PASSWORDCONFIRM = 'Password does not match';
 
     /**
@@ -62,7 +45,6 @@ class AuthController extends Controller
         } else {
             $response = $this->render($response, self::PAGE_AUTH);
         }
-
         return $response;
     }
 
@@ -79,7 +61,6 @@ class AuthController extends Controller
         } else {
             $response = $this->render($response, self::PAGE_SIGNUP);
         }
-
         return $response;
     }
 
@@ -96,7 +77,6 @@ class AuthController extends Controller
         } else {
             $response = $this->render($response, self::PAGE_LOSTPASSWORD);
         }
-
         return $response;
     }
 
@@ -108,14 +88,15 @@ class AuthController extends Controller
      */
     public function showResetPassword(Request $request, Response $response): Response
     {
+        $datas = array();
         $params = $request->getQueryParams();
-
         $result = AuthFacade::confirmLostPasswordToken($this->container, $params['token']);
 
         if ($result) {
-            $datas['user'] = UsersFacade::getProfile($this->container, $params['token']);
+            $datas['user'] = UsersFacade::getProfile($this->container, $params['token'], "token");
             $response = $this->render($response, self::PAGE_RESETPASSWORD, $datas);
         } else {
+            $this->messageService->addMessage('error', self::MSG_ERROR);
             $response = $this->render($response, self::PAGE_AUTH);
         }
 
@@ -171,7 +152,6 @@ class AuthController extends Controller
     public function confirmEmail(Request $request, Response $response): Response
     {
         $params = $request->getQueryParams();
-
         $result = AuthFacade::confirmEmail($this->container, $params['username'], $params['token']);
 
         if ($result) {

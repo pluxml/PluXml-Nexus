@@ -59,18 +59,19 @@ class UsersFacade
      * @param bool $withPlugins add user's plugins name to the view datas
      * @return array $datas
      */
-    static public function getProfile(ContainerInterface $container, string $username, bool $withPlugins = false): array
+    static public function getProfile(ContainerInterface $container, string $search, string $userAttribute = "username", bool $withPlugins = false): array
     {
         $datas = array();
-        $userModel = self::searchUser($container, $username);
+        $userModel = self::searchUser($container, $search, $userAttribute);
 
-        $datas['title'] = "Profile $userModel->username Ressources - PluXml.org";
-        $datas['username'] = $userModel->username;
-        $datas['email'] = $userModel->email;
-        $datas['website'] = $userModel->website;
-
-        if ($withPlugins) {
-            $datas['plugins'] = self::getPluginsByProfile($container, $userModel->id);
+        if (!is_null($userModel)) {
+            $datas['title'] = "Profile $userModel->username Ressources - PluXml.org";
+            $datas['username'] = $userModel->username;
+            $datas['email'] = $userModel->email;
+            $datas['website'] = $userModel->website;
+            if ($withPlugins) {
+                $datas['plugins'] = self::getPluginsByProfile($container, $userModel->id);
+            }
         }
         return $datas;
     }
@@ -78,17 +79,18 @@ class UsersFacade
     /**
      *
      * @param ContainerInterface $container
-     * @param string $username
+     * @param string $search the value to search with
+     * @param string $userAttribute the user attribute where to search
      * @return UserModel
      */
-    static public function searchUser(ContainerInterface $container, string $username): ?UserModel
+    static public function searchUser(ContainerInterface $container, string $search, string $userAttribute = "username"): ?UserModel
     {
         $userModel = NULL;
         $userModels = new UsersModel($container);
 
         // Search userid by the username
         foreach ($userModels->users as $k => $v) {
-            if ($v['username'] == $username) {
+            if ($v[$userAttribute] == $search) {
                 $userId = $userModels->users[$k]['id'];
                 break;
             }

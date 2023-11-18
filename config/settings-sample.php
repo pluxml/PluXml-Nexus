@@ -33,4 +33,6 @@ const MAIL_SMTP_SECURITY = 'ssl'; //possible values : 'ssl' or 'tls'
 const MAIL_FROM = 'name@mail.com';
 const MAIL_FROM_NAME = 'MailName';
 const MAIL_NEWUSER_SUBJECT = 'Welcome to PluXml Nexus';
-const MAIL_NEWUSER_BODY = '<p>Hello ##USERNAME##</p>To complete your signup and be able to login to <a href="https://ressources.pluxml.org">ressources.pluxml.org</a>, please confirm your email address by clicking the link below</p>##TOKEN##<p>This link will expire in 24h.</p>';
+const MAIL_NEWUSER_BODY = 'Hello ##USERNAME##\nTo complete your signup and be able to login to https://ressources.pluxml.org, please confirm your email address by clicking the link below</p>##TOKEN##\nThis link will expire in 24h.';
+const MAIL_LOSTPASSWORD_SUBJECT = 'PluXml Nexus - Lost password';
+const MAIL_LOSTPASSWORD_BODY = 'Hello ##USERNAME##\nPlease use this link to change your password : ##URL_PASSWORD##\nThis link will expire in ##URL_EXPIRY## hours.';

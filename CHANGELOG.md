@@ -2,8 +2,11 @@
 
 ## 1.6 - 2023/mm/dd
 
+Warning : settings.php needs to be updated with new constants (see `setting-sample.php` : `MAIL_LOSTPASSWORD_SUBJECT` and `MAIL_LOSTPASSWORD_BODY`)
+
 - FIX active tabs CSS class
 - FIX syntax error on themes view
+- FIX lost password
 
 ## 1.5 - 2023/11/17
 

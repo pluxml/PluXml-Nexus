@@ -56,6 +56,7 @@ class AuthFacade extends Facade
      * Check user role from session and model
      *
      * @param ContainerInterface $container
+     * @param $username
      * @return boolean
      */
     static public function isAdmin(ContainerInterface $container, $username): bool
@@ -75,7 +76,7 @@ class AuthFacade extends Facade
     /**
      * Logout the user
      */
-    static public function logout()
+    static public function logout(): void
     {
         unset($_SESSION['user']);
     }
@@ -93,11 +94,11 @@ class AuthFacade extends Facade
         $tokenHref = $container->get('router')->urlFor('confirmEmail') . "?username=$userModel->username&token=$userModel->token";
         $placeholder = [
             '##USERNAME##' => $userModel->username,
-            '##TOKEN##' => '<p><a href="' . $host . $tokenHref . '">' . $host . $tokenHref . '</a></p>'
+            '##TOKEN##' => $host . $tokenHref
         ];
         $body = str_replace(array_keys($placeholder), array_values($placeholder), MAIL_NEWUSER_BODY);
 
-        $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_NEWUSER_SUBJECT, $body, TRUE);
+        $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_NEWUSER_SUBJECT, $body, FALSE);
 
         return $result;
     }
@@ -134,8 +135,8 @@ class AuthFacade extends Facade
      */
     static public function sendNewPasswordEmail(ContainerInterface $container, string $username): bool
     {
+        $token = array();
         $result = FALSE;
-
         $userModel = UsersFacade::searchUser($container, $username);
 
         if (isset($userModel->id)) {
@@ -153,9 +154,9 @@ class AuthFacade extends Facade
                 '##URL_PASSWORD##' => $host . $tokenHref,
                 '##URL_EXPIRY##' => $token['expire']
             ];
-            $body = str_replace(array_keys($placeholder), array_values($placeholder), MAIL_LOSTPASSWORD);
+            $body = str_replace(array_keys($placeholder), array_values($placeholder), MAIL_LOSTPASSWORD_BODY);
 
-            $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_NEWUSER_SUBJECT, $body, TRUE);
+            $result = $container->get('mail')->sendMail(MAIL_FROM, MAIL_FROM_NAME, $userModel->email, $userModel->username, MAIL_LOSTPASSWORD_SUBJECT, $body, FALSE);
         }
 
         return $result;
@@ -170,7 +171,7 @@ class AuthFacade extends Facade
     {
         $result = false;
         if (isset($token)) {
-            $userModel = UsersFacade::searchUser($container, $token);
+            $userModel = UsersFacade::searchUser($container, $token, "token");
             if (isset($userModel)) {
                 $result = true;
             }
