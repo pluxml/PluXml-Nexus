@@ -17,7 +17,7 @@ class ProfilesController extends Controller
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function show(Request $request, Response $response)
+    public function show(Request $request, Response $response): Response
     {
         $datas = UsersFacade::getAllProfiles($this->container, true);
         return $this->render($response, 'pages/profiles.php', $datas);
@@ -30,9 +30,9 @@ class ProfilesController extends Controller
      * @param Array $args
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function showProfile(Request $request, Response $response, $args)
+    public function showProfile(Request $request, Response $response, $args): Response
     {
-        $datas = UsersFacade::getProfile($this->container, $args['username'], true);
+        $datas = UsersFacade::getProfile($this->container, $args['username'], "username", true);
         return $this->render($response, 'pages/profile.php', $datas);
     }
 }
