@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7 - 2023/mm/dd
+
+- FIX typo in lost password mail template
+
 ## 1.6 - 2023/11/17
 
 **Warning** : `settings.php` needs to be updated with new constants (see `setting-sample.php` : `MAIL_LOSTPASSWORD_SUBJECT` and `MAIL_LOSTPASSWORD_BODY`)
