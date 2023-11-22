@@ -2,6 +2,7 @@
 
 ## 1.7 - 2023/mm/dd
 
+- ADD timestamp comparison on signup form submission against bots
 - FIX typo in lost password mail template
 
 ## 1.6 - 2023/11/17
