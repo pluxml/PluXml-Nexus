@@ -56,10 +56,12 @@ class AuthController extends Controller
      */
     public function showSignup(Request $request, Response $response): Response
     {
+        $datas = array();
         if (AuthFacade::isLogged()) {
             $response = $this->redirect($response, self::NAMED_ROUTE_BACKOFFICE);
         } else {
-            $response = $this->render($response, self::PAGE_SIGNUP);
+            $datas['timestamp'] = time();
+            $response = $this->render($response, self::PAGE_SIGNUP, $datas);
         }
         return $response;
     }
@@ -218,26 +220,30 @@ class AuthController extends Controller
         $namedRoute = self::NAMED_ROUTE_SIGNUP;
         $post = $request->getParsedBody();
 
-        Validator::notEmpty()->noWhitespace()
-            ->alnum()
-            ->length(1, 99)
-            ->validate($post['username']) || $errors['username'] = self::MSG_VALID_USERNAME;
-        Validator::notEmpty()->length(1, 99)->validate($post['password']) || $errors['password'] = self::MSG_VALID_PASSWORD;
-        Validator::notEmpty()->equals($post['password'])->validate($post['password2']) || $errors['password2'] = self::MSG_VALID_PASSWORDCONFIRM;
-        Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = self::MSG_VALID_EMAIL;
+        if (time() - $post['timestamp'] > 5) {
+            Validator::notEmpty()->noWhitespace()
+                ->alnum()
+                ->length(1, 99)
+                ->validate($post['username']) || $errors['username'] = self::MSG_VALID_USERNAME;
+            Validator::notEmpty()->length(1, 99)->validate($post['password']) || $errors['password'] = self::MSG_VALID_PASSWORD;
+            Validator::notEmpty()->equals($post['password'])->validate($post['password2']) || $errors['password2'] = self::MSG_VALID_PASSWORDCONFIRM;
+            Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = self::MSG_VALID_EMAIL;
 
-        if (empty($errors)) {
-            if (UsersFacade::addUser($this->container, $post) and AuthFacade::sendConfirmationEmail($this->container, $post['username'])) {
-                $this->messageService->addMessage('success', self::MSG_SUCCESS_SIGNUP);
-                $namedRoute = self::NAMED_ROUTE_AUTH;
+            if (empty($errors)) {
+                if (UsersFacade::addUser($this->container, $post) and AuthFacade::sendConfirmationEmail($this->container, $post['username'])) {
+                    $this->messageService->addMessage('success', self::MSG_SUCCESS_SIGNUP);
+                    $namedRoute = self::NAMED_ROUTE_AUTH;
+                } else {
+                    $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
+                }
             } else {
-                $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
+                $this->messageService->addMessage('error', self::MSG_ERROR_SIGNUP);
+                foreach ($errors as $key => $message) {
+                    $this->messageService->addMessage($key, $message);
+                }
             }
         } else {
-            $this->messageService->addMessage('error', self::MSG_ERROR_SIGNUP);
-            foreach ($errors as $key => $message) {
-                $this->messageService->addMessage($key, $message);
-            }
+            $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
         }
 
         return $this->redirect($response, $namedRoute);

@@ -16,6 +16,7 @@
             <form action="<?= $routerService->urlFor('signupAction') ?>" method="post">
                 <input type="hidden" name="<?= $csrf['nameKey'] ?>" value="<?= $csrf['name'] ?>">
                 <input type="hidden" name="<?= $csrf['valueKey'] ?>" value="<?= $csrf['value'] ?>">
+                <input type="hidden" name="timestamp" value="<?= $timestamp ?>">
                 <div <?php if (isset($flash['username'][0])): ?>style="color:red"<?php endif; ?>>
                     <label for="username">Username*: </label>
                     <input type="text" name="username" id="username"
