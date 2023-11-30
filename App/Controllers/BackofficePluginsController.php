@@ -40,8 +40,9 @@ class BackofficePluginsController extends Controller
      * @param Response $response
      * @return Response
      */
-    public function show(Request $request, Response $response)
+    public function show(Request $request, Response $response): Response
     {
+        $datas = [];
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'Plugins';
@@ -59,6 +60,7 @@ class BackofficePluginsController extends Controller
      */
     public function showPlugin(Request $request, Response $response, array $args): Response
     {
+        $datas = [];
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'Edit plugin ' . $args['name'];
@@ -76,6 +78,7 @@ class BackofficePluginsController extends Controller
      */
     public function showAddPlugin(Request $request, Response $response): Response
     {
+        $datas = [];        
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'New plugin';

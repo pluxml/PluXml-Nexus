@@ -13,6 +13,8 @@ class ThemesFacade extends Facade
 
     static public function getAllThemes(ContainerInterface $container)
     {
+        $datas = [];
+        $themes = [];
         $themesModel = new ThemesModel($container);
 
         $datas['title'] = 'Themes Ressources - PluXml.org';
@@ -30,6 +32,7 @@ class ThemesFacade extends Facade
 
     static public function getTheme(ContainerInterface $container, String $name)
     {
+        $datas = [];
         $themeModel = new ThemeModel($container, $name);
 
         $datas['title'] = "Plugin $themeModel->name Ressources - PluXml.org";
