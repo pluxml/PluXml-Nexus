@@ -37,6 +37,7 @@ class PluginsController extends Controller
     {
         $datas['activeTab'] = 3;
         $datas['categories'] = CategoriesFacade::getCategories($this->container);
+        $datas['activeCategory'] = $args['name'];
         $datas['plugins'] = CategoriesFacade::getPluginsForCategory($this->container, $args['name']);
         return $this->render($response, 'pages/plugins.php', $datas);
     }
