@@ -21,9 +21,9 @@
             <small>
                 <strong>Warning</strong>
                 <ul>
-                    <li>The plugin name must be unique</li>
-                    <li>The uploaded file must be a "zip" archive</li>
-                    <li>The uploaded file will be renamed with the plugin name</li>
+                    <li>Plugin name must be unique</li>
+                    <li>Uploaded file must be a "zip" archive</li>
+                    <li>Uploaded file will be renamed with the plugin name</li>
                 </ul>
             </small>
         </div>

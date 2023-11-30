@@ -11,7 +11,7 @@
     </div>
     <div class="col sml-12 med-4">
         <div class="tab <?php if ($activeTab == 2): ?>activeTab<?php endif; ?>">
-            <a style="pointer-events: none;" href="<?= $routerService->urlFor('themes') ?>">Themes</a>
+            <a href="<?= $routerService->urlFor('themes') ?>">Themes</a>
         </div>
     </div>
 </div>

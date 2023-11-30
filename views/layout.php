@@ -86,7 +86,8 @@
 </main>
 
 <footer>
-    PluXml.org - Blog ou Cms à l'Xml !
+    PluXml - Fast and simple site generator<br>
+    Powered by <a href="https://github.com/pluxml/PluXml-Nexus">PluXml-Nexus</a>
     <script src="https://medias.pluxml.org/navigation/nav.js"></script>
 </footer>
 
