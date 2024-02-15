@@ -4,8 +4,8 @@
 </p>
 
 <p align="center">
-    <a href="https://www.pluxml.org/download/pluxml-latest.zip"><img src="https://badgen.net/github/release/pluxml/pluxml?icon=github" /></a>
-    <a href="https://github.com/pluxml/PluXml/blob/master/readme/LICENSE"><img src="https://badgen.net/badge/license/GPL/green?icon=php" /></a>
+    <a href="https://www.pluxml.org/download/pluxml-latest.zip"><img src="https://badgen.net/github/release/pluxml/Pluxml-Nexus?icon=github" /></a>
+    <a href="https://github.com/pluxml/PluXml-Nexus/blob/master/readme/LICENSE"><img src="https://badgen.net/badge/license/GPL/green?icon=php" /></a>
 </p>
 
 <p align="center">Ressources center for PluXml.org</p>
