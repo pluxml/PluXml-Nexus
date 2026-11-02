@@ -5,22 +5,22 @@
 
             <?php if (isset($flash['success'])): ?>
                 <div class="alert green">
-                    <?= e($flash['success'][0]) ?>
+                    <?= escape_html($flash['success'][0]) ?>
                 </div>
             <?php elseif (isset($flash['error'])): ?>
                 <div class="alert red">
-                    <?= e($flash['error'][0]) ?>
+                    <?= escape_html($flash['error'][0]) ?>
                 </div>
             <?php endif; ?>
 
             <form action="<?= $routerService->urlFor('resetPassword') ?>" method="post">
-                <input type="hidden" name="<?= e($csrf['nameKey']) ?>" value="<?= e($csrf['name']) ?>">
-                <input type="hidden" name="<?= e($csrf['valueKey']) ?>" value="<?= e($csrf['value']) ?>">
-                <input type="hidden" name="username" value="<?= e($user['username']) ?>">
+                <input type="hidden" name="<?= escape_html($csrf['nameKey']) ?>" value="<?= escape_html($csrf['name']) ?>">
+                <input type="hidden" name="<?= escape_html($csrf['valueKey']) ?>" value="<?= escape_html($csrf['value']) ?>">
+                <input type="hidden" name="username" value="<?= escape_html($user['username']) ?>">
                 <div <?php if (isset($flash['error'][2])): ?>style="color:red"<?php endif; ?>>
                     <label for="password">Password: </label>
                     <input type="password" name="password" id="password" required>
-                    <?php if (isset($flash['error'][2])): ?><p><?= e($flash['error'][2]) ?></p><?php endif; ?>
+                    <?php if (isset($flash['error'][2])): ?><p><?= escape_html($flash['error'][2]) ?></p><?php endif; ?>
                 </div>
                 <div>
                     <input type="submit" value="Change my password">

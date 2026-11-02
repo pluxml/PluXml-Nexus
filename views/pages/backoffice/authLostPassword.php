@@ -4,14 +4,14 @@
             <h3>Lost your password?</h3>
 
             <form action="<?= $routerService->urlFor('lostPasswordAction') ?>" method="post">
-                <input type="hidden" name="<?= e($csrf['nameKey']) ?>" value="<?= e($csrf['name']) ?>">
-                <input type="hidden" name="<?= e($csrf['valueKey']) ?>" value="<?= e($csrf['value']) ?>">
+                <input type="hidden" name="<?= escape_html($csrf['nameKey']) ?>" value="<?= escape_html($csrf['name']) ?>">
+                <input type="hidden" name="<?= escape_html($csrf['valueKey']) ?>" value="<?= escape_html($csrf['value']) ?>">
                 <div <?php if (isset($flash['error'][1])): ?>style="color:red"<?php endif; ?>>
                     <label for="username">Username: </label>
                     <input type="text" name="username" id="username"
-                           <?php if (isset($formOldValues['username'])): ?>value="<?= e($formOldValues['username']) ?>"<?php endif; ?>
+                           <?php if (isset($formOldValues['username'])): ?>value="<?= escape_html($formOldValues['username']) ?>"<?php endif; ?>
                            required>
-                    <?php if (isset($flash['error'][1])): ?><p><?= e($flash['error'][1]) ?></p><?php endif; ?>
+                    <?php if (isset($flash['error'][1])): ?><p><?= escape_html($flash['error'][1]) ?></p><?php endif; ?>
                 </div>
                 <div>
                     <input type="submit" value="Get new password">

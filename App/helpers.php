@@ -9,7 +9,7 @@
  * @param mixed $value
  * @return string
  */
-function e($value): string
+function escape_html($value): string
 {
     return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
