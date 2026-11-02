@@ -47,7 +47,7 @@ class BackofficeProfileController extends Controller
         $errors = array();
 
         Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = self::MSG_VALID_EMAIL;
-        Validator::url()->length(1, 99)->validate($post['website']) || $errors['website'] = self::MSG_VALID_URL;
+        Validator::url()->regex('#^https?://#i')->length(1, 99)->validate($post['website']) || $errors['website'] = self::MSG_VALID_URL;
 
         if (empty($errors)) {
             if (UsersFacade::editUser($this->container, $post)) {
