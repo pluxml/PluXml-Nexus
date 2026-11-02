@@ -1,8 +1,8 @@
 <div class="content">
     <div class="page">
-        <h2><?= e($h2) ?></h2>
+        <h2><?= escape_html($h2) ?></h2>
         <p><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;Themes</p>
-        <h3><?= e($h3) ?></h3>
+        <h3><?= escape_html($h3) ?></h3>
 
         <p><a href="<?= $routerService->urlFor('boaddtheme') ?>" class="button blue">Add a theme</a></p>
 
@@ -22,15 +22,15 @@
                     <tbody>
                     <?php foreach ($themes as $key => $theme): ?>
                         <tr>
-                            <td><?= e($theme['name']) ?></td>
-                            <td><?= e($theme['description']) ?></td>
-                            <td><?= e($theme['versionPlugin']) ?></td>
-                            <td><?= e($theme['versionPluxml']) ?></td>
-                            <td><a href="<?= e(safe_url($theme['website'])) ?>"><?= e($theme['website']) ?></a></td>
+                            <td><?= escape_html($theme['name']) ?></td>
+                            <td><?= escape_html($theme['description']) ?></td>
+                            <td><?= escape_html($theme['versionPlugin']) ?></td>
+                            <td><?= escape_html($theme['versionPluxml']) ?></td>
+                            <td><a href="<?= escape_html(safe_url($theme['website'])) ?>"><?= escape_html($theme['website']) ?></a></td>
                             <td>
-                                <a href="<?= e($routerService->urlFor('boeditplugin', ['name' => $theme['name']])) ?>">edit</a>&nbsp;
-                                <a href="<?= e($routerService->urlFor('boeditplugin', ['name' => $theme['name']])) ?>">delete</a>&nbsp;
-                                <a href="<?= e(safe_url($theme['link'])) ?>">download</a>
+                                <a href="<?= escape_html($routerService->urlFor('boeditplugin', ['name' => $theme['name']])) ?>">edit</a>&nbsp;
+                                <a href="<?= escape_html($routerService->urlFor('boeditplugin', ['name' => $theme['name']])) ?>">delete</a>&nbsp;
+                                <a href="<?= escape_html(safe_url($theme['link'])) ?>">download</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
