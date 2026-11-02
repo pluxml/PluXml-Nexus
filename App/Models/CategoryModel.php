@@ -20,9 +20,9 @@ class CategoryModel extends Model
         parent::__construct($container);
 
         if (!empty($id)) {
-            $pdo = $this->pdoService->query("SELECT * FROM categories WHERE id = '$id'");
+            $pdo = $this->pdoService->query('SELECT * FROM categories WHERE id = :id', ['id' => $id]);
         } else {
-            $pdo = $this->pdoService->query("SELECT * FROM categories WHERE name = '$name'");
+            $pdo = $this->pdoService->query('SELECT * FROM categories WHERE name = :name', ['name' => $name]);
         }
 
         $this->id = $pdo[0]['id'];
