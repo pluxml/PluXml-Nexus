@@ -21,7 +21,7 @@ class UserModel extends Model
     {
         parent::__construct($container);
 
-        $pdo = $this->pdoService->query("SELECT * FROM users WHERE id = '$id'");
+        $pdo = $this->pdoService->query('SELECT * FROM users WHERE id = :id', ['id' => $id]);
 
         $this->id = $pdo[0]['id'];
         $this->username = $pdo[0]['username'];
@@ -35,11 +35,20 @@ class UserModel extends Model
 
     public function editUser(): bool
     {
-        return $this->pdoService->insert("UPDATE users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '$this->role', token = '$this->token', tokenexpire = '$this->tokenExpire' WHERE id = '$this->id'");
+        return $this->pdoService->insert('UPDATE users SET username = :username, password = :password, email = :email, website = :website, role = :role, token = :token, tokenexpire = :tokenexpire WHERE id = :id', [
+            'username' => $this->username,
+            'password' => $this->password,
+            'email' => $this->email,
+            'website' => $this->website,
+            'role' => $this->role,
+            'token' => $this->token,
+            'tokenexpire' => $this->tokenExpire,
+            'id' => $this->id,
+        ]);
     }
 
     public function delete(): bool
     {
-        return $this->pdoService->delete("DELETE FROM users WHERE id = '$this->id'");
+        return $this->pdoService->delete('DELETE FROM users WHERE id = :id', ['id' => $this->id]);
     }
 }

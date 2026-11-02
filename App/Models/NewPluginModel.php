@@ -51,7 +51,7 @@ class NewPluginModel extends Model
      */
     public function saveNewPlugin()
     {
-        return $this->pdoService->insert("INSERT INTO plugins SET name = '$this->name', description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file', category = '$this->category'");
+        return $this->pdoService->insert('INSERT INTO plugins SET name = :name, description = :description, author = :author, date = :date, versionPlugin = :versionPlugin, versionPluxml = :versionPluxml, link = :link, file = :file, category = :category', $this->toParams());
     }
 
     /**
@@ -60,6 +60,26 @@ class NewPluginModel extends Model
      */
     public function updatePlugin()
     {
-        return $this->pdoService->insert("UPDATE plugins SET description = '$this->description', author = '$this->author', date = '$this->date', versionPlugin = '$this->versionPlugin', versionPluxml = '$this->versionPluxml', link = '$this->link', file= '$this->file', category = '$this->category' WHERE name = '$this->name'");
+        return $this->pdoService->insert('UPDATE plugins SET description = :description, author = :author, date = :date, versionPlugin = :versionPlugin, versionPluxml = :versionPluxml, link = :link, file = :file, category = :category WHERE name = :name', $this->toParams());
+    }
+
+    /**
+     * Values bound to the placeholders of the INSERT and UPDATE queries
+     *
+     * @return array
+     */
+    private function toParams(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'author' => $this->author,
+            'date' => $this->date,
+            'versionPlugin' => $this->versionPlugin,
+            'versionPluxml' => $this->versionPluxml,
+            'link' => $this->link,
+            'file' => $this->file,
+            'category' => $this->category,
+        ];
     }
 }

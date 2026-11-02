@@ -31,11 +31,22 @@ class NewUserModel extends Model
 
     public function saveNewUser(): bool
     {
-        return $this->pdoService->insert("INSERT INTO users SET username = '$this->username', password = '$this->password', email = '$this->email', website = '$this->website', role = '', token = '$this->token', tokenexpire = '$this->tokenExpire'");
+        return $this->pdoService->insert("INSERT INTO users SET username = :username, password = :password, email = :email, website = :website, role = '', token = :token, tokenexpire = :tokenexpire", [
+            'username' => $this->username,
+            'password' => $this->password,
+            'email' => $this->email,
+            'website' => $this->website,
+            'token' => $this->token,
+            'tokenexpire' => $this->tokenExpire,
+        ]);
     }
 
     public function updateUser(): bool
     {
-        return $this->pdoService->insert("UPDATE users SET email = '$this->email', website = '$this->website' WHERE username = '$this->username'");
+        return $this->pdoService->insert('UPDATE users SET email = :email, website = :website WHERE username = :username', [
+            'email' => $this->email,
+            'website' => $this->website,
+            'username' => $this->username,
+        ]);
     }
 }
