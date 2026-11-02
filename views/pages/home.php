@@ -1,17 +1,17 @@
 <?php if (isset($flash['success'])): ?>
     <div class="alert green">
-        <?= $flash['success'][0] ?>
+        <?= e($flash['success'][0]) ?>
     </div>
 <?php elseif (isset($flash['error'])): ?>
     <div class="alert red">
-        <?= $flash['error'][0] ?>
+        <?= e($flash['error'][0]) ?>
     </div>
 <?php endif; ?>
 
 <div class="content">
     <?php require_once 'tags/tabs.php' ?>
     <div class="page text-center">
-        <h2>PluXml <?= $pluxmlCurrentVersion ?></h2>
+        <h2>PluXml <?= e($pluxmlCurrentVersion) ?></h2>
         <p><a href="https://www.pluxml.org/download/pluxml-latest.zip"
               title="Download PluXml"><button><i class="icon-download"></i>Download</button></a></p>
         <p><small><a href="https://www.pluxml.org/download/changelog.txt">Changelog</a> - <a

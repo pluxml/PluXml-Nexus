@@ -5,8 +5,8 @@
         <?php if (!empty($themes)): ?>
             <?php foreach ($themes as $key => $theme): ?>
                 <div class="col sml-12 med-3 panel text-center">
-                    <a href="<?= $routerService->urlFor('theme', ['name' => $theme['name']]) ?>">
-                        <div class="panel-content"><?= $theme['name'] ?></div>
+                    <a href="<?= e($routerService->urlFor('theme', ['name' => $theme['name']])) ?>">
+                        <div class="panel-content"><?= e($theme['name']) ?></div>
                     </a>
                 </div>
             <?php endforeach; ?>

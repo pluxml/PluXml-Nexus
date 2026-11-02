@@ -1,4 +1,4 @@
-<h1>Theme <?= $name ?></h1>
+<h1>Theme <?= e($name) ?></h1>
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et leo
 	et ex congue blandit. Sed vel eleifend lorem. Proin laoreet commodo
 	libero non dictum. Vestibulum at bibendum nunc, a ullamcorper turpis.
@@ -11,10 +11,10 @@
 	Vestibulum a ipsum eu massa finibus fringilla.</p>
 
 <ul>
-	<li><?= $name ?></li>
-	<li><?= $description ?></li>
-	<li><?= $versionTheme ?></li>
-	<li><?= $versionPluxml ?></li>
-	<li><?= $author ?></li>
-	<li><?= $link ?></li>
+	<li><?= e($name) ?></li>
+	<li><?= e($description) ?></li>
+	<li><?= e($versionTheme) ?></li>
+	<li><?= e($versionPluxml) ?></li>
+	<li><?= e($author) ?></li>
+	<li><?= e($link) ?></li>
 </ul>

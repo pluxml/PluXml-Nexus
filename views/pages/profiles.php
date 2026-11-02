@@ -6,7 +6,7 @@
         <ul>
             <?php foreach ($profiles as $profile): ?>
                 <li>
-                    <a href="<?= $routerService->urlFor('profile', ['username' => $profile['username']]) ?>"><?= $profile['username'] ?></a>
+                    <a href="<?= e($routerService->urlFor('profile', ['username' => $profile['username']])) ?>"><?= e($profile['username']) ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>

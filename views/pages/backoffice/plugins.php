@@ -1,16 +1,16 @@
 <div class="content">
     <div class="page">
-        <h2><?= $h2 ?></h2>
+        <h2><?= e($h2) ?></h2>
         <p><a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;Plugins</p>
-        <h3><?= $h3 ?></h3>
+        <h3><?= e($h3) ?></h3>
 
         <?php if (isset($flash['success'])): ?>
             <div class="alert green">
-                <?= $flash['success'][0] ?>
+                <?= e($flash['success'][0]) ?>
             </div>
         <?php elseif (isset($flash['error'])): ?>
             <div class="alert red">
-                <?= $flash['error'][0] ?>
+                <?= e($flash['error'][0]) ?>
             </div>
         <?php endif; ?>
 
@@ -35,16 +35,16 @@
                     <?php foreach ($plugins as $key => $plugin): ?>
                         <tr>
                             <td>
-                                <a href="<?= $routerService->urlFor('plugin', ['name' => $plugin['name']]) ?>"><?= $plugin['name'] ?></a>
+                                <a href="<?= e($routerService->urlFor('plugin', ['name' => $plugin['name']])) ?>"><?= e($plugin['name']) ?></a>
                             </td>
-                            <td><?= $plugin['description'] ?></td>
-                            <td><?= $plugin['versionPlugin'] ?></td>
-                            <td><?= $plugin['versionPluxml'] ?></td>
-                            <td><a href="<?= $plugin['link'] ?>"><?= $plugin['link'] ?></a></td>
+                            <td><?= e($plugin['description']) ?></td>
+                            <td><?= e($plugin['versionPlugin']) ?></td>
+                            <td><?= e($plugin['versionPluxml']) ?></td>
+                            <td><a href="<?= e(safe_url($plugin['link'])) ?>"><?= e($plugin['link']) ?></a></td>
                             <td>
-                                <a href="<?= $routerService->urlFor('boeditplugin', ['name' => $plugin['name']]) ?>"><i
+                                <a href="<?= e($routerService->urlFor('boeditplugin', ['name' => $plugin['name']])) ?>"><i
                                             class="icon-pencil"></i></a>
-                                <a href="<?= $plugin['file'] ?>"><i class="icon-download"></i></a>
+                                <a href="<?= e($plugin['file']) ?>"><i class="icon-download"></i></a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
