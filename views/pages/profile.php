@@ -2,10 +2,14 @@
     <?php require_once 'tags/tabs.php' ?>
 
     <div class="page grid">
-        <h2><?= $username ?></h2>
+        <h2><?= htmlspecialchars($username) ?></h2>
         <ul>
             <li>
-                Website: <a href="<?= $website ?>" target="_blank"><?= $website ?></a></li>
+                <?php if (preg_match('#^https?://#i', (string) $website)): ?>
+                Website: <a href="<?= htmlspecialchars($website) ?>" target="_blank" rel="noopener noreferrer nofollow"><?= htmlspecialchars($website) ?></a></li>
+                <?php else: ?>
+                Website: <?= htmlspecialchars((string) $website) ?></li>
+                <?php endif; ?>
             </li>
         </ul>
 
