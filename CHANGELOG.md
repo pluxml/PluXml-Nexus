@@ -1,6 +1,8 @@
 # Changelog
 
-## 1.7 - 2023/mm/dd
+## 1.7 - yyyy/mm/dd
+
+**Warning** : this release need a composer `dump-autoload`
 
 - ADD timestamp comparison on signup form submission against bots
 - ADD handle active category
