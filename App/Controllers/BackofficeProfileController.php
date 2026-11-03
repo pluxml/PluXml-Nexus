@@ -44,6 +44,8 @@ class BackofficeProfileController extends Controller
     {
         $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
         $post = $request->getParsedBody();
+        // Only the logged in user profile can be edited, whatever the form sends
+        $post['username'] = $this->currentUser;
         $errors = array();
 
         Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = self::MSG_VALID_EMAIL;
@@ -76,6 +78,8 @@ class BackofficeProfileController extends Controller
     {
         $namedRoute = self::NAMED_ROUTE_BACKOFFICE;
         $post = $request->getParsedBody();
+        // Only the logged in user password can be changed, whatever the form sends
+        $post['username'] = $this->currentUser;
 
         if (UsersFacade::changeUserPassword($this->container, $post)) {
             $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITPROFILE);
