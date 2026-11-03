@@ -23,7 +23,7 @@ class PluginModel extends Model
     {
         parent::__construct($container);
 
-        $pdo = $this->pdoService->query("SELECT * FROM plugins WHERE name = '$name'");
+        $pdo = $this->pdoService->query('SELECT * FROM plugins WHERE name = :name', ['name' => $name]);
 
         if (!empty($pdo)) {
             $this->name = $pdo[0]['name'];
@@ -46,6 +46,6 @@ class PluginModel extends Model
      */
     public function delete(ContainerInterface $container, string $name): bool
     {
-        return $this->pdoService->delete("DELETE FROM plugins WHERE name = '$name'");
+        return $this->pdoService->delete('DELETE FROM plugins WHERE name = :name', ['name' => $name]);
     }
 }

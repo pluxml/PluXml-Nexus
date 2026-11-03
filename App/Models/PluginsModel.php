@@ -18,9 +18,9 @@ class PluginsModel extends Model
         parent::__construct($container);
 
         if (!empty($userid)) {
-            $this->plugins = $this->pdoService->query("SELECT * FROM plugins WHERE author='$userid'");
+            $this->plugins = $this->pdoService->query('SELECT * FROM plugins WHERE author = :author', ['author' => $userid]);
         } else if (!empty($categoryId)) {
-            $this->plugins = $this->pdoService->query("SELECT * FROM plugins WHERE category='$categoryId'");
+            $this->plugins = $this->pdoService->query('SELECT * FROM plugins WHERE category = :category', ['category' => $categoryId]);
         } else {
             $this->plugins = $this->pdoService->query('SELECT * FROM plugins');
         }

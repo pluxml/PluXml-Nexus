@@ -29,7 +29,7 @@ class ThemeModel extends Model
     {
         parent::__construct($container);
 
-        $pdo = $this->pdoService->query("SELECT * FROM themes WHERE name = '$name'");
+        $pdo = $this->pdoService->query('SELECT * FROM themes WHERE name = :name', ['name' => $name]);
 
         $this->name = $pdo[0]['name'];
         $this->description = $pdo[0]['description'];
