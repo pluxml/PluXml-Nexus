@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Facades\AuthFacade;
 use App\Facades\CategoriesFacade;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -34,6 +35,8 @@ class BackofficePluginsController extends Controller
 
     private const MSG_ERROR_TECHNICAL_PLUGINS = 'Technical error or plugin name already exist';
 
+    private const MSG_ERROR_FORBIDDEN_PLUGIN = 'Plugin not found or you are not allowed to manage it';
+
     /**
      *
      * @param Request $request
@@ -62,7 +65,11 @@ class BackofficePluginsController extends Controller
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'Edit plugin ' . $args['name'];
-        $datas['plugin'] = PluginsFacade::getPlugin($this->container, $args['name']);
+        $datas['plugin'] = $this->getManageablePlugin($args['name']);
+        if (empty($datas['plugin'])) {
+            $this->messageService->addMessage('error', self::MSG_ERROR_FORBIDDEN_PLUGIN);
+            return $this->redirect($response, self::NAMED_ROUTE_BOPLUGINS);
+        }
         $datas['categories'] = CategoriesFacade::getCategories($this->container);
 
         return $this->render($response, 'pages/backoffice/editPlugin.php', $datas);
@@ -97,18 +104,25 @@ class BackofficePluginsController extends Controller
         $dirPlugins = $_SERVER['DOCUMENT_ROOT'] . DIR_PLUGINS;
         $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
 
-        $post = $request->getParsedBody();
-
-        if (isset($post['file'])) {
-            $errors = self::pluginValidator($request, false, true);
-        } else {
-            $errors = self::pluginValidator($request);
+        $plugin = $this->getManageablePlugin($args['name']);
+        if (empty($plugin)) {
+            $this->messageService->addMessage('error', self::MSG_ERROR_FORBIDDEN_PLUGIN);
+            return $this->redirect($response, self::NAMED_ROUTE_BOPLUGINS);
         }
+
+        $post = $request->getParsedBody();
+        // The plugin name and author can not be changed by the form
+        $post['name'] = $plugin['name'];
+        $post['author'] = $plugin['author'];
+        $uploadedFile = $request->getUploadedFiles()['file'] ?? null;
+        $newFile = !empty($uploadedFile) && $uploadedFile->getError() !== UPLOAD_ERR_NO_FILE;
+
+        $errors = self::pluginValidator($request, $post, false, $newFile);
 
         if (empty($errors)) {
             if (PluginsFacade::editPlugin($this->container, $post)) {
                 $result = true;
-                if (isset($post['file'])) {
+                if ($newFile) {
                     $filename = $post['name'] . '.zip';
                     $result = rename($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename, $dirPlugins . DIRECTORY_SEPARATOR . $filename);
                 }
@@ -144,7 +158,9 @@ class BackofficePluginsController extends Controller
         $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
 
         $post = $request->getParsedBody();
-        $errors = self::pluginValidator($request, true);
+        // The author is the logged in user, whatever the form sends
+        $post['author'] = $this->currentUser;
+        $errors = self::pluginValidator($request, $post, true);
 
         // Validator error and plugin does not exist
         if (empty($errors) && empty(PluginsFacade::getPlugin($this->container, $post['name']))) {
@@ -188,7 +204,9 @@ class BackofficePluginsController extends Controller
     {
         $namedRoute = self::NAMED_ROUTE_BOPLUGINS;
 
-        if (PluginsFacade::deletePlugin($this->container, $args['name'])) {
+        if (empty($this->getManageablePlugin($args['name']))) {
+            $this->messageService->addMessage('error', self::MSG_ERROR_FORBIDDEN_PLUGIN);
+        } elseif (PluginsFacade::deletePlugin($this->container, $args['name'])) {
             $this->messageService->addMessage('success', self::MSG_SUCCESS_DELETEPLUGIN);
         } else {
             $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
@@ -201,15 +219,15 @@ class BackofficePluginsController extends Controller
      * Validate request body for a plugin save or edit
      *
      * @param Request $request
+     * @param array $post request body, with the name and author set by the controller
      * @param bool $newPlugin
      * @param bool $newFile
      * @return array
      * @throws Exception
      */
-    private function pluginValidator(Request $request, bool $newPlugin = false, bool $newFile = false): array
+    private function pluginValidator(Request $request, array $post, bool $newPlugin = false, bool $newFile = false): array
     {
         $errors = [];
-        $post = $request->getParsedBody();
         $dirTmpPlugin = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
         $uploadedFiles = $request->getUploadedFiles();
         if (empty($uploadedFiles['file'])) {
@@ -251,5 +269,20 @@ class BackofficePluginsController extends Controller
         }
 
         return $errors;
+    }
+
+    /**
+     * Return the plugin if the logged in user is its author or an admin
+     *
+     * @param string $name
+     * @return array empty if the plugin does not exist or can not be managed by the logged in user
+     */
+    private function getManageablePlugin(string $name): array
+    {
+        $plugin = PluginsFacade::getPlugin($this->container, $name);
+        if (!empty($plugin) && ($plugin['author'] === $this->currentUser || AuthFacade::isAdmin($this->container, $this->currentUser))) {
+            return $plugin;
+        }
+        return [];
     }
 }
