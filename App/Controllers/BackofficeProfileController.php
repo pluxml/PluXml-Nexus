@@ -49,7 +49,7 @@ class BackofficeProfileController extends Controller
         Validator::notEmpty()->email()->validate($post['email']) || $errors['email'] = self::MSG_VALID_EMAIL;
         // The website is optional
         if (!empty($post['website'])) {
-            Validator::url()->regex('#^https?://#i')->length(1, 99)->validate($post['website']) || $errors['website'] = self::MSG_VALID_URL;
+            Validator::url()->regex('#^https?://[^\s"\'<>]+$#i')->length(1, 99)->validate($post['website']) || $errors['website'] = self::MSG_VALID_URL;
         }
 
         if (empty($errors)) {
