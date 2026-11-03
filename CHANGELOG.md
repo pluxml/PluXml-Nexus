@@ -5,6 +5,14 @@
 - ADD timestamp comparison on signup form submission against bots
 - ADD handle active category
 - FIX typo in lost password mail template
+- FIX security: backoffice actions were run before checking the authentication
+- FIX security: users could edit the profile or password of another user
+- FIX security: users could edit or delete the plugins of other users
+- FIX security: SQL injection in all database queries
+- FIX security: XSS in all views (escaped output, only http(s) links accepted)
+- FIX new plugin file ignored when editing a plugin
+- FIX profile website never saved
+- FIX profile website mandatory
 
 ## 1.6 - 2023/11/17
 
