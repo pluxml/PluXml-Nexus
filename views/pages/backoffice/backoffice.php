@@ -1,15 +1,15 @@
 <div class="content">
     <div class="page">
-        <h2><?= $h2 ?></h2>
-        <p>Hello <?= $_SESSION['user'] ?> !</p>
+        <h2><?= escape_html($h2) ?></h2>
+        <p>Hello <?= escape_html($_SESSION['user']) ?> !</p>
 
         <?php if (isset($flash['success'])): ?>
             <div class="alert green">
-                <?= $flash['success'][0] ?>
+                <?= escape_html($flash['success'][0]) ?>
             </div>
         <?php elseif (isset($flash['error'])): ?>
             <div class="alert red">
-                <?= $flash['error'][0] ?>
+                <?= escape_html($flash['error'][0]) ?>
             </div>
         <?php endif; ?>
 

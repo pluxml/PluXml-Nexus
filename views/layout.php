@@ -6,7 +6,7 @@
     <!--[if IE]>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title>
+    <title><?= escape_html($title) ?></title>
     <link rel="apple-touch-icon" sizes="57x57"
           href="https://medias.pluxml.org/favicon/purple/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60"
@@ -69,7 +69,7 @@
                             <li><a href="<?= $routerService->urlFor('signup') ?>">Sign up</a></li>
                             <li><a href="<?= $routerService->urlFor('auth') ?>">Log in</a></li>
                         <?php else: ?>
-                            <li><a href="<?= $routerService->urlFor('backoffice') ?>"><?= $_SESSION['user'] ?></a></li>
+                            <li><a href="<?= $routerService->urlFor('backoffice') ?>"><?= escape_html($_SESSION['user']) ?></a></li>
                             <li><a href="<?= $routerService->urlFor('logoutAction') ?>">Log out</a></li>
                         <?php endif; ?>
                     </ul>
