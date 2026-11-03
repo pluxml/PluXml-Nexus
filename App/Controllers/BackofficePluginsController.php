@@ -226,7 +226,7 @@ class BackofficePluginsController extends Controller
             Validator::alnum('.')->length(1, 99)->validate($post['versionPluxml']) || $errors['versionPluxml'] = self::MSG_VALID_TOLONG100;
         }
         if (!empty($post['link'])) {
-            Validator::url()->regex('#^https?://#i')->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
+            Validator::url()->regex('#^https?://[^\s"\'<>]+$#i')->length(1, 99)->validate($post['link']) || $errors['link'] = self::MSG_VALID_URL;
         }
 
         if ($newPlugin) {
