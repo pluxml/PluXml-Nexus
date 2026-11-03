@@ -2,10 +2,14 @@
     <?php require_once 'tags/tabs.php' ?>
 
     <div class="page grid">
-        <h2><?= $username ?></h2>
+        <h2><?= escape_html($username) ?></h2>
         <ul>
             <li>
-                Website: <a href="<?= $website ?>" target="_blank"><?= $website ?></a></li>
+                <?php if (safe_url($website) !== ''): ?>
+                Website: <a href="<?= escape_html(safe_url($website)) ?>" target="_blank" rel="noopener noreferrer nofollow"><?= escape_html($website) ?></a>
+                <?php else: ?>
+                Website: <?= escape_html($website) ?>
+                <?php endif; ?>
             </li>
         </ul>
 
