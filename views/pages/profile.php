@@ -2,13 +2,13 @@
     <?php require_once 'tags/tabs.php' ?>
 
     <div class="page grid">
-        <h2><?= htmlspecialchars($username) ?></h2>
+        <h2><?= escape_html($username) ?></h2>
         <ul>
             <li>
-                <?php if (preg_match('#^https?://#i', (string) $website)): ?>
-                Website: <a href="<?= htmlspecialchars($website) ?>" target="_blank" rel="noopener noreferrer nofollow"><?= htmlspecialchars($website) ?></a></li>
+                <?php if (safe_url($website) !== ''): ?>
+                Website: <a href="<?= escape_html(safe_url($website)) ?>" target="_blank" rel="noopener noreferrer nofollow"><?= escape_html($website) ?></a>
                 <?php else: ?>
-                Website: <?= htmlspecialchars((string) $website) ?></li>
+                Website: <?= escape_html($website) ?>
                 <?php endif; ?>
             </li>
         </ul>

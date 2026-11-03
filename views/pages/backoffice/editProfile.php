@@ -32,8 +32,8 @@
             <div <?php if (isset($flash['website'][0])): ?>style="color:red"<?php endif; ?>>
                 <label for="website">Website: </label>
                 <input type="url" name="website" id="website"
-                       <?php if (isset($formOldValues['website'])): ?>value="<?= htmlspecialchars($formOldValues['website']) ?>"
-                       <?php else: ?>value="<?= htmlspecialchars((string) $website) ?>"<?php endif; ?>>
+                       <?php if (isset($formOldValues['website'])): ?>value="<?= escape_html($formOldValues['website']) ?>"
+                       <?php else: ?>value="<?= escape_html($website) ?>"<?php endif; ?>>
                 <?php if (isset($flash['website'][0])): ?><p><?= escape_html($flash['website'][0]) ?></p><?php endif; ?>
             </div>
             <div>
