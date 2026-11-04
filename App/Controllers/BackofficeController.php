@@ -5,6 +5,7 @@
 namespace App\Controllers;
 
 use App\Facades\AuthFacade;
+use App\Nexus;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -22,6 +23,9 @@ class BackofficeController extends Controller
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['adminUser'] = AuthFacade::isAdmin($this->container, $this->currentUser);
+        if ($datas['adminUser']) {
+            $datas['version'] = Nexus::VERSION;
+        }
 
         return $this->render($response, self::VIEW_BO_USERS, $datas);
     }

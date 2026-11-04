@@ -2,6 +2,9 @@
     <div class="page">
         <h2><?= escape_html($h2) ?></h2>
         <p>Hello <?= escape_html($_SESSION['user']) ?> !</p>
+        <?php if ($adminUser): ?>
+            <p>PluXml Nexus version <?= escape_html($version) ?></p>
+        <?php endif; ?>
 
         <?php if (isset($flash['success'])): ?>
             <div class="alert green">
