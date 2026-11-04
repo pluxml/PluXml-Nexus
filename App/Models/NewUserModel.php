@@ -21,7 +21,8 @@ class NewUserModel extends Model
         parent::__construct($container);
 
         $this->username = $user['username'];
-        $this->password = password_hash($user['password'], PASSWORD_BCRYPT);
+        // The password is only sent by the signup form, not by the profile form
+        $this->password = isset($user['password']) ? password_hash($user['password'], PASSWORD_BCRYPT) : NULL;
         $this->email = $user['email'];
         $this->website = !empty($user['website']) ? $user['website'] : NULL;
 

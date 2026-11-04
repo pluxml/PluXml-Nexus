@@ -3,6 +3,7 @@
 
     <div class="page grid">
         <h2><?= escape_html($username) ?></h2>
+        <?php if (!empty($website)): ?>
         <ul>
             <li>
                 <?php if (safe_url($website) !== ''): ?>
@@ -12,6 +13,7 @@
                 <?php endif; ?>
             </li>
         </ul>
+        <?php endif; ?>
 
         <h3>Plugins:</h3>
         <?php if (!empty($plugins)): ?>
