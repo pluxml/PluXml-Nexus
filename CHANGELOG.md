@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.8 - yyyy-mm-dd
+## 1.8 - 2026-11-04
 
 - ADD PluXml Nexus version displayed in the backoffice for admin users (#2)
 - FIX warning on profile edit: undefined array key "password" (#3)
