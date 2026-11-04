@@ -21,6 +21,8 @@ class BackofficePluginsController extends Controller
 
     private const NAMED_ROUTE_SAVEPLUGIN = 'boaddplugin';
 
+    private const NAMED_ROUTE_EDITPLUGIN = 'boeditplugin';
+
     private const MSG_VALID_NAME = 'Must be alphanumeric with no whitespace';
 
     private const MSG_VALID_TOLONG1000 = 'Invalid or to long (1000 characters max)';
@@ -28,6 +30,8 @@ class BackofficePluginsController extends Controller
     private const MSG_VALID_TOLONG100 = 'Invalid or to long (100 characters max)';
 
     private const MSG_VALID_FILE = 'Invalid file (extension must be zip and size inferior to 10MB';
+
+    private const MSG_VALID_FILE_TOO_LARGE = 'File too large, the server accepts files up to %s';
 
     private const MSG_SUCCESS_EDITPLUGIN = 'Plugin saved with success';
 
@@ -139,6 +143,8 @@ class BackofficePluginsController extends Controller
             foreach ($errors as $key => $message) {
                 $this->messageService->addMessage($key, $message);
             }
+            // Back to the edit form, which displays the error of each field
+            return $this->redirect($response, self::NAMED_ROUTE_EDITPLUGIN, ['name' => $plugin['name']]);
         }
 
         return $this->redirect($response, self::NAMED_ROUTE_BOPLUGINS, $args);
@@ -263,6 +269,9 @@ class BackofficePluginsController extends Controller
                 Validator::notEmpty()->extension('zip')
                     ->size(NULL, PLUGINS_MAX_SIZE)
                     ->validate($dirTmpPlugin . DIRECTORY_SEPARATOR . $filename) || $errors['file'] = self::MSG_VALID_FILE;
+            } elseif (in_array($uploadedFile->getError(), [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE], true)) {
+                // Refused by PHP (upload_max_filesize) before reaching the application
+                $errors['file'] = sprintf(self::MSG_VALID_FILE_TOO_LARGE, ini_get('upload_max_filesize'));
             } else {
                 $errors['error'] = self::MSG_ERROR_TECHNICAL_PLUGINS;
             }
