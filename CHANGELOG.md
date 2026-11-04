@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.7 - yyyy/mm/dd
+## 1.7 - 2026/11/04
 
 **Warning** : this release needs a `composer dump-autoload` (`App/helpers.php` is now loaded by the Composer autoloader)
 
