@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8 - yyyy-mm-dd
+
+- ADD PluXml Nexus version displayed in the backoffice for admin users (#2)
+- FIX warning on profile edit: undefined array key "password" (#3)
+- FIX empty website displayed on the profile page (#4)
+
 ## 1.7 - 2026/11/04
 
 **Warning** : this release needs a `composer dump-autoload` (`App/helpers.php` is now loaded by the Composer autoloader)
