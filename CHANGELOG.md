@@ -1,8 +1,8 @@
 # Changelog
 
-## 1.7 - yyyy/mm/dd
+## 1.7 - 2026/11/04
 
-**Warning** : this release need a composer `dump-autoload`
+**Warning** : this release needs a `composer dump-autoload` (`App/helpers.php` is now loaded by the Composer autoloader)
 
 - ADD timestamp comparison on signup form submission against bots
 - ADD handle active category
@@ -15,6 +15,10 @@
 - FIX new plugin file ignored when editing a plugin
 - FIX profile website never saved
 - FIX profile website mandatory
+- FIX clear error message when a plugin file exceeds the server upload limit
+- FIX plugin edit errors displayed on the edit form
+- ADD `.user.ini` raising the PHP upload limit to 10M for plugin files (denied in `.htaccess`)
+- OTHER view helpers loaded by the Composer autoloader
 
 ## 1.6 - 2023/11/17
 

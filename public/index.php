@@ -10,9 +10,6 @@ use Slim\Factory\AppFactory;
 // Composer autoloader
 require_once '../vendor/autoload.php';
 
-// Global helpers used by the views
-require_once '../App/helpers.php';
-
 // Start the PHP session
 session_start();
 
