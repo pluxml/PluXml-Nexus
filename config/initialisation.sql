@@ -75,6 +75,7 @@ CREATE TABLE `themes`
     `file`          varchar(250) NOT NULL,
     `link`          varchar(100) DEFAULT NULL,
     PRIMARY KEY (`id`),
+    UNIQUE KEY `themes_UN` (`name`),
     KEY `themes_FK` (`author`),
     CONSTRAINT `themes_FK` FOREIGN KEY (`author`) REFERENCES `users` (`id`)
 ) ENGINE = InnoDB
