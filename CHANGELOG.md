@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2.1 - 2026-11-24
 
 - FIX profiles: list users who only have themes and show their themes on the profile page
 
