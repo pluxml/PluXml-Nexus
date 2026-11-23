@@ -15,7 +15,7 @@ class CategoryModel extends Model
 
     public $icon;
 
-    public function __construct(ContainerInterface $container, int $id = NULL, string $name = NULL)
+    public function __construct(ContainerInterface $container, ?int $id = NULL, ?string $name = NULL)
     {
         parent::__construct($container);
 
