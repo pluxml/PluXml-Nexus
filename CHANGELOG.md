@@ -6,6 +6,10 @@
 - FIX security: escape HTML entities in the default error renderer (CVE-2026-48157)
 - FIX security: stop decoding route arguments twice to prevent route constraint bypass (GHSA-h377-p8x2-prf9)
 - OTHER Slim now supports PHP 8.4/8.5 and PHPStan 2; no application code change was required
+- OTHER split CI into quality, PHP matrix (8.3/8.4/8.5) and PHPUnit jobs; replace php-actions/phpstan with setup-php
+- OTHER add composer audit, platform checks, PHP lint, concurrency and manual workflow trigger
+- ADD unit tests for helpers and integration tests for public pages, 404, login/logout and backoffice access
+- OTHER update PHP-DI, slim/csrf, slim/psr7, respect/validation and PHPMailer for PHP 8.4/8.5 compatibility
 
 ## 1.8 - 2026-11-04
 
