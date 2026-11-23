@@ -16,6 +16,11 @@
 			"App/helpers.php"
 		]
 	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Tests\\" : "tests/"
+		}
+	},
 	"require" : {
 		"slim/slim" : "^4.15.3",
 		"slim/psr7" : "^1.0",
@@ -27,6 +32,15 @@
 		"phpmailer/phpmailer" : "^6.1"
 	},
 	"require-dev": {
-		"phpstan/phpstan": "^2.3"
+		"phpstan/phpstan": "^2.3",
+		"phpunit/phpunit": "^11.5"
+	},
+	"config": {
+		"audit": {
+			"abandoned": "report"
+		}
+	},
+	"scripts": {
+		"test": "phpunit"
 	}
 }
