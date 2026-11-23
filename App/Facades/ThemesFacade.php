@@ -22,7 +22,7 @@ class ThemesFacade extends Facade
     {
         if (isset($username)) {
             $userModel = UsersFacade::searchUser($container, $username);
-            $themesModel = new ThemesModel($container, $userModel->id);
+            $themesModel = new ThemesModel($container, $userModel ? $userModel->id : '');
         } else {
             $themesModel = new ThemesModel($container);
         }

@@ -23,14 +23,16 @@ class UserModel extends Model
 
         $pdo = $this->pdoService->query('SELECT * FROM users WHERE id = :id', ['id' => $id]);
 
-        $this->id = $pdo[0]['id'];
-        $this->username = $pdo[0]['username'];
-        $this->password = $pdo[0]['password'];
-        $this->email = $pdo[0]['email'];
-        $this->website = $pdo[0]['website'];
-        $this->role = $pdo[0]['role'];
-        $this->token = $pdo[0]['token'];
-        $this->tokenExpire = $pdo[0]['tokenexpire'];
+        if (!empty($pdo)) {
+            $this->id = $pdo[0]['id'];
+            $this->username = $pdo[0]['username'];
+            $this->password = $pdo[0]['password'];
+            $this->email = $pdo[0]['email'];
+            $this->website = $pdo[0]['website'];
+            $this->role = $pdo[0]['role'];
+            $this->token = $pdo[0]['token'];
+            $this->tokenExpire = $pdo[0]['tokenexpire'];
+        }
     }
 
     public function editUser(): bool

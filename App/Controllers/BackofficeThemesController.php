@@ -82,6 +82,7 @@ class BackofficeThemesController extends Controller
      */
     public function showTheme(Request $request, Response $response, array $args): Response
     {
+        $datas = [];
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'Edit theme ' . $args['name'];
@@ -164,6 +165,7 @@ class BackofficeThemesController extends Controller
         $dirTmp = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
 
         $post = $request->getParsedBody();
+        $post['name'] ??= '';
         $post['author'] = $this->currentUser;
         $errors = self::themeValidator($request, $post, true);
 

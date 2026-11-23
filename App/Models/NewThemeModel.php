@@ -34,7 +34,7 @@ class NewThemeModel extends Model
 
         $this->name = $theme['name'];
         $this->description = $theme['description'] ?? null;
-        $this->author = $userModel->id;
+        $this->author = $userModel ? $userModel->id : null;
         $this->date = date('Y-m-d');
         $this->versionTheme = $theme['versionTheme'] ?? null;
         $this->versionPluxml = $theme['versionPluxml'] ?? null;

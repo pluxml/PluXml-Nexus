@@ -19,6 +19,7 @@ class ThemesController extends Controller
      */
     public function show(Request $request, Response $response)
     {
+        $datas = [];
         $datas['activeTab'] = 2;
         $datas['title'] = 'Themes Ressources - PluXml.org';
         $datas['themes'] = ThemesFacade::getAllThemes($this->container);
