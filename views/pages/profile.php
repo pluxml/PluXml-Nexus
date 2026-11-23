@@ -21,5 +21,12 @@
         <?php else: ?>
             <div class="alert orange">No plugins found</div>
         <?php endif; ?>
+
+        <h3>Themes:</h3>
+        <?php if (!empty($themes)): ?>
+            <?php include 'tags/themesList.php'; ?>
+        <?php else: ?>
+            <div class="alert orange">No themes found</div>
+        <?php endif; ?>
     </div>
 </div>

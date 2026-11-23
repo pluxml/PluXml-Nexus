@@ -19,7 +19,7 @@ class ProfilesController extends Controller
      */
     public function show(Request $request, Response $response): Response
     {
-        $datas = UsersFacade::getAllProfiles($this->container, true);
+        $datas = UsersFacade::getAllProfiles($this->container, true, true);
         return $this->render($response, 'pages/profiles.php', $datas);
     }
 
@@ -32,7 +32,7 @@ class ProfilesController extends Controller
      */
     public function showProfile(Request $request, Response $response, $args): Response
     {
-        $datas = UsersFacade::getProfile($this->container, $args['username'], "username", true);
+        $datas = UsersFacade::getProfile($this->container, $args['username'], "username", true, true);
         if (empty($datas)) {
             return $this->redirect($response, 'profiles');
         }

@@ -33,6 +33,23 @@ class AppTest extends AppTestCase
         self::assertSame(404, $response->getStatusCode());
     }
 
+    public function testProfilesListIncludesUsersWithThemesOnly(): void
+    {
+        $body = (string) $this->request('GET', '/profiles')->getBody();
+
+        self::assertStringContainsString('themeonly', $body);
+        self::assertStringNotContainsString('ciadmin', $body);
+    }
+
+    public function testProfilePageShowsThemes(): void
+    {
+        $body = (string) $this->request('GET', '/profiles/themeonly')->getBody();
+
+        self::assertStringContainsString('ci-theme', $body);
+        self::assertStringContainsString('<h3>Themes:</h3>', $body);
+        self::assertStringNotContainsString('No themes found', $body);
+    }
+
     public function testLoginGrantsBackofficeAccessAndLogoutRevokesIt(): void
     {
         $loginPage = (string) $this->request('GET', '/auth')->getBody();

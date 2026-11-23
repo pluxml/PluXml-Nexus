@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- FIX profiles: list users who only have themes and show their themes on the profile page
+
 ## 2.0 - 2026-11-23
 
 - Themes management (add, remove, edit, search)
