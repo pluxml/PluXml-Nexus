@@ -48,6 +48,7 @@ class BackofficeThemesController extends Controller
      */
     public function show(Request $request, Response $response): Response
     {
+        $datas = [];
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'Themes';
@@ -64,6 +65,7 @@ class BackofficeThemesController extends Controller
      */
     public function showAddTheme(Request $request, Response $response): Response
     {
+        $datas = [];
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['h3'] = 'New theme';
