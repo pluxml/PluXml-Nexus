@@ -18,7 +18,7 @@ class ThemesFacade extends Facade
      * @param string|null $username
      * @return array|null
      */
-    static public function getAllThemes(ContainerInterface $container, string $username = null)
+    static public function getAllThemes(ContainerInterface $container, ?string $username = null)
     {
         if (isset($username)) {
             $userModel = UsersFacade::searchUser($container, $username);

@@ -13,7 +13,7 @@ class PluginsModel extends Model
 
     public $plugins;
 
-    public function __construct(ContainerInterface $container, string $userid = NULL, int $categoryId = NULL)
+    public function __construct(ContainerInterface $container, ?string $userid = NULL, ?int $categoryId = NULL)
     {
         parent::__construct($container);
 

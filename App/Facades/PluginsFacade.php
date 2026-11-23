@@ -22,7 +22,7 @@ class PluginsFacade extends Facade
      * @param string|null $username
      * @return array
      */
-    static public function getAllPlugins(ContainerInterface $container, string $username = NULL)
+    static public function getAllPlugins(ContainerInterface $container, ?string $username = NULL)
     {
         $plugins = [];
 

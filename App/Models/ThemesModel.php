@@ -11,7 +11,7 @@ class ThemesModel extends Model
 
     public $themes;
 
-    public function __construct(ContainerInterface $container, string $userid = null)
+    public function __construct(ContainerInterface $container, ?string $userid = null)
     {
         parent::__construct($container);
 
