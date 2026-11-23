@@ -33,6 +33,9 @@ class ProfilesController extends Controller
     public function showProfile(Request $request, Response $response, $args): Response
     {
         $datas = UsersFacade::getProfile($this->container, $args['username'], "username", true);
+        if (empty($datas)) {
+            return $this->redirect($response, 'profiles');
+        }
         return $this->render($response, 'pages/profile.php', $datas);
     }
 }

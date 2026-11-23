@@ -22,6 +22,7 @@ class HomeController extends Controller
     {
         $pluginModel = new PluginsModel($this->container);
 
+        $datas = [];
         $datas['title'] = 'Ressources - PluXml.org';
         $datas['activeTab'] = 1;
         $datas['pluxmlCurrentVersion'] = file_get_contents('https://www.pluxml.org/download/latest-version.txt');

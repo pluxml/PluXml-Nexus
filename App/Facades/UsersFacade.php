@@ -151,7 +151,7 @@ class UsersFacade
     static public function removeUser(ContainerInterface $container, string $username): bool
     {
         $userModel = self::searchUser($container, $username);
-        return $userModel->delete();
+        return $userModel ? $userModel->delete() : false;
     }
 
     /**

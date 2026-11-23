@@ -28,7 +28,7 @@ class PluginsFacade extends Facade
 
         if (isset($username)) {
             $userModel = UsersFacade::searchUser($container, $username);
-            $pluginsModel = new PluginsModel($container, $userModel->id);
+            $pluginsModel = new PluginsModel($container, $userModel ? $userModel->id : '');
         } else {
             $pluginsModel = new PluginsModel($container);
         }

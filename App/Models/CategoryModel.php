@@ -25,8 +25,10 @@ class CategoryModel extends Model
             $pdo = $this->pdoService->query('SELECT * FROM categories WHERE name = :name', ['name' => $name]);
         }
 
-        $this->id = $pdo[0]['id'];
-        $this->name = $pdo[0]['name'];
-        $this->icon = $pdo[0]['icon'];
+        if (!empty($pdo)) {
+            $this->id = $pdo[0]['id'];
+            $this->name = $pdo[0]['name'];
+            $this->icon = $pdo[0]['icon'];
+        }
     }
 }

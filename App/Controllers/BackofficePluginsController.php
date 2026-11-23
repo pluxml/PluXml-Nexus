@@ -260,7 +260,7 @@ class BackofficePluginsController extends Controller
             Validator::notEmpty()->alnum()
                 ->noWhitespace()
                 ->length(1, 99)
-                ->validate($post['name']) || $errors['name'] = self::MSG_VALID_NAME;
+                ->validate($post['name'] ?? '') || $errors['name'] = self::MSG_VALID_NAME;
         }
 
         if ($newPlugin || $newFile) {

@@ -92,10 +92,11 @@ class AuthController extends Controller
     {
         $datas = array();
         $params = $request->getQueryParams();
-        $result = AuthFacade::confirmLostPasswordToken($this->container, $params['token']);
+        $token = $params['token'] ?? '';
+        $result = AuthFacade::confirmLostPasswordToken($this->container, $token);
 
         if ($result) {
-            $datas['user'] = UsersFacade::getProfile($this->container, $params['token'], "token");
+            $datas['user'] = UsersFacade::getProfile($this->container, $token, "token");
             $response = $this->render($response, self::PAGE_RESETPASSWORD, $datas);
         } else {
             $this->messageService->addMessage('error', self::MSG_ERROR);
@@ -114,7 +115,7 @@ class AuthController extends Controller
     public function sendNewPassword(Request $request, Response $response): Response
     {
         $post = $request->getParsedBody();
-        $result = AuthFacade::sendNewPasswordEmail($this->container, $post['username']);
+        $result = AuthFacade::sendNewPasswordEmail($this->container, $post['username'] ?? '');
 
         if ($result) {
             $this->messageService->addMessage('success', self::MSG_SUCCESS_LOSTPASSWORDEMAIL);
@@ -134,7 +135,7 @@ class AuthController extends Controller
     public function resetPassword(Request $request, Response $response): Response
     {
         $post = $request->getParsedBody();
-        $result = AuthFacade::resetPassword($this->container, $post['username'], $post['password']);
+        $result = AuthFacade::resetPassword($this->container, $post['username'] ?? '', $post['password'] ?? '');
 
         if ($result) {
             $this->messageService->addMessage('success', self::MSG_SUCCESS_RESETPASSWORD);
@@ -154,7 +155,7 @@ class AuthController extends Controller
     public function confirmEmail(Request $request, Response $response): Response
     {
         $params = $request->getQueryParams();
-        $result = AuthFacade::confirmEmail($this->container, $params['username'], $params['token']);
+        $result = AuthFacade::confirmEmail($this->container, $params['username'] ?? '', $params['token'] ?? '');
 
         if ($result) {
             $this->messageService->addMessage('success', self::MSG_SUCCESS_CONFIRMEMAIL);
@@ -175,14 +176,16 @@ class AuthController extends Controller
     {
         $namedRoute = self::NAMED_ROUTE_AUTH;
         $post = $request->getParsedBody();
+        $username = $post['username'] ?? '';
+        $password = $post['password'] ?? '';
 
         $validUsername = Validator::notEmpty()->alnum()
             ->noWhitespace()
-            ->validate($post['username']);
-        $validPassword = Validator::notEmpty()->validate($post['password']);
+            ->validate($username);
+        $validPassword = Validator::notEmpty()->validate($password);
 
         if ($validUsername and $validPassword) {
-            $result = AuthFacade::authentificateUser($this->container, $post['username'], $post['password']);
+            $result = AuthFacade::authentificateUser($this->container, $username, $password);
             if (! $result) {
                 $this->messageService->addMessage('error', self::MSG_ERROR_LOGIN);
             } else {
@@ -219,8 +222,9 @@ class AuthController extends Controller
         $errors = [];
         $namedRoute = self::NAMED_ROUTE_SIGNUP;
         $post = $request->getParsedBody();
+        $timestamp = $post['timestamp'] ?? 0;
 
-        if (time() - $post['timestamp'] > 5) {
+        if (time() - $timestamp > 5) {
             Validator::notEmpty()->noWhitespace()
                 ->alnum()
                 ->length(1, 99)

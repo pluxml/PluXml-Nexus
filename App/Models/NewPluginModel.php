@@ -36,7 +36,7 @@ class NewPluginModel extends Model
 
         $this->name = $plugin['name'];
         $this->description = $plugin['description'];
-        $this->author = $UserModel->id;
+        $this->author = $UserModel ? $UserModel->id : null;
         $this->date = date('Y-m-d H:i:s', mktime(date('H'), date('i'), date('s'), date('m'), date('d'), date('Y')));
         $this->versionPlugin = $plugin['versionPlugin'];
         $this->versionPluxml = $plugin['versionPluxml'];
