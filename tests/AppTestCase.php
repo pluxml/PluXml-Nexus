@@ -36,6 +36,17 @@ abstract class AppTestCase extends TestCase
             'ci@example.test',
             'admin',
         ]);
+        $statement->execute([
+            'themeonly',
+            password_hash('Test1234!', PASSWORD_BCRYPT),
+            'theme@example.test',
+            'user',
+        ]);
+
+        $this->pdo->exec(
+            "INSERT INTO themes (name, description, author, date, versiontheme, versionpluxml, link, file) " .
+            "VALUES ('ci-theme', 'Test theme', 2, '2026-11-24', '1.0', '5.2', 'https://example.test', '/datas/themes/ci-theme.zip')"
+        );
 
         $container = new Container();
         AppFactory::setContainer($container);

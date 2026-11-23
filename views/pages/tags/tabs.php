@@ -1,3 +1,4 @@
+<?php $activeTab = $activeTab ?? 0; ?>
 <div class="grid">
     <div class="col sml-12 med-4">
         <div class="tab <?php if ($activeTab == 1): ?>activeTab<?php endif; ?>">

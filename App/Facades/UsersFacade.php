@@ -19,12 +19,13 @@ class UsersFacade
      *
      * @param ContainerInterface $container
      * @param bool $hadPlugins
+     * @param bool $withThemes
      * @return array $datas
      */
-    static public function getAllProfiles(ContainerInterface $container, bool $hadPlugins = false): array
+    static public function getAllProfiles(ContainerInterface $container, bool $hadPlugins = false, bool $withThemes = false): array
     {
         $datas = [];
-        $usersModel = new UsersModel($container, $hadPlugins);
+        $usersModel = new UsersModel($container, $hadPlugins, $withThemes);
 
         $datas['profiles'] = $usersModel->users;
 
@@ -57,9 +58,10 @@ class UsersFacade
      * @param ContainerInterface $container
      * @param string $username
      * @param bool $withPlugins add user's plugins name to the view datas
+     * @param bool $withThemes add user's themes name to the view datas
      * @return array $datas
      */
-    static public function getProfile(ContainerInterface $container, string $search, string $userAttribute = "username", bool $withPlugins = false): array
+    static public function getProfile(ContainerInterface $container, string $search, string $userAttribute = "username", bool $withPlugins = false, bool $withThemes = false): array
     {
         $datas = array();
         $userModel = self::searchUser($container, $search, $userAttribute);
@@ -71,6 +73,9 @@ class UsersFacade
             $datas['website'] = $userModel->website;
             if ($withPlugins) {
                 $datas['plugins'] = self::getPluginsByProfile($container, $userModel->id);
+            }
+            if ($withThemes) {
+                $datas['themes'] = self::getThemesByProfile($container, $userModel->username);
             }
         }
         return $datas;
@@ -164,5 +169,16 @@ class UsersFacade
     {
         $pluginsModel = new PluginsModel($container, $userid);
         return isset($pluginsModel) ? PluginsFacade::populatePluginsList($container, $pluginsModel) : null;
+    }
+
+    /**
+     *
+     * @param ContainerInterface $container
+     * @param string $username
+     * @return array|null
+     */
+    static private function getThemesByProfile(ContainerInterface $container, string $username): ?array
+    {
+        return ThemesFacade::getAllThemes($container, $username);
     }
 }
