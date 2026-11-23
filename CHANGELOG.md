@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- OTHER upgrade Slim from 4.12.0 to 4.15.3 (nikic/fast-route 1.3.1, psr/http-factory 1.1.0, psr/log 3.0.2)
+- FIX security: escape HTML entities in the default error renderer (CVE-2026-48157)
+- FIX security: stop decoding route arguments twice to prevent route constraint bypass (GHSA-h377-p8x2-prf9)
+- OTHER Slim now supports PHP 8.4/8.5 and PHPStan 2; no application code change was required
+
 ## 1.8 - 2026-11-04
 
 - ADD PluXml Nexus version displayed in the backoffice for admin users (#2)
