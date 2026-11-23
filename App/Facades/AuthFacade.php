@@ -63,9 +63,9 @@ class AuthFacade extends Facade
     {
         $result = FALSE;
 
-        if ($_SESSION['role'] == 'admin') {
+        if (($_SESSION['role'] ?? null) == 'admin') {
             $userModel = UsersFacade::searchUser($container, $username);
-            if ($userModel->role == 'admin') {
+            if ($userModel && $userModel->role == 'admin') {
                 $result = TRUE;
             }
         }

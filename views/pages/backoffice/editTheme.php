@@ -1,45 +1,69 @@
-<h1><?= escape_html($h1) ?></h1>
-<h2><?= escape_html($h2) ?></h2>
+<div class="content">
+    <div class="page">
+        <h2><?= escape_html($h2) ?></h2>
+        <p>
+            <a href="<?= $routerService->urlFor('backoffice') ?>">Backoffice</a>&nbsp;/&nbsp;
+            <a href="<?= $routerService->urlFor('bothemes') ?>">Themes</a>&nbsp;/&nbsp;
+            <?= escape_html($theme['name']) ?>
+        </p>
+        <h3><?= escape_html($h3) ?></h3>
 
-<?php if (isset($flash['success'])): ?>
-	<div class="alert green">
-		<?= escape_html($flash['success'][0]) ?>
-	</div>
-<?php elseif (isset($flash['error'])): ?>
-	<div class="alert red">
-		<?= escape_html($flash['error'][0]) ?>
-	</div>
-<?php endif; ?>
+        <?php if (isset($flash['success'])): ?>
+            <div class="alert green">
+                <?= escape_html($flash['success'][0]) ?>
+            </div>
+        <?php elseif (isset($flash['error'])): ?>
+            <div class="alert red">
+                <?= escape_html($flash['error'][0]) ?>
+            </div>
+        <?php endif; ?>
 
-<form action="<?= $routerService->urlFor('signupAction') ?>" method="post">
-	<input type="hidden" name="<?= escape_html($csrf['nameKey']) ?>" value="<?= escape_html($csrf['name']) ?>">
-	<input type="hidden" name="<?= escape_html($csrf['valueKey']) ?>" value="<?= escape_html($csrf['value']) ?>">
-	<div <?php if (isset($flash['username'][0])): ?>style="color:red"<?php endif; ?>>
-		<label for="username">Username*: </label>
-		<input type="text" name="username" id="username" <?php if (isset($formOldValues['username'])): ?>value="<?= escape_html($formOldValues['username']) ?>"<?php endif; ?> required>
-		<?php if (isset($flash['username'][0])): ?><p><?= escape_html($flash['username'][0]) ?></p><?php endif; ?>
-	</div>
-	<div <?php if (isset($flash['password'][0]) or isset($flash['password2'][0])): ?>style="color:red"<?php endif; ?>>
-		<label for="password">Password*: </label>
-		<input type="password" name="password" id="password" <?php if (isset($formOldValues['password'])): ?>value="<?= escape_html($formOldValues['password']) ?>"<?php endif; ?> required>
-		<?php if (isset($flash['password'][0])): ?><p><?= escape_html($flash['password'][0]) ?></p><?php endif; ?>
-	</div>
-	<div <?php if (isset($flash['password2'][0])): ?>style="color:red"<?php endif; ?>>
-		<label for="password2">Confirm password*: </label>
-		<input type="password" name="password2" id="password2" required>
-		<?php if (isset($flash['password2'][0])): ?><p><?= escape_html($flash['password2'][0]) ?></p><?php endif; ?>
-	</div>
-	<div <?php if (isset($flash['email'][0])): ?>style="color:red"<?php endif; ?>>
-		<label for="email">Email address*: </label>
-		<input type="email" name="email" id="email" <?php if (isset($formOldValues['email'])): ?>value="<?= escape_html($formOldValues['email']) ?>"<?php endif; ?> required>
-		<?php if (isset($flash['email'][0])): ?><p><?= escape_html($flash['email'][0]) ?></p><?php endif; ?>
-	</div>
-	<div <?php if (isset($flash['website'][0])): ?>style="color:red"<?php endif; ?>>
-		<label for="website">Website: </label>
-		<input type="url" name="website" id="website" <?php if (isset($formOldValues['website'])): ?>value="<?= escape_html($formOldValues['website']) ?>"<?php endif; ?>>
-		<?php if (isset($flash['website'][0])): ?><p><?= escape_html($flash['website'][0]) ?></p><?php endif; ?>
-	</div>
-	<div>
-		<input type="submit" value="Sign up">
-	</div>
-</form>
+        <form action="<?= escape_html($routerService->urlFor('themeEditAction', ['name' => $theme['name']])) ?>" method="post"
+              enctype="multipart/form-data">
+            <input type="hidden" name="<?= escape_html($csrf['nameKey']) ?>" value="<?= escape_html($csrf['name']) ?>">
+            <input type="hidden" name="<?= escape_html($csrf['valueKey']) ?>" value="<?= escape_html($csrf['value']) ?>">
+            <input type="hidden" name="name" value="<?= escape_html($theme['name']) ?>">
+            <input type="hidden" name="author" value="<?= escape_html($_SESSION['user']) ?>">
+            <div <?php if (isset($flash['description'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="description">Description: </label>
+                <input type="text" name="description" id="description"
+                       <?php if (isset($formOldValues['description'])): ?>value="<?= escape_html($formOldValues['description']) ?>"
+                       <?php else: ?>value="<?= escape_html($theme['description']) ?>"<?php endif; ?>>
+                <?php if (isset($flash['description'][0])): ?><p><?= escape_html($flash['description'][0]) ?></p><?php endif; ?>
+            </div>
+            <div <?php if (isset($flash['versionTheme'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="versionTheme">Version: </label>
+                <input type="text" name="versionTheme" id="versionTheme"
+                       <?php if (isset($formOldValues['versionTheme'])): ?>value="<?= escape_html($formOldValues['versionTheme']) ?>"
+                       <?php else: ?>value="<?= escape_html($theme['versionTheme']) ?>"<?php endif; ?>>
+                <?php if (isset($flash['versionTheme'][0])): ?><p><?= escape_html($flash['versionTheme'][0]) ?></p><?php endif; ?>
+            </div>
+            <div <?php if (isset($flash['versionPluxml'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="versionPluxml">PluXml version: </label>
+                <input type="text" name="versionPluxml" id="versionPluxml"
+                       <?php if (isset($formOldValues['versionPluxml'])): ?>value="<?= escape_html($formOldValues['versionPluxml']) ?>"
+                       <?php else: ?>value="<?= escape_html($theme['versionPluxml']) ?>"<?php endif; ?>>
+                <?php if (isset($flash['versionPluxml'][0])): ?><p><?= escape_html($flash['versionPluxml'][0]) ?></p><?php endif; ?>
+            </div>
+            <div <?php if (isset($flash['link'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="link">Link: </label>
+                <input type="url" name="link" id="link"
+                       <?php if (isset($formOldValues['link'])): ?>value="<?= escape_html($formOldValues['link']) ?>"
+                       <?php else: ?>value="<?= escape_html($theme['link']) ?>"<?php endif; ?>>
+                <?php if (isset($flash['link'][0])): ?><p><?= escape_html($flash['link'][0]) ?></p><?php endif; ?>
+            </div>
+            <div <?php if (isset($flash['file'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="file">File (optionnal): </label>
+                <input type="file" name="file" id="file">
+                <?php if (isset($flash['file'][0])): ?><p><?= escape_html($flash['file'][0]) ?></p><?php endif; ?>
+            </div>
+            <button type="submit"><i class="icon-floppy"></i>Save</button>&nbsp;
+        </form>
+        <hr>
+        <form action="<?= escape_html($routerService->urlFor('themeDeleteAction', ['name' => $theme['name']])) ?>" method="post">
+            <input type="hidden" name="<?= escape_html($csrf['nameKey']) ?>" value="<?= escape_html($csrf['name']) ?>">
+            <input type="hidden" name="<?= escape_html($csrf['valueKey']) ?>" value="<?= escape_html($csrf['value']) ?>">
+            <button type="submit" class="blue"><i class="icon-trash"></i>Delete</button>
+        </form>
+    </div>
+</div>

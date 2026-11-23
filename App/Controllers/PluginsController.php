@@ -20,6 +20,7 @@ class PluginsController extends Controller
      */
     public function show(Request $request, Response $response)
     {
+        $datas = [];
         $datas['activeTab'] = 3;
         $datas['categories'] = CategoriesFacade::getCategories($this->container);
         $datas['plugins'] = PluginsFacade::getAllPlugins($this->container);
@@ -35,6 +36,7 @@ class PluginsController extends Controller
      */
     public function showCategory(Request $request, Response $response, $args)
     {
+        $datas = [];
         $datas['activeTab'] = 3;
         $datas['categories'] = CategoriesFacade::getCategories($this->container);
         $datas['activeCategory'] = $args['name'];
@@ -51,8 +53,12 @@ class PluginsController extends Controller
      */
     public function showPlugin(Request $request, Response $response, $args)
     {
+        $datas = [];
         $datas['activeTab'] = 3;
         $datas['plugin'] = PluginsFacade::getPlugin($this->container, $args['name']);
+        if (empty($datas['plugin'])) {
+            return $this->redirect($response, 'plugins');
+        }
         return $this->render($response, 'pages/plugin.php', $datas);
     }
 }

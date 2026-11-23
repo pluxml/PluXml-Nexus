@@ -62,7 +62,9 @@ class Controller
     public function render(Response $response, $filename, $datas = [])
     {
         $datas['flash'] = $this->messageService->getMessages();
-        $datas['title'] = 'Plugins Ressources - PluXml.org';
+        if (empty($datas['title'])) {
+            $datas['title'] = 'Ressources - PluXml.org';
+        }
         return $this->viewService->render($response, $filename, $datas);
     }
 }

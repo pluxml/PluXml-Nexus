@@ -20,6 +20,7 @@ class BackofficeController extends Controller
      */
     public function show(Request $request, Response $response): Response
     {
+        $datas = [];
         $datas['title'] = 'Backoffice Ressources - PluXml.org';
         $datas['h2'] = 'Backoffice';
         $datas['adminUser'] = AuthFacade::isAdmin($this->container, $this->currentUser);
