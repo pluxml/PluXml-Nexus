@@ -1,35 +1,36 @@
 {
-	"name" : "hyperion/pluxml-nexus",
-	"description" : "Ressources center for PluXml",
-	"type" : "project",
-	"license" : "GPL-3.0-or-later",
-	"authors" : [{
-			"name" : "Pedro CADETE",
-			"email" : "pedro@hyperion-web.fr"
+	"name": "pluxml/nexus",
+	"description": "Ressources center for PluXml",
+	"type": "project",
+	"license": "GPL-3.0-or-later",
+	"authors": [
+		{
+			"name": "Haruka (Pedro CADETE)",
+			"email": "haruka@memcat.eu"
 		}
 	],
-	"autoload" : {
-		"psr-4" : {
-			"App\\" : "App/"
+	"autoload": {
+		"psr-4": {
+			"App\\": "App/"
 		},
-		"files" : [
+		"files": [
 			"App/helpers.php"
 		]
 	},
-	"autoload-dev" : {
-		"psr-4" : {
-			"Tests\\" : "tests/"
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests/"
 		}
 	},
-	"require" : {
-		"slim/slim" : "^4.15.3",
-		"slim/psr7" : "^1.0",
-		"slim/csrf" : "^1.0",
-		"slim/flash" : "^0.4.0",
-		"slim/php-view" : "^2.2",
-		"php-di/slim-bridge" : "^3.0",
-		"respect/validation" : "^2.2",
-		"phpmailer/phpmailer" : "^6.1"
+	"require": {
+		"slim/slim": "^4.15.3",
+		"slim/psr7": "^1.0",
+		"slim/csrf": "^1.0",
+		"slim/flash": "^0.4.0",
+		"slim/php-view": "^2.2",
+		"php-di/slim-bridge": "^3.0",
+		"respect/validation": "^2.2",
+		"phpmailer/phpmailer": "^6.1"
 	},
 	"require-dev": {
 		"phpstan/phpstan": "^2.3",
