@@ -121,6 +121,19 @@ h1 {
     background-color: var(--backhover);
 }
 
+.theme-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.theme-image-detail {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
 button, input[type=submit] {
     border: 0px;
     border-radius: inherit;

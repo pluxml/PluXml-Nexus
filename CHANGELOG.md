@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2 - 2026-11-26
+
+- ADD theme illustration image upload in backoffice (add/edit)
+- ADD theme image display on theme list and theme detail pages
+
 ## 2.1 - 2026-11-24
 
 - FIX profiles: list users who only have themes and show their themes on the profile page

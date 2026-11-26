@@ -74,6 +74,7 @@ CREATE TABLE `themes`
     `versionpluxml` varchar(100) DEFAULT NULL,
     `file`          varchar(250) NOT NULL,
     `link`          varchar(100) DEFAULT NULL,
+    `image`         varchar(250) DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `themes_UN` (`name`),
     KEY `themes_FK` (`author`),

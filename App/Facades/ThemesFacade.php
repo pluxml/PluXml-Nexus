@@ -47,6 +47,7 @@ class ThemesFacade extends Facade
             $datas['versionPluxml'] = $themeModel->versionPluxml;
             $datas['link'] = $themeModel->link;
             $datas['file'] = $themeModel->file;
+            $datas['image'] = $themeModel->image;
             $datas['author'] = Facade::getAuthorUsernameById($container, $themeModel->author);
         }
         return $datas;
@@ -83,10 +84,18 @@ class ThemesFacade extends Facade
     static public function deleteTheme(ContainerInterface $container, string $name): bool
     {
         $themeModel = new ThemeModel($container, $name);
+        $image = $themeModel->image;
         $result = $themeModel->delete($container, $name);
         $file = $_SERVER['DOCUMENT_ROOT'] . DIR_THEMES . DIRECTORY_SEPARATOR . $name . '.zip';
         if ($result && file_exists($file)) {
-            return unlink($file);
+            unlink($file);
+        }
+        if ($result && !empty($image)) {
+            $dirThemeImages = defined('DIR_THEME_IMAGES') ? DIR_THEME_IMAGES : DIR_THEMES . '/images';
+            $imagePath = $_SERVER['DOCUMENT_ROOT'] . $dirThemeImages . DIRECTORY_SEPARATOR . basename($image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
         }
         return $result;
     }
@@ -108,6 +117,7 @@ class ThemesFacade extends Facade
                 $themes[$key]['versionPluxml'] = $value['versionpluxml'];
                 $themes[$key]['link'] = $value['link'];
                 $themes[$key]['file'] = $value['file'];
+                $themes[$key]['image'] = $value['image'] ?? null;
             }
         }
         return $themes;

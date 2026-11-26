@@ -26,6 +26,8 @@ class NewThemeModel extends Model
 
     private string $file;
 
+    private $image;
+
     public function __construct(ContainerInterface $container, array $theme)
     {
         parent::__construct($container);
@@ -40,6 +42,7 @@ class NewThemeModel extends Model
         $this->versionPluxml = $theme['versionPluxml'] ?? null;
         $this->link = $theme['link'] ?? null;
         $this->file = DIR_THEMES . DIRECTORY_SEPARATOR . $theme['name'] . '.zip';
+        $this->image = $theme['image'] ?? null;
     }
 
     /**
@@ -49,7 +52,7 @@ class NewThemeModel extends Model
     public function saveNewTheme()
     {
         return $this->pdoService->insert(
-            'INSERT INTO themes SET name = :name, description = :description, author = :author, date = :date, versiontheme = :versionTheme, versionpluxml = :versionPluxml, link = :link, file = :file',
+            'INSERT INTO themes SET name = :name, description = :description, author = :author, date = :date, versiontheme = :versionTheme, versionpluxml = :versionPluxml, link = :link, file = :file, image = :image',
             $this->toParams()
         );
     }
@@ -61,7 +64,7 @@ class NewThemeModel extends Model
     public function updateTheme()
     {
         return $this->pdoService->insert(
-            'UPDATE themes SET description = :description, author = :author, date = :date, versiontheme = :versionTheme, versionpluxml = :versionPluxml, link = :link, file = :file WHERE name = :name',
+            'UPDATE themes SET description = :description, author = :author, date = :date, versiontheme = :versionTheme, versionpluxml = :versionPluxml, link = :link, file = :file, image = :image WHERE name = :name',
             $this->toParams()
         );
     }
@@ -82,6 +85,7 @@ class NewThemeModel extends Model
             'versionPluxml' => $this->versionPluxml,
             'link' => $this->link,
             'file' => $this->file,
+            'image' => $this->image,
         ];
     }
 }
