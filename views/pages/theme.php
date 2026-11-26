@@ -11,6 +11,9 @@
                 <em><a href="<?= escape_html(safe_url($link)) ?>"><?= escape_html($link) ?></a></em>
             <?php endif; ?>
         </p>
+        <?php if (!empty($image)): ?>
+            <p><img src="<?= escape_html($image) ?>" alt="<?= escape_html($name) ?>" class="theme-image-detail"></p>
+        <?php endif; ?>
         <?php if (!empty($description)): ?>
             <p><?= escape_html($description) ?></p>
         <?php endif; ?>

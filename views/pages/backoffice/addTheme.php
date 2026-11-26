@@ -68,6 +68,11 @@
                 <input type="file" name="file" id="file" required>
                 <?php if (isset($flash['file'][0])): ?><p><?= escape_html($flash['file'][0]) ?></p><?php endif; ?>
             </div>
+            <div <?php if (isset($flash['image'][0])): ?>style="color:red"<?php endif; ?>>
+                <label for="image">Image (optionnal): </label>
+                <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp">
+                <?php if (isset($flash['image'][0])): ?><p><?= escape_html($flash['image'][0]) ?></p><?php endif; ?>
+            </div>
             <button type="submit"><i class="icon-floppy"></i>Save</button>
         </form>
     </div>

@@ -9,5 +9,5 @@ class Nexus
     /**
      * Current version, to update at each release (see CHANGELOG.md)
      */
-    public const VERSION = '2.1';
+    public const VERSION = '2.2';
 }

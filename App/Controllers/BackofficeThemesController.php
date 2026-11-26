@@ -32,6 +32,10 @@ class BackofficeThemesController extends Controller
 
     private const MSG_VALID_FILE_TOO_LARGE = 'File too large, the server accepts files up to %s';
 
+    private const MSG_VALID_IMAGE = 'Invalid image (extension must be jpg, jpeg, png or webp and size inferior to 2MB)';
+
+    private const MSG_VALID_IMAGE_TOO_LARGE = 'Image too large, the server accepts files up to %s';
+
     private const MSG_SUCCESS_EDITTHEME = 'Theme saved with success';
 
     private const MSG_SUCCESS_DELETETHEME = 'Theme deleted with success';
@@ -105,7 +109,9 @@ class BackofficeThemesController extends Controller
      */
     public function edit(Request $request, Response $response, array $args): Response
     {
+        $dirThemeImagesPath = defined('DIR_THEME_IMAGES') ? DIR_THEME_IMAGES : DIR_THEMES . '/images';
         $dirThemes = $_SERVER['DOCUMENT_ROOT'] . DIR_THEMES;
+        $dirThemeImages = $_SERVER['DOCUMENT_ROOT'] . $dirThemeImagesPath;
         $dirTmp = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
 
         $theme = $this->getManageableTheme($args['name']);
@@ -117,10 +123,22 @@ class BackofficeThemesController extends Controller
         $post = $request->getParsedBody();
         $post['name'] = $theme['name'];
         $post['author'] = $theme['author'];
+        $post['image'] = $theme['image'] ?? null;
         $uploadedFile = $request->getUploadedFiles()['file'] ?? null;
         $newFile = !empty($uploadedFile) && $uploadedFile->getError() !== UPLOAD_ERR_NO_FILE;
+        $uploadedImage = $request->getUploadedFiles()['image'] ?? null;
+        $newImage = !empty($uploadedImage) && $uploadedImage->getError() !== UPLOAD_ERR_NO_FILE;
 
         $errors = self::themeValidator($request, $post, false, $newFile);
+
+        if (empty($errors)) {
+            if ($newImage) {
+                $imageFilename = $this->processThemeImage($uploadedImage, $post['name'], $dirTmp, $errors);
+                if (!empty($imageFilename)) {
+                    $post['image'] = $dirThemeImagesPath . '/' . $imageFilename;
+                }
+            }
+        }
 
         if (empty($errors)) {
             if (ThemesFacade::editTheme($this->container, $post)) {
@@ -132,6 +150,18 @@ class BackofficeThemesController extends Controller
                     }
                     $result = rename($dirTmp . DIRECTORY_SEPARATOR . $filename, $dirThemes . DIRECTORY_SEPARATOR . $filename);
                 }
+                if ($result && $newImage && !empty($post['image'])) {
+                    if (!is_dir($dirThemeImages)) {
+                        mkdir($dirThemeImages, 0755, true);
+                    }
+                    $result = rename($dirTmp . DIRECTORY_SEPARATOR . basename($post['image']), $dirThemeImages . DIRECTORY_SEPARATOR . basename($post['image']));
+                    if ($result && !empty($theme['image']) && $theme['image'] !== $post['image']) {
+                        $oldImage = $dirThemeImages . DIRECTORY_SEPARATOR . basename($theme['image']);
+                        if (file_exists($oldImage)) {
+                            unlink($oldImage);
+                        }
+                    }
+                }
                 if ($result) {
                     $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITTHEME);
                 } else {
@@ -140,7 +170,9 @@ class BackofficeThemesController extends Controller
             } else {
                 $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
             }
-        } else {
+        }
+
+        if (!empty($errors)) {
             $this->messageService->addMessage('error', self::MSG_ERROR_TECHNICAL);
             foreach ($errors as $key => $message) {
                 $this->messageService->addMessage($key, $message);
@@ -161,16 +193,30 @@ class BackofficeThemesController extends Controller
     public function save(Request $request, Response $response): Response
     {
         $namedRoute = self::NAMED_ROUTE_BOTHEMES;
+        $dirThemeImagesPath = defined('DIR_THEME_IMAGES') ? DIR_THEME_IMAGES : DIR_THEMES . '/images';
         $dirThemes = $_SERVER['DOCUMENT_ROOT'] . DIR_THEMES;
+        $dirThemeImages = $_SERVER['DOCUMENT_ROOT'] . $dirThemeImagesPath;
         $dirTmp = $_SERVER['DOCUMENT_ROOT'] . DIR_TMP;
 
         $post = $request->getParsedBody();
         $post['name'] ??= '';
         $post['author'] = $this->currentUser;
+        $post['image'] = null;
         $errors = self::themeValidator($request, $post, true);
 
-        if (empty($errors) && empty(ThemesFacade::getTheme($this->container, $post['name']))) {
-            if (ThemesFacade::saveTheme($this->container, $post)) {
+        $uploadedImage = $request->getUploadedFiles()['image'] ?? null;
+        $newImage = !empty($uploadedImage) && $uploadedImage->getError() !== UPLOAD_ERR_NO_FILE;
+        if (empty($errors) && $newImage) {
+            $imageFilename = $this->processThemeImage($uploadedImage, $post['name'], $dirTmp, $errors);
+            if (!empty($imageFilename)) {
+                $post['image'] = $dirThemeImagesPath . '/' . $imageFilename;
+            }
+        }
+
+        if (empty($errors)) {
+            if (!empty(ThemesFacade::getTheme($this->container, $post['name']))) {
+                $errors['name'] = self::MSG_ERROR_TECHNICAL_THEMES;
+            } elseif (ThemesFacade::saveTheme($this->container, $post)) {
                 $filename = $post['name'] . '.zip';
                 if (!is_dir($dirThemes)) {
                     mkdir($dirThemes, 0755, true);
@@ -178,6 +224,12 @@ class BackofficeThemesController extends Controller
                 $target = $dirThemes . DIRECTORY_SEPARATOR . $filename;
                 if (!file_exists($target)) {
                     $result = rename($dirTmp . DIRECTORY_SEPARATOR . $filename, $target);
+                    if ($result && $newImage && !empty($post['image'])) {
+                        if (!is_dir($dirThemeImages)) {
+                            mkdir($dirThemeImages, 0755, true);
+                        }
+                        $result = rename($dirTmp . DIRECTORY_SEPARATOR . basename($post['image']), $dirThemeImages . DIRECTORY_SEPARATOR . basename($post['image']));
+                    }
                     if ($result) {
                         $this->messageService->addMessage('success', self::MSG_SUCCESS_EDITTHEME);
                     } else {
@@ -189,11 +241,12 @@ class BackofficeThemesController extends Controller
             } else {
                 $errors['error'] = self::MSG_ERROR_TECHNICAL_THEMES;
             }
-        } else {
-            $errors['error'] = self::MSG_ERROR_TECHNICAL_THEMES;
         }
 
         if (!empty($errors)) {
+            if (!isset($errors['error'])) {
+                $errors['error'] = self::MSG_ERROR_TECHNICAL;
+            }
             foreach ($errors as $key => $message) {
                 $this->messageService->addMessage($key, $message);
             }
@@ -284,6 +337,56 @@ class BackofficeThemesController extends Controller
         }
 
         return $errors;
+    }
+
+    /**
+     * Validate and move a theme image to the tmp directory
+     *
+     * @param mixed $uploadedImage
+     * @param string $name
+     * @param string $dirTmp
+     * @param array $errors
+     * @return string|null
+     */
+    private function processThemeImage($uploadedImage, string $name, string $dirTmp, array &$errors): ?string
+    {
+        if ($uploadedImage->getError() === UPLOAD_ERR_INI_SIZE || $uploadedImage->getError() === UPLOAD_ERR_FORM_SIZE) {
+            $errors['image'] = sprintf(self::MSG_VALID_IMAGE_TOO_LARGE, ini_get('upload_max_filesize'));
+            return null;
+        }
+        if ($uploadedImage->getError() !== UPLOAD_ERR_OK) {
+            $errors['image'] = self::MSG_VALID_IMAGE;
+            return null;
+        }
+
+        $clientFilename = $uploadedImage->getClientFilename();
+        $extension = strtolower(pathinfo($clientFilename, PATHINFO_EXTENSION));
+        $allowed = ['jpg', 'jpeg', 'png', 'webp'];
+        if (!in_array($extension, $allowed, true)) {
+            $errors['image'] = self::MSG_VALID_IMAGE;
+            return null;
+        }
+
+        $maxSize = defined('THEMES_IMAGE_MAX_SIZE') ? THEMES_IMAGE_MAX_SIZE : '2MB';
+        if (!is_dir($dirTmp)) {
+            mkdir($dirTmp, 0755, true);
+        }
+        $filename = $name . '.' . $extension;
+        $uploadedImage->moveTo($dirTmp . DIRECTORY_SEPARATOR . $filename);
+        $tmpPath = $dirTmp . DIRECTORY_SEPARATOR . $filename;
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = $finfo ? finfo_file($finfo, $tmpPath) : null;
+        if ($finfo) {
+            finfo_close($finfo);
+        }
+        $allowedMimes = ['image/jpeg', 'image/png', 'image/webp'];
+        if (!in_array($mime, $allowedMimes, true) || !Validator::size(null, $maxSize)->validate($tmpPath)) {
+            @unlink($tmpPath);
+            $errors['image'] = self::MSG_VALID_IMAGE;
+            return null;
+        }
+
+        return $filename;
     }
 
     /**

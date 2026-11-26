@@ -11,9 +11,11 @@ const DIR_DOWNLOAD = '/datas';
 const DIR_TMP = DIR_DOWNLOAD . '/tmp';
 const DIR_PLUGINS = DIR_DOWNLOAD . '/plugins';
 const DIR_THEMES = DIR_DOWNLOAD . '/themes';
+const DIR_THEME_IMAGES = DIR_THEMES . '/images';
 
 const PLUGINS_MAX_SIZE = '10MB';
 const THEMES_MAX_SIZE = '10MB';
+const THEMES_IMAGE_MAX_SIZE = '2MB';
 
 const DB_HOST = 'localhost';
 //const DB_HOST = '127.0.0.1';

@@ -2,6 +2,9 @@
     <div class="col sml-12 med-3 panel">
         <a href="<?= escape_html($routerService->urlFor('theme', ['name' => $theme['name']])) ?>">
             <div class="panel-content">
+                <?php if (!empty($theme['image'])): ?>
+                    <img src="<?= escape_html($theme['image']) ?>" alt="<?= escape_html($theme['name']) ?>" class="theme-image">
+                <?php endif; ?>
                 <strong><?= escape_html($theme['name']) ?></strong>
                 <?php if (!empty($theme['description'])): ?>
                     <p><?= escape_html($theme['description']) ?></p>
